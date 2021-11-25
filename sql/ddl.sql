@@ -18,6 +18,7 @@ CREATE TABLE role
     PRIMARY KEY (name)
 );
 
+
 CREATE TABLE recipe
 (
     id          INTEGER AUTO_INCREMENT,
