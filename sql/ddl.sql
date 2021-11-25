@@ -1,4 +1,4 @@
-CREATE SCHEMA IF NOT EXISTS rezeptefabrik;
+CREATE SCHEMA IF NOT EXISTS rezeptfabrik;
 
 CREATE TABLE user
 (
@@ -20,13 +20,16 @@ CREATE TABLE role
 
 CREATE TABLE recipe
 (
-    id          INTEGER AUTO_INCREMENT,
-    title       VARCHAR(30) NOT NULL,
-    content     TEXT        NOT NULL,
-    slug        VARCHAR(15) NOT NULL,
-    user_id     INTEGER     NOT NULL,
-    category_id INTEGER     NOT NULL,
-    article_id  INTEGER     NOT NULL,
+    id             INTEGER AUTO_INCREMENT,
+    title          VARCHAR(30) NOT NULL,
+    content        TEXT        NOT NULL,
+    slug           VARCHAR(15) NOT NULL,
+    user_id        INTEGER     NOT NULL,
+    category_id    INTEGER     NOT NULL,
+    article_id     INTEGER     NOT NULL,
+    type_id        INTEGER     NOT NULL,
+    photo_url      TEXT,
+    published_date DATETIME    NOT NULL,
     PRIMARY KEY (id),
     UNIQUE (title),
     UNIQUE (slug)
@@ -36,40 +39,35 @@ CREATE TABLE recipe
 
 CREATE TABLE ingredient
 (
-
+    id   INTEGER AUTO_INCREMENT,
+    name VARCHAR(30),
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE unit_of_measurement
 (
-
+    name VARCHAR(5),
+    PRIMARY KEY (name)
 );
-CREATE TABLE categorie
+CREATE TABLE category
 (
+    name VARCHAR(30),
+    PRIMARY KEY (name)
 );
 
 CREATE TABLE typ
 (
+    name VARCHAR(30),
+    PRIMARY KEY (name)
 );
 
-CREATE TABLE favour
+CREATE TABLE favorites
 (
+    user_id   INTEGER NOT NULL,
+    recipe_id INTEGER NOT NULL,
+    PRIMARY KEY (user_id, recipe_id),
+    CONSTRAINT fk_ufr_uid FOREIGN KEY (user_id) REFERENCES user (id),
+    CONSTRAINT fk_ufr_rid FOREIGN KEY (recipe_id) REFERENCES recipe (id)
 );
 
-CREATE TABLE besichtigung
-(
-    user_id       INTEGER,
-    immobilien_id INTEGER,
-    termin        DATETIME,
-    PRIMARY KEY (user_id, immobilien_id, termin),
-    CONSTRAINT fk_bes_uid FOREIGN KEY (user_id) REFERENCES users (id),
-    CONSTRAINT fk_bes_iid FOREIGN KEY (immobilien_id) REFERENCES immobilie (id)
-);
-CREATE TABLE kontaktformular
-(
-    id    INTEGER AUTO_INCREMENT,
-    name  VARCHAR(30) NOT NULL,
-    grund VARCHAR(30) NOT NULL,
-    text  TEXT        NOT NULL,
-    PRIMARY KEY (id)
-);
 
