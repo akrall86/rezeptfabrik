@@ -12,17 +12,18 @@ CREATE TABLE user
     UNIQUE KEY (user_name),
     UNIQUE KEY (email)
 );
-CREATE TABLE role(
+CREATE TABLE role
+(
     name VARCHAR(30),
     PRIMARY KEY (name)
 );
-create table blabla(id int);
+
 CREATE TABLE recipe
 (
     id          INTEGER AUTO_INCREMENT,
     title       VARCHAR(30) NOT NULL,
     content     TEXT        NOT NULL,
-    slug        VARCHAR(15) NOT NULL ,
+    slug        VARCHAR(15) NOT NULL,
     user_id     INTEGER     NOT NULL,
     category_id INTEGER     NOT NULL,
     article_id  INTEGER     NOT NULL,
