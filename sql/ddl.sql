@@ -16,8 +16,8 @@ CREATE TABLE role(
     name VARCHAR(30),
     PRIMARY KEY (name)
 );
-CREATE TABLE blablabla (
-id          INTEGER AUTO_INCREMENT);
+
+create table blabla(id int);
 
 CREATE TABLE recipe
 (
