@@ -12,6 +12,7 @@ CREATE TABLE user
     UNIQUE KEY (user_name),
     UNIQUE KEY (email)
 );
+
 CREATE TABLE role
 (
     name VARCHAR(30),
@@ -35,8 +36,6 @@ CREATE TABLE recipe
     UNIQUE (slug)
 );
 
-
-
 CREATE TABLE ingredient
 (
     id   INTEGER AUTO_INCREMENT,
@@ -49,6 +48,7 @@ CREATE TABLE unit_of_measurement
     name VARCHAR(5),
     PRIMARY KEY (name)
 );
+
 CREATE TABLE category
 (
     name VARCHAR(30),
@@ -69,5 +69,3 @@ CREATE TABLE favorites
     CONSTRAINT fk_ufr_uid FOREIGN KEY (user_id) REFERENCES user (id),
     CONSTRAINT fk_ufr_rid FOREIGN KEY (recipe_id) REFERENCES recipe (id)
 );
-
-
