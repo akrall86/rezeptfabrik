@@ -55,7 +55,7 @@ CREATE TABLE category
     PRIMARY KEY (name)
 );
 
-CREATE TABLE typ
+CREATE TABLE type
 (
     name VARCHAR(30),
     PRIMARY KEY (name)
