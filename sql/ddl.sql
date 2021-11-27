@@ -1,6 +1,6 @@
 CREATE SCHEMA IF NOT EXISTS rezeptfabrik;
 
-CREATE TABLE user
+CREATE TABLE rezeptfabrik.user
 (
     id        INTEGER AUTO_INCREMENT,
     firstname VARCHAR(30)  NOT NULL,
@@ -13,13 +13,13 @@ CREATE TABLE user
     UNIQUE KEY (email)
 );
 
-CREATE TABLE role
+CREATE TABLE rezeptfabrik.role
 (
     name VARCHAR(30),
     PRIMARY KEY (name)
 );
 
-CREATE TABLE recipe
+CREATE TABLE rezeptfabrik.recipe
 (
     id             INTEGER AUTO_INCREMENT,
     title          VARCHAR(30) NOT NULL,
@@ -36,32 +36,32 @@ CREATE TABLE recipe
     UNIQUE (slug)
 );
 
-CREATE TABLE ingredient
+CREATE TABLE rezeptfabrik.ingredient
 (
     id   INTEGER AUTO_INCREMENT,
     name VARCHAR(30),
     PRIMARY KEY (id)
 );
 
-CREATE TABLE unit_of_measurement
+CREATE TABLE rezeptfabrik.unit_of_measurement
 (
     name VARCHAR(5),
     PRIMARY KEY (name)
 );
 
-CREATE TABLE category
+CREATE TABLE rezeptfabrik.category
 (
     name VARCHAR(30),
     PRIMARY KEY (name)
 );
 
-CREATE TABLE type
+CREATE TABLE rezeptfabrik.type
 (
     name VARCHAR(30),
     PRIMARY KEY (name)
 );
 
-CREATE TABLE favorites
+CREATE TABLE rezeptfabrik.favorites
 (
     user_id   INTEGER NOT NULL,
     recipe_id INTEGER NOT NULL,
