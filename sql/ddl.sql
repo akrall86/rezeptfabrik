@@ -19,6 +19,21 @@ CREATE TABLE rezeptfabrik.role
     PRIMARY KEY (name)
 );
 
+INSERT INTO rezeptfabrik.role (name)
+VALUES ('ADMIN');
+
+INSERT INTO rezeptfabrik.role (name)
+VALUES ('USER');
+
+CREATE TABLE  rezeptfabrik.user_has_role
+(
+    user_id INTEGER NOT NULL,
+    role_id VARCHAR(30) NOT NULL,
+    PRIMARY KEY (user_id, role_id),
+    CONSTRAINT fk_uhr_uid FOREIGN KEY (user_id) REFERENCES user (id),
+    CONSTRAINT fk_uhr_rid FOREIGN KEY (role_id) REFERENCES role (name)
+);
+
 CREATE TABLE rezeptfabrik.recipe
 (
     id             INTEGER AUTO_INCREMENT,
@@ -27,7 +42,6 @@ CREATE TABLE rezeptfabrik.recipe
     slug           VARCHAR(15) NOT NULL,
     user_id        INTEGER     NOT NULL,
     category_id    INTEGER     NOT NULL,
-    article_id     INTEGER     NOT NULL,
     type_id        INTEGER     NOT NULL,
     photo_url      TEXT,
     published_date DATETIME    NOT NULL,
@@ -61,7 +75,7 @@ CREATE TABLE rezeptfabrik.type
     PRIMARY KEY (name)
 );
 
-CREATE TABLE rezeptfabrik.favorites
+CREATE TABLE rezeptfabrik.user_has_favorites
 (
     user_id   INTEGER NOT NULL,
     recipe_id INTEGER NOT NULL,
