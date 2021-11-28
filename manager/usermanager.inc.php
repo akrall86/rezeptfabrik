@@ -13,18 +13,16 @@ class UserManager
         $this->conn = $conn;
     }
 
-    // if insert user true returns id, if false return false
-    function createUser(string $firstname, string $lastname, string $user_name, string $email, string $password): string|bool
+    function createUser(string $firstname, string $lastname, string $user_name, string $email, string $password): string
     {
         // password hash
         $password = password_hash($password, PASSWORD_DEFAULT);
 
+        // set role to user
 
         // check email of it exist
 
         // check user_name of it exist
-
-        // set role to user
 
         // insert user in the DB
         $ps = $this->conn->prepare('INSERT INTO user 
