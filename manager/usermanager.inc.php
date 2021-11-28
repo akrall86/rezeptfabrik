@@ -18,11 +18,11 @@ class UserManager
         // password hash
         $password = password_hash($password, PASSWORD_DEFAULT);
 
-        // set role to user
-
         // check email of it exist
 
         // check user_name of it exist
+
+        // set role to user
 
         // insert user in the DB
         $ps = $this->conn->prepare('INSERT INTO user 
