@@ -19,10 +19,13 @@ class UserManager
         $password = password_hash($password, PASSWORD_DEFAULT);
 
         // check email of it exist
-
+        if ($this->getUserByEmail($email) == true) {
+            return false;
+        }
         // check user_name of it exist
-
-        // set role to user
+        if ($this->getUserByUser_Name($user_name) == true) {
+            return false;
+        }
 
         // insert user in the DB
         $ps = $this->conn->prepare('INSERT INTO user 
@@ -37,6 +40,8 @@ class UserManager
         $ps->bindValue('password', $password);
 
         $ps->execute();
+
+        // set USER role to user
 
         return $this->conn->lastInsertId();
     }
@@ -76,6 +81,22 @@ class UserManager
     }
 
     /**
+     * @param $user_name
+     * @return User|bool
+     */
+    function getUserByUser_Name($user_name): User|bool
+    {
+        $ps = $this->conn->prepare('SELECT * FROM user WHERE user_name = :user_name');
+        $ps->bindValue('user_name', $user_name);
+        $ps->execute();
+
+        if ($row = $ps->fetch()) {
+            return new User($row['id'], $row['firstname'], $row['lastname'], $row['user_name'], $row['email'], $row['password']);
+        }
+        return false;
+    }
+
+    /**
      * @param int $id
      * @return User|bool
      */
@@ -89,6 +110,18 @@ class UserManager
             return new User($row['id'], $row['firstname'], $row['lastname'], $row['user_name'], $row['email'], $row['password']);
         }
         return false;
+    }
+
+    function getRoles(){
+        $ps = $this->conn->query('SELECT * FROM role');
+
+    }
+
+
+    function setUserRoleToUserById(int $id) {
+        $ps = $this->conn->prepare('INSERT INTO user_has_role (user_id, role_id)  VALUES (:user_id, :role_id)');
+        $ps->bindValue('user_id', $id);
+        $ps->bindValue('role_id', );
     }
 
 }
