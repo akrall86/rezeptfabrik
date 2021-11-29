@@ -1,6 +1,6 @@
-CREATE SCHEMA IF NOT EXISTS rezeptefabrik;
+CREATE SCHEMA IF NOT EXISTS rezeptfabrik;
 
-CREATE TABLE user
+CREATE TABLE rezeptfabrik.user
 (
     id        INTEGER AUTO_INCREMENT,
     firstname VARCHAR(30)  NOT NULL,
@@ -12,65 +12,73 @@ CREATE TABLE user
     UNIQUE KEY (user_name),
     UNIQUE KEY (email)
 );
-CREATE TABLE role
+
+CREATE TABLE rezeptfabrik.role
 (
     name VARCHAR(30),
     PRIMARY KEY (name)
 );
 
 
-CREATE TABLE recipe
+
+INSERT INTO rezeptfabrik.role (name)
+VALUES ('USER');
+
+CREATE TABLE  rezeptfabrik.user_has_role
 (
-    id          INTEGER AUTO_INCREMENT,
-    title       VARCHAR(30) NOT NULL,
-    content     TEXT        NOT NULL,
-    slug        VARCHAR(15) NOT NULL,
-    user_id     INTEGER     NOT NULL,
-    category_id INTEGER     NOT NULL,
-    article_id  INTEGER     NOT NULL,
+    user_id INTEGER NOT NULL,
+    role_id VARCHAR(30) NOT NULL,
+    PRIMARY KEY (user_id, role_id),
+    CONSTRAINT fk_uhr_uid FOREIGN KEY (user_id) REFERENCES user (id),
+    CONSTRAINT fk_uhr_rid FOREIGN KEY (role_id) REFERENCES role (name)
+);
+
+CREATE TABLE rezeptfabrik.recipe
+(
+    id             INTEGER AUTO_INCREMENT,
+    title          VARCHAR(30) NOT NULL,
+    content        TEXT        NOT NULL,
+    slug           VARCHAR(15) NOT NULL,
+    user_id        INTEGER     NOT NULL,
+    category_id    INTEGER     NOT NULL,
+    type_id        INTEGER     NOT NULL,
+    photo_url      TEXT,
+    published_date DATETIME    NOT NULL,
     PRIMARY KEY (id),
     UNIQUE (title),
     UNIQUE (slug)
 );
 
-
-
-CREATE TABLE ingredient
+CREATE TABLE rezeptfabrik.ingredient
 (
-
-);
-
-CREATE TABLE unit_of_measurement
-(
-
-);
-CREATE TABLE categorie
-(
-);
-
-CREATE TABLE typ
-(
-);
-
-CREATE TABLE favour
-(
-);
-
-CREATE TABLE besichtigung
-(
-    user_id       INTEGER,
-    immobilien_id INTEGER,
-    termin        DATETIME,
-    PRIMARY KEY (user_id, immobilien_id, termin),
-    CONSTRAINT fk_bes_uid FOREIGN KEY (user_id) REFERENCES users (id),
-    CONSTRAINT fk_bes_iid FOREIGN KEY (immobilien_id) REFERENCES immobilie (id)
-);
-CREATE TABLE kontaktformular
-(
-    id    INTEGER AUTO_INCREMENT,
-    name  VARCHAR(30) NOT NULL,
-    grund VARCHAR(30) NOT NULL,
-    text  TEXT        NOT NULL,
+    id   INTEGER AUTO_INCREMENT,
+    name VARCHAR(30),
     PRIMARY KEY (id)
 );
 
+CREATE TABLE rezeptfabrik.unit_of_measurement
+(
+    name VARCHAR(5),
+    PRIMARY KEY (name)
+);
+
+CREATE TABLE rezeptfabrik.category
+(
+    name VARCHAR(30),
+    PRIMARY KEY (name)
+);
+
+CREATE TABLE rezeptfabrik.type
+(
+    name VARCHAR(30),
+    PRIMARY KEY (name)
+);
+
+CREATE TABLE rezeptfabrik.user_has_favorites
+(
+    user_id   INTEGER NOT NULL,
+    recipe_id INTEGER NOT NULL,
+    PRIMARY KEY (user_id, recipe_id),
+    CONSTRAINT fk_ufr_uid FOREIGN KEY (user_id) REFERENCES user (id),
+    CONSTRAINT fk_ufr_rid FOREIGN KEY (recipe_id) REFERENCES recipe (id)
+);
