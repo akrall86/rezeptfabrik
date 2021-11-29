@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="utf-8" />
-    <title>Page Title</title>
+    <title>rezeptfabrik</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="js/jquery-3.6.0.js" defer></script>
     <script src="js/script.js" defer></script>
@@ -11,7 +11,7 @@
 <body>
 <!-- HEADER mit Menü -->
 <header class="center-wrapper">
-    <div class="title">Meine Seite</div>
+    <div class="title"rezeptfabrik</div>
     <div class="menu">
         <ul>
             <li><a href="./index.php">Home</a></li>
