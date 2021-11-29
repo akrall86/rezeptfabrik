@@ -80,6 +80,7 @@ class UserManager
         }
 
         // add to Session from User
+        $_SESSION['loggedin'] ;
 
 
         return $user;
