@@ -19,7 +19,8 @@ CREATE TABLE rezeptfabrik.role
     PRIMARY KEY (name)
 );
 
-
+INSERT INTO rezeptfabrik.role (name)
+VALUES  ('ADMIN');
 
 INSERT INTO rezeptfabrik.role (name)
 VALUES ('USER');
