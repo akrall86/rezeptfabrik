@@ -80,6 +80,7 @@ class UserManager
         }
 
         // add to Session from User
+        $_SESSION['loggedin'] ;
 
 
         return $user;
@@ -151,7 +152,7 @@ class UserManager
         $result = $this->conn->query('SELECT * FROM role');
 
         $roles = [];
-        while ($row = $result->fetch()){
+        while ($row = $result->fetch()) {
             $roles[] = new Role($row['name']);
         }
         return $roles;
@@ -162,7 +163,8 @@ class UserManager
      * @param int $id
      * @return false|void
      */
-    function setUserRoleToUserById(int $id) {
+    function setUserRoleToUserById(int $id)
+    {
         $roles[] = $this->getRoles();
         if (count($roles) == 0) {
             return false;
@@ -174,7 +176,7 @@ class UserManager
         }
         $ps = $this->conn->prepare('INSERT INTO user_has_role (user_id, role_id)  VALUES (:user_id, :role_id)');
         $ps->bindValue('user_id', $id);
-        $ps->bindValue('role_id',$user->getName());
+        $ps->bindValue('role_id', $user->getName());
     }
 
 }
