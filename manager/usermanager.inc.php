@@ -121,7 +121,7 @@ class UserManager
     function setUserRoleToUserById(int $id) {
         $ps = $this->conn->prepare('INSERT INTO user_has_role (user_id, role_id)  VALUES (:user_id, :role_id)');
         $ps->bindValue('user_id', $id);
-        $ps->bindValue('role_id', );
+        $ps->bindValue('role_id', "USER");
     }
 
 }
