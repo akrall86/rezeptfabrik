@@ -28,6 +28,10 @@
   color: black;
   display: block;
 }
+.footer {
+  border-top: 1px solid grey;
+  margin-top: 8px;
+}
 .success {
   font-weight: bold;
   border: 5px dotted green;
