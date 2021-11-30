@@ -80,10 +80,35 @@ class UserManager
         }
 
         // add to Session from User
-        $_SESSION['loggedin'] ;
+        $_SESSION['loggedin'] = true;
+        $_SESSION['user_id'] = $user->id;
+        $roles = $this->getUserRoles($user->id);
+        if (in_array('ADMIN', $roles)) {
+            $_SESSION['admin'] = true;
+        }
 
 
         return $user;
+    }
+
+    /**
+     * @return bool
+     */
+    function isLoggedIn(): bool
+    {
+        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true && isset($_SESSION['user_id'])) {
+            return true;
+        }
+        return false;
+    }
+
+    function logout() {
+        if ($this->isLoggedIn()) {
+            $_SESSION['loggedin'] = false;
+            $_SESSION['user_id'] = '';
+            $_SESSION['admin'] = false;
+            session_destroy();
+        }
     }
 
     /**
@@ -154,6 +179,16 @@ class UserManager
         $roles = [];
         while ($row = $result->fetch()) {
             $roles[] = new Role($row['name']);
+        }
+        return $roles;
+    }
+
+    function getUserRoles($user_id): array
+    {
+        $result = $this->conn->query('SELECT * FROM user_has_role WHERE user_id = $user_id');
+        $roles = [];
+        while ($row = $result->fetch()) {
+            $roles[] = new Role($row['role_id']);
         }
         return $roles;
     }
