@@ -42,7 +42,7 @@ class UserManager
             return false;
         }
 
-        // insert user in the DB
+        // insert user into DB
         $ps = $this->conn->prepare('INSERT INTO user 
                                             (firstname, lastname, user_name, email, password) 
                                             VALUES 
@@ -62,11 +62,11 @@ class UserManager
     }
 
     /**
-     * if Login true returns User object and set Session
-     * if Login false returns false
+     * checks e-mail and password and add user data to Session if they are correct
+     *
      * @param string $email
      * @param string $password
-     * @return User|bool
+     * @return User|bool if Login is true returns User object, false otherwise
      */
     function login(string $email, string $password): User|bool
     {
@@ -79,15 +79,15 @@ class UserManager
             return false;
         }
 
-        // add to Session from User
+        // add Userdata to Session
+
         $_SESSION['loggedin'] = true;
         $_SESSION['user_id'] = $user->id;
         $roles = $this->getUserRoles($user->id);
         if (in_array('ADMIN', $roles)) {
             $_SESSION['admin'] = true;
         }
-
-
+      
         return $user;
     }
 
