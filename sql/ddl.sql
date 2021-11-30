@@ -20,14 +20,14 @@ CREATE TABLE rezeptfabrik.role
 );
 
 INSERT INTO rezeptfabrik.role (name)
-VALUES  ('ADMIN');
+VALUES ('ADMIN');
 
 INSERT INTO rezeptfabrik.role (name)
 VALUES ('USER');
 
-CREATE TABLE  rezeptfabrik.user_has_role
+CREATE TABLE rezeptfabrik.user_has_role
 (
-    user_id INTEGER NOT NULL,
+    user_id INTEGER     NOT NULL,
     role_id VARCHAR(30) NOT NULL,
     PRIMARY KEY (user_id, role_id),
     CONSTRAINT fk_uhr_uid FOREIGN KEY (user_id) REFERENCES user (id),
@@ -41,8 +41,8 @@ CREATE TABLE rezeptfabrik.recipe
     content        TEXT        NOT NULL,
     slug           VARCHAR(15) NOT NULL,
     user_id        INTEGER     NOT NULL,
-    category_id    INTEGER     NOT NULL,
-    type_id        INTEGER     NOT NULL,
+    category_name  VARCHAR(30) NOT NULL,
+    type_name      VARCHAR(30) NOT NULL,
     photo_url      TEXT,
     published_date DATETIME    NOT NULL,
     PRIMARY KEY (id),
@@ -61,6 +61,16 @@ CREATE TABLE rezeptfabrik.unit_of_measurement
 (
     name VARCHAR(5),
     PRIMARY KEY (name)
+);
+
+CREATE TABLE rezeptfabrik.recipe_has_ingredient_has_unit_of_measurement
+(
+    recipe_id                INTEGER    NOT NULL,
+    ingredient_id            INTEGER    NOT NULL,
+    unit_of_measurement_name VARCHAR(5) NOT NULL,
+    CONSTRAINT fk_riuom_rid FOREIGN KEY (recipe_id) REFERENCES recipe (id),
+    CONSTRAINT fk_riuom_iid FOREIGN KEY (ingredient_id) REFERENCES ingredient (id),
+    CONSTRAINT fk_riuom_uofmn FOREIGN KEY (unit_of_measurement_name) REFERENCES unit_of_measurement (name)
 );
 
 CREATE TABLE rezeptfabrik.category
