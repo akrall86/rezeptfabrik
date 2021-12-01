@@ -10,7 +10,7 @@
 </head>
 <body>
 <!-- header -->
-<?php include 'inc/header.php'; ?>
+<?php include 'inc/header.inc.php'; ?>
 
 <!-- content -->
 <main class="center-wrapper">
@@ -27,7 +27,7 @@
 </main>
 
 <!-- content -->
-<?php include 'inc/footer.php'; ?>
+<?php include 'inc/footer.inc.php'; ?>
 
 </body>
 </html>
