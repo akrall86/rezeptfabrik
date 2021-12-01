@@ -1,5 +1,10 @@
 <?php
 require_once 'inc/maininclude.inc.php';
+if (isset($_POST['btlogout'])) {
+    $userManager->logout();
+    header('Location: ./');
+    return;
+}
 ?>
 <!DOCTYPE HTML>
 <html lang="de">
@@ -18,19 +23,10 @@ require_once 'inc/maininclude.inc.php';
 
 <!-- content -->
 <main class="center-wrapper">
-    <h1>Login</h1>
-    <form action="login.php" method="POST">
-        <?php include 'inc/errormessages.inc.php' ?>
+    <h1>Logout</h1>
+    <form action="logout.php" method="POST">
         <div>
-            <label for="email">E-Mail:</label>
-            <input type="email" name="email" id="email">
-        </div>
-        <div>
-            <label for="password">Passwort:</label>
-            <input type="password" name="password" id="password">
-        </div>
-        <div>
-            <button name="btsubmit">Login</button>
+            <button name="btsubmit">Logout</button>
         </div>
 </main>
 

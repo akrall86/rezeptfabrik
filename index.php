@@ -1,3 +1,6 @@
+<?php
+require_once 'inc/maininclude.inc.php';
+?>
 <!DOCTYPE HTML>
 <html lang="de">
 <head>
