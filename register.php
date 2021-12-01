@@ -1,3 +1,6 @@
+<?php
+require_once 'inc/maininclude.inc.php'
+?>
 <!DOCTYPE HTML>
 <html lang="de">
 <head>
@@ -11,13 +14,13 @@
 </head>
 <body>
 <!-- header -->
-<?php include 'inc/header.inc.php'; ?>
+<?php include 'inc/header.inc.php' ?>
 
 <!-- content -->
 <main class="center-wrapper">
     <h1>Registrierung</h1>
     <form action="register.php" method="POST">
-        <?php include 'inc/errormessage.inc.php' ?>
+        <?php include 'inc/errormessages.inc.php' ?>
         <div>
             <label for="firstname">Vorname:</label>
             <input type="text" name="firstname" id="firstname">

@@ -28,18 +28,19 @@ class UserManager
      * @param string $password
      * @return string
      */
-    function createUser(string $firstname, string $lastname, string $user_name, string $email, string $password): bool|string
+    function createUser(string $firstname, string $lastname, string $user_name, string $email, string $password): string
     {
         // password hash
         $password = password_hash($password, PASSWORD_BCRYPT);
 
         // check email of it exist
         if ($this->getUserByEmail($email) == true) {
-            return false;
+            return $errors['email'] = 'E-mail schon vorhanden!';
         }
         // check user_name of it exist
         if ($this->getUserByUser_Name($user_name) == true) {
-            return false;
+            return $errors['user_name'] = 'Benutzername schon vorhanden!';
+
         }
 
         // insert user into DB
@@ -100,6 +101,14 @@ class UserManager
             return true;
         }
         return false;
+    }
+
+    function isAdmin(): bool
+    {
+        if ($this->isLoggedIn() && isset($_SESSION['admin']) && $_SESSION['admin'] === true) {
+            return true;
+        }
+        return  false;
     }
 
     /**
