@@ -59,18 +59,22 @@ CREATE TABLE rezeptfabrik.ingredient
 
 CREATE TABLE rezeptfabrik.unit_of_measurement
 (
-    name VARCHAR(5),
-    PRIMARY KEY (name)
+    id INTEGER AUTO_INCREMENT,
+    name VARCHAR(15),
+    PRIMARY KEY (id)
 );
+
+INSERT INTO rezeptfabrik.unit_of_measurement (name)
+VALUES ('g'), ('dag'), ('kg'), ('ml'), ('cl'), ('l'), ('Teelöffel'), ('Esslöffel'), ('Prise'), ('Schuss');
 
 CREATE TABLE rezeptfabrik.recipe_has_ingredient_has_unit_of_measurement
 (
     recipe_id                INTEGER    NOT NULL,
     ingredient_id            INTEGER    NOT NULL,
-    unit_of_measurement_name VARCHAR(5) NOT NULL,
+    unit_of_measurement_id   INTEGER   NOT NULL,
     CONSTRAINT fk_riuom_rid FOREIGN KEY (recipe_id) REFERENCES recipe (id),
     CONSTRAINT fk_riuom_iid FOREIGN KEY (ingredient_id) REFERENCES ingredient (id),
-    CONSTRAINT fk_riuom_uofmn FOREIGN KEY (unit_of_measurement_name) REFERENCES unit_of_measurement (name)
+    CONSTRAINT fk_riuom_uomid FOREIGN KEY (unit_of_measurement_id) REFERENCES unit_of_measurement (id)
 );
 
 CREATE TABLE rezeptfabrik.category
