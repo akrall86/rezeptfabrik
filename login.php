@@ -15,16 +15,7 @@
 
 <!-- content -->
 <main class="center-wrapper">
-    <h1>Frühstücksrezept des Tages</h1>
-    <p>Frühstück:</p>
-    </br>
-    <h1>Rezept des Tages</h1>
-    <p>Vorspeise:</p>
-    <p>Hauptspeise:</p>
-    <p>Nachspeise:</p>
-    </br>
-    <h1>Getränk des Tages</h1>
-    <p>Getränk:</p>
+
 </main>
 
 <!-- footer -->

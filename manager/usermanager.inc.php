@@ -28,7 +28,7 @@ class UserManager
      * @param string $password
      * @return string
      */
-    function createUser(string $firstname, string $lastname, string $user_name, string $email, string $password): string
+    function createUser(string $firstname, string $lastname, string $user_name, string $email, string $password): bool|string
     {
         // password hash
         $password = password_hash($password, PASSWORD_BCRYPT);
@@ -102,6 +102,9 @@ class UserManager
         return false;
     }
 
+    /**
+     *
+     */
     function logout() {
         if ($this->isLoggedIn()) {
             $_SESSION['loggedin'] = false;
