@@ -83,11 +83,17 @@ CREATE TABLE rezeptfabrik.category
     PRIMARY KEY (name)
 );
 
+INSERT INTO rezeptfabrik.category (name)
+VALUES ('Frühstück'), ('Vorspeise'), ('Dessert'), ('Hauptspeise'), ('Getränk'), ('Suppe'), ('Abendessen');
+
 CREATE TABLE rezeptfabrik.type
 (
     name VARCHAR(30),
     PRIMARY KEY (name)
 );
+
+INSERT INTO rezeptfabrik.type (name)
+VALUES ('mit Fleisch'), ('vegetarisch'), ('vegan');
 
 CREATE TABLE rezeptfabrik.user_has_favorites
 (
