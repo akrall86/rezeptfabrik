@@ -20,10 +20,7 @@ CREATE TABLE rezeptfabrik.role
 );
 
 INSERT INTO rezeptfabrik.role (name)
-VALUES ('ADMIN');
-
-INSERT INTO rezeptfabrik.role (name)
-VALUES ('USER');
+VALUES ('ADMIN'), ('USER');
 
 CREATE TABLE rezeptfabrik.user_has_role
 (
