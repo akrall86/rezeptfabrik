@@ -88,6 +88,9 @@ class UserManager
         if (in_array('ADMIN', $roles)) {
             $_SESSION['admin'] = true;
         }
+        if (in_array('USER', $roles)) {
+            $_SESSION['user'] = true;
+        }
       
         return $user;
     }
@@ -118,6 +121,7 @@ class UserManager
         if ($this->isLoggedIn()) {
             $_SESSION['loggedin'] = false;
             $_SESSION['user_id'] = '';
+            $_SESSION['user'] = false;
             $_SESSION['admin'] = false;
             session_destroy();
         }
