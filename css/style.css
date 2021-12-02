@@ -4,11 +4,23 @@
 .center-wrapper {
   max-width: 1200px;
   margin: 0 auto;
+  background-color: aqua;
+}
+#container {
+  max-width: 1400px;
+  min-height: 980px;
+  max-height: 2100px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 50px;
+  background-image: url(../img/background.jpeg);
+  background-size: cover;
 }
 .title {
   font-size: 24px;
   padding: 8px;
 }
+/* navbar */
 .menu {
   border-bottom: 1px solid grey;
   margin-bottom: 8px;
@@ -28,22 +40,28 @@
   color: black;
   display: block;
 }
-.footer {
-  border-top: 1px solid grey;
-  margin-top: 8px;
-}
 .success {
   font-weight: bold;
   border: 5px dotted green;
   padding: 16px;
 }
+/* errors */
 .error {
   font-weight: bold;
   background-color: red;
   color: white;
   padding: 16px;
 }
+/* form */
 form div {
   margin: 8px;
+}
+/* footer */
+footer {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  border-top: 1px solid grey;
+  margin-top: 8px;
 }
 /*# sourceMappingURL=style.css.map */

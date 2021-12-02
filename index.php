@@ -18,6 +18,7 @@ require_once 'inc/maininclude.inc.php';
 
 <!-- content -->
 <main class="center-wrapper">
+    <div id="content">
     <h1>Frühstücksrezept des Tages</h1>
     <p>Frühstück:</p>
     </br>
@@ -28,6 +29,7 @@ require_once 'inc/maininclude.inc.php';
     </br>
     <h1>Getränk des Tages</h1>
     <p>Getränk:</p>
+    </div>
 </main>
 
 <!-- footer -->
