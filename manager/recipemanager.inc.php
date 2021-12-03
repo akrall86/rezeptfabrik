@@ -1,13 +1,16 @@
 <?php
 require_once __DIR__ . '/../model/recipe.inc.php';
 
+/**
+ * The RecipeManager class contains methods for editing the table recipe
+ */
 class RecipeManager
 {
 
     private PDO $conn;
 
     /**
-     * @param PDO $connection
+     * @param PDO $connection the connection to the DB
      */
     public function __construct(PDO $connection)
     {
@@ -15,6 +18,9 @@ class RecipeManager
     }
 
     /**
+     * insert recipe into DB
+     * check title in DB if exist
+     * check slug in DB if exist
      * @param string $title
      * @param string $content
      * @param string $slug
@@ -23,9 +29,9 @@ class RecipeManager
      * @param string $type_name
      * @param string $photo_url
      * @param DateTime $published_date
-     * @return string
+     * @return string $id return the id of recipe, return $errors[]
      */
-    function createRecipe(string $title, string $content, string $slug, int $user_id, string $category_name, string $type_name, string $photo_url, DateTime $published_date)
+    function createRecipe(string $title, string $content, string $slug, int $user_id, string $category_name, string $type_name, string $photo_url, DateTime $published_date): string
     {
         if ($this->getTitle($title) == true) {
             return $errors['title'] = 'Titel wird schon verwendet!';

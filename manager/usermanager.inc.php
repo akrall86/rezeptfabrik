@@ -2,12 +2,15 @@
 require_once __DIR__ . '/../model/user.inc.php';
 require_once __DIR__ . '/../model/role.inc.php';
 
+/**
+ * The UserManager class contains methods for editing the table user
+ */
 class UserManager
 {
     private PDO $conn;
 
     /**
-     * @param PDO $conn
+     * @param PDO $conn the connection to the db
      */
     public function __construct(PDO $conn)
     {
@@ -15,12 +18,11 @@ class UserManager
     }
 
     /**
+     * inset user into DB
      * Password hash with BCrypt
      * check email in DB if it exists, if not return false
      * check user_name in DB if it exists, if not return false
-     * insert user in DB
      * set Role to USER
-     * return id
      * @param string $firstname
      * @param string $lastname
      * @param string $user_name
@@ -64,7 +66,6 @@ class UserManager
 
     /**
      * checks e-mail and password and add user data to Session if they are correct
-     *
      * @param string $email
      * @param string $password
      * @return User|bool if Login is true returns User object, false otherwise
@@ -96,6 +97,7 @@ class UserManager
     }
 
     /**
+     * control methods for $_SESSION['loggedin']
      * @return bool
      */
     function isLoggedIn(): bool
@@ -106,6 +108,10 @@ class UserManager
         return false;
     }
 
+    /**
+     * control method for $_SESSION['admin']
+     * @return bool
+     */
     function isAdmin(): bool
     {
         if ($this->isLoggedIn() && isset($_SESSION['admin']) && $_SESSION['admin'] === true) {
@@ -115,7 +121,7 @@ class UserManager
     }
 
     /**
-     *
+     * methods for logout destroy the Session
      */
     function logout() {
         if ($this->isLoggedIn()) {
@@ -132,7 +138,7 @@ class UserManager
      * if email was found returns new User object with data from DB
      * if email not found returns false
      * @param $email
-     * @return User|bool
+     * @return User|bool if true return user, If not return false
      */
     function getUserByEmail($email): User|bool
     {
@@ -198,7 +204,9 @@ class UserManager
         }
         return $roles;
     }
-
+    /*
+     *
+     */
     function getUserRoles($user_id): array
     {
         $result = $this->conn->query('SELECT * FROM user_has_role WHERE user_id = $user_id');
