@@ -89,4 +89,23 @@ class RecipeManager
         }
         return false;
     }
+
+    /**
+     * @return array
+     */
+    function getRecipes(): array
+    {
+        $result = $this->conn->query('SELECT * FROM recipe');
+        $recipes = [];
+        while ($row = $result->fetch()) {
+            $recipes[] = new Recipe($row['id'], $row['title'], $row['content'], $row['slug'], $row['user_id'], $row['category_id'], $row['type_id'], $row['photo_url'], $row['published_date']);
+        }
+
+        return $recipes;
+    }
+
+    function getRecipeById($id)
+    {
+
+    }
 }
