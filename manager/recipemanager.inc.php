@@ -104,8 +104,19 @@ class RecipeManager
         return $recipes;
     }
 
-    function getRecipeById($id)
+    /**
+     * @param $id
+     * @return bool|Recipe
+     */
+    function getRecipeById($id): bool|Recipe
     {
+        $ps = $this->conn->prepare('SELECT * FROM recipe WHERE id = :id');
+        $ps->bindValue('id', $id);
+        $ps->execute();
 
+        if ($row = $ps->fetch()) {
+            return new Recipe($row['id'], $row['title'], $row['content'], $row['slug'], $row['user_id'], $row['category_id'], $row['type_id'], $row['photo_url'], $row['published_date']);
+        }
+        return  false;
     }
 }
