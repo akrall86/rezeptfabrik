@@ -1,5 +1,15 @@
 <?php
 require_once 'inc/maininclude.inc.php';
+
+if (isset($_POST['btlogin'])) {
+    if (strlen(trim($_POST['email'])) == 0 || strlen($_POST['email'], '@') == false) {
+        $errors['email'] = 'E-Mail eingeben.';
+    }
+    if (strlen(trim($_POST['password'])) == 0) {
+        $errors['password'] = 'Passwort eingebn';
+    }
+
+}
 ?>
 <!DOCTYPE HTML>
 <html lang="de">
@@ -29,7 +39,7 @@ require_once 'inc/maininclude.inc.php';
             <input type="password" name="password" id="password">
         </div>
         <div>
-            <button name="btsubmit">Login</button>
+            <button name="btlogin">Login</button>
         </div>
 </main>
 
