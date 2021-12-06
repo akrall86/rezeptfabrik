@@ -28,9 +28,10 @@ class UserManager
      * @param string $user_name
      * @param string $email
      * @param string $password
+     * @param string $passwordrepeat
      * @return string
      */
-    function createUser(string $firstname, string $lastname, string $user_name, string $email, string $password): string
+    function createUser(string $firstname, string $lastname, string $user_name, string $email, string $password, string $passwordrepeat): string
     {
         // password hash
         $password = password_hash($password, PASSWORD_BCRYPT);
@@ -43,6 +44,10 @@ class UserManager
         if ($this->getUserByUser_Name($user_name) == true) {
             return $errors['user_name'] = 'Benutzername schon vorhanden!';
 
+        }
+
+        if ($password !== $passwordrepeat) {
+            return $errors['password'] = 'Passwörter stimmen nicht überein';
         }
 
         // insert user into DB

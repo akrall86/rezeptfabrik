@@ -18,7 +18,7 @@ require_once 'inc/maininclude.inc.php'
 <!-- content -->
 <main class="center-wrapper">
     <h1>Registrierung</h1>
-    <form action="register.php" method="POST">
+    <form name="register" action="register.php" method="POST">
         <?php include 'inc/errormessages.inc.php' ?>
         <div>
             <label for="firstname">Vorname:</label>
