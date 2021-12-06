@@ -31,7 +31,7 @@ class UserManager
      * @param string $passwordrepeat
      * @return string
      */
-    function createUser(string $firstname, string $lastname, string $user_name, string $email, string $password, string $passwordrepeat): string
+    function createUser(string $firstname, string $lastname, string $user_name, string $email, string $password): string
     {
         // password hash
         $password = password_hash($password, PASSWORD_BCRYPT);
@@ -44,10 +44,6 @@ class UserManager
         if ($this->getUserByUser_Name($user_name) == true) {
             return $errors['user_name'] = 'Benutzername schon vorhanden!';
 
-        }
-
-        if ($password !== $passwordrepeat) {
-            return $errors['password'] = 'Passwörter stimmen nicht überein';
         }
 
         // insert user into DB
@@ -234,7 +230,7 @@ class UserManager
             return false;
         }
         foreach ($roles as $role) {
-            if (($role->name) === 'USER') {
+            if (($role->name) == 'USER') {
                 $user = $role;
             }
         }
