@@ -25,7 +25,7 @@ if (isset($_POST['btlogout'])) {
     <h1>Logout</h1>
     <form action="logout.php" method="POST">
         <div>
-            <button name="btsubmit">Logout</button>
+            <button name="btlogout">Logout</button>
         </div>
 </main>
 
