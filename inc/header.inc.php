@@ -14,7 +14,7 @@
             <?php endif; ?>
             <?php if($userManager->isAdmin()): ?>
                 <li><a href="./admin.user.php">Administrator Benutzerverwaltung</a></li>
-                <li><a href="./admin.recipe.php">Administrator Rezepteverwaltung</a></li>
+                <li><a href="./admin.recipe.php">Administrator Rezepte verwaltung</a></li>
             <?php endif; ?>
         </ul>
     </div>
