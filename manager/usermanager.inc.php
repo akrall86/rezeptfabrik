@@ -225,18 +225,18 @@ class UserManager
      */
     function setUserRoleToUserById(int $id)
     {
-        $roles[] = $this->getRoles();
-        if (count($roles) == 0) {
-            return false;
-        }
+        $roles = $this->getRoles();
+        $user_role = "";
+
         foreach ($roles as $role) {
-            if (($role->name) == 'USER') {
-                $user = $role;
+            if (($role->name) === 'USER') {
+                $user_role = $role->name;
             }
         }
         $ps = $this->conn->prepare('INSERT INTO user_has_role (user_id, role_id)  VALUES (:user_id, :role_id)');
         $ps->bindValue('user_id', $id);
-        $ps->bindValue('role_id', $user->getName());
+        $ps->bindValue('role_id', $user_role);
+        $ps->execute();
     }
 
 }
