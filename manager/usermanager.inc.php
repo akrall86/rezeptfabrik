@@ -28,7 +28,6 @@ class UserManager
      * @param string $user_name
      * @param string $email
      * @param string $password
-     * @param string $passwordrepeat
      * @return string
      */
     function createUser(string $firstname, string $lastname, string $user_name, string $email, string $password): string
@@ -86,7 +85,7 @@ class UserManager
 
         $_SESSION['loggedin'] = true;
         $_SESSION['user_id'] = $user->id;
-        $roles = $this->getUserRoles($user->id);
+        $roles[] = $this->getUserRoles($user->id);
         if (in_array('ADMIN', $roles)) {
             $_SESSION['admin'] = true;
         }
@@ -210,9 +209,11 @@ class UserManager
      */
     function getUserRoles($user_id): array
     {
-        $result = $this->conn->query('SELECT * FROM user_has_role WHERE user_id = $user_id');
+        $ps = $this->conn->prepare('SELECT * FROM user_has_role WHERE user_id = :user_id');
+        $ps->bindValue('user_id', $user_id);
+        $ps->execute();
         $roles = [];
-        while ($row = $result->fetch()) {
+        while ($row = $ps->fetch()) {
             $roles[] = new Role($row['role_id']);
         }
         return $roles;
