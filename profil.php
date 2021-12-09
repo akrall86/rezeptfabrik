@@ -1,6 +1,5 @@
 <?php
 require_once 'inc/maininclude.inc.php';
-require_once 'inc/logoutinclude.inc.php';
 ?>
 <!DOCTYPE HTML>
 <html lang="de">
@@ -18,11 +17,17 @@ require_once 'inc/logoutinclude.inc.php';
 
 <!-- content -->
 <main class="center-wrapper">
-    <h1>Logout</h1>
-    <form action="logout.php" method="POST">
+    <div id="content">
+       <div>
+           <h2>Persönliche Daten</h2>
+       </div>
         <div>
-            <button name="btlogout">Logout</button>
+            <h2>Meine Rezepte</h2>
         </div>
+        <div>
+            <h2>Meine Favoriten</h2>
+        </div>
+    </div>
 </main>
 
 <!-- footer -->
