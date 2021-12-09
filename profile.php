@@ -32,6 +32,7 @@ if (isset($_POST['btsubmit'])) {
     <div id="content">
         <div>
             <h2>Persönliche Daten</h2>
+            <?php include 'inc/errormessages.inc.php' ?>
             Vorname: <?php echo $user->getFirstname() ?><br/>
             Nachname: <?php echo $user->getLastname() ?><br/>
             Benutzername: <?php echo $user->getUserName() ?><br/>

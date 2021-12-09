@@ -2,7 +2,7 @@
     <div class="title">rezeptefabrik</div>
     <div class="menu">
         <ul>
-            <li><a href="./index.php">Home</a></li>
+            <li><a href="./">Home</a></li>
             <?php if(!$userManager->isLoggedIn()): ?>
                 <li><a href="./login.php">Login</a></li>
                 <li><a href="./register.php">Registrieren</a></li>
