@@ -1,10 +1,6 @@
 <?php
 require_once 'inc/maininclude.inc.php';
-if (isset($_POST['btlogout'])) {
-    $userManager->logout();
-    header('Location: ./');
-    return;
-}
+require_once 'inc/logoutinclude.inc.php';
 ?>
 <!DOCTYPE HTML>
 <html lang="de">
