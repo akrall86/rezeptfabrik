@@ -5,6 +5,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['user_id'] != null) {
     $user = $userManager->getUserById($_SESSION['user_id']);
     if ($user === false) {
         $errors[] = 'User nicht gefunden.';
+        header("Location: ./profile.php");
     }
 
 }
@@ -43,6 +44,19 @@ if (isset($_SESSION['loggedin']) && $_SESSION['user_id'] != null) {
             <div>
                 <label for="email">E-Mail:</label>
                 <input type="email" name="email" id="email" value="<?php echo $user->getEmail() ?>">
+            </div>
+
+            <div>
+                <label for="newpassword">Neues Passwort:</label>
+                <input type="password" name="newpassword" id="newpassword">
+            </div>
+            <div>
+                <label for="newpasswordrepeat">Neues Passwort wiederholen:</label>
+                <input type="password" name="newpasswordrepeat" id="newpasswordrepeat">
+            </div>
+            <div>
+                <label for="password">Mit Passwort änderung Bestätigen:</label>
+                <input type="password" name="password" id="password">
             </div>
             <div>
                 <button name="btupdate">Daten aktualisieren</button>
