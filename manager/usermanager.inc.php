@@ -245,4 +245,19 @@ class UserManager
         $ps->execute();
     }
 
+    function updateUser(User $user) {
+        $passwordhash = password_hash($user->password, PASSWORD_BCRYPT);
+        $ps = $this->conn->prepare('UPDATE user
+        SET firstname = :firstname, lastname = :lastname, user_name = :user_name, email = :email, password = :password
+        WHERE  id = :id');
+        $ps->bindValue('firstname', $user->firstname);
+        $ps->bindValue('lastname', $user->lastname);
+        $ps->bindValue('user_name', $user->user_name);
+        $ps->bindValue('email', $user->email);
+        $ps->bindValue('password', $passwordhash);
+        $ps->bindValue('id', $user->id);
+        $ps->execute();
+
+    }
+
 }
