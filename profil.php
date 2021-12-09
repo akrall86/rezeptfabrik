@@ -20,6 +20,7 @@ require_once 'inc/maininclude.inc.php';
     <div id="content">
        <div>
            <h2>Persönliche Daten</h2>
+
        </div>
         <div>
             <h2>Meine Rezepte</h2>

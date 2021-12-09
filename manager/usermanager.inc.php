@@ -214,7 +214,7 @@ class UserManager
         $ps->execute();
         $roles = [];
         while ($row = $ps->fetch()) {
-            $roles[] = new Role($row['role_id']);
+            $roles[] = new Role($row['role_name']);
         }
         return $roles;
     }
@@ -234,9 +234,9 @@ class UserManager
                 $user_role = $role->name;
             }
         }
-        $ps = $this->conn->prepare('INSERT INTO user_has_role (user_id, role_id)  VALUES (:user_id, :role_id)');
+        $ps = $this->conn->prepare('INSERT INTO user_has_role (user_id, role_name)  VALUES (:user_id, :role_name)');
         $ps->bindValue('user_id', $id);
-        $ps->bindValue('role_id', $user_role);
+        $ps->bindValue('role_name', $user_role);
         $ps->execute();
     }
 
