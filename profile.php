@@ -1,17 +1,7 @@
 <?php
 require_once 'inc/maininclude.inc.php';
-
-if (isset($_SESSION['loggedin']) && $_SESSION['user_id'] != null) {
-    $user = $userManager->getUserById($_SESSION['user_id']);
-    if ($user === false) {
-        $errors[] = 'User nicht gefunden.';
-    }
-}
-
-if (isset($_POST['btsubmit'])) {
-    header("Location: ./profileupdate.php");
-    return;
-}
+require_once 'inc/requirelogin.inc.php';
+require_once 'inc/profileinclude.inc.php';
 ?>
 <!DOCTYPE HTML>
 <html lang="de">

@@ -85,6 +85,9 @@ class UserManager
 
         $_SESSION['loggedin'] = true;
         $_SESSION['user_id'] = $user->id;
+        $_SESSION['admin'] = false;
+        $_SESSION['user'] = false;
+        echo $_SESSION['admin'];
         $roles[] = $this->getUserRoles($user->id);
         if (in_array('ADMIN', $roles)) {
             $_SESSION['admin'] = true;
@@ -92,7 +95,7 @@ class UserManager
         if (in_array('USER', $roles)) {
             $_SESSION['user'] = true;
         }
-      
+
         return $user;
     }
 
@@ -117,13 +120,14 @@ class UserManager
         if ($this->isLoggedIn() && isset($_SESSION['admin']) && $_SESSION['admin'] === true) {
             return true;
         }
-        return  false;
+        return false;
     }
 
     /**
      * methods for logout destroy the Session
      */
-    function logout() {
+    function logout()
+    {
         if ($this->isLoggedIn()) {
             $_SESSION['loggedin'] = false;
             $_SESSION['user_id'] = '';
@@ -204,6 +208,7 @@ class UserManager
         }
         return $roles;
     }
+
     /*
      *
      */
