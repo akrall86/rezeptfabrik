@@ -26,10 +26,10 @@ VALUES ('ADMIN'),
 CREATE TABLE rezeptfabrik.user_has_role
 (
     user_id INTEGER     NOT NULL,
-    role_id VARCHAR(30) NOT NULL,
-    PRIMARY KEY (user_id, role_id),
+    role_name VARCHAR(30) NOT NULL,
+    PRIMARY KEY (user_id, role_name),
     CONSTRAINT fk_uhr_uid FOREIGN KEY (user_id) REFERENCES user (id),
-    CONSTRAINT fk_uhr_rid FOREIGN KEY (role_id) REFERENCES role (name)
+    CONSTRAINT fk_uhr_rid FOREIGN KEY (role_name) REFERENCES role (name)
 );
 
 CREATE TABLE rezeptfabrik.recipe
