@@ -1,6 +1,8 @@
 <?php
 require_once 'inc/maininclude.inc.php';
+require_once 'db/dbtoolkit.php';
 ?>
+
 <!DOCTYPE HTML>
 <html lang="de">
 <head>
@@ -12,27 +14,50 @@ require_once 'inc/maininclude.inc.php';
     <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-<!-- header -->
-<?php include 'inc/header.inc.php'; ?>
+<div class="body">
+    <header>
+        <?php
+        include "inc/header.inc.php";
+        include "inc/navbar.inc.php";
+        ?>
+    </header>
 
-<!-- content -->
-<main class="center-wrapper">
-    <div id="content">
-    <h1>Frühstücksrezept des Tages</h1>
-    <p>Frühstück:</p>
-    </br>
-    <h1>Rezept des Tages</h1>
-    <p>Vorspeise:</p>
-    <p>Hauptspeise:</p>
-    <p>Nachspeise:</p>
-    </br>
-    <h1>Getränk des Tages</h1>
-    <p>Getränk:</p>
+    <div class="content">
+
+        <h1>Frühstücksrezept des Tages</h1>
+        <?php
+        $breakfast = $recipeManager->getOneRandomRecipeByCategory("Frühstück");
+        $recipeManager->displayRecipe($breakfast);
+        ?>
+        </br>
+        <h1>Rezept des Tages</h1>
+        <p>Vorspeise:</p>
+        <?php
+        $starter = $recipeManager->getOneRandomRecipeByCategory("Vorspeise");
+        $recipeManager->displayRecipe($starter);
+        ?>
+        <p>Hauptspeise:</p>
+        <?php
+        $dinner = $recipeManager->getOneRandomRecipeByCategory("Hauptspeise");
+        $recipeManager->displayRecipe($dinner);
+        ?>
+        <p>Nachspeise:</p>
+        <?php
+        $dessert = $recipeManager->getOneRandomRecipeByCategory("Nachspeise");
+        $recipeManager->displayRecipe($dessert);
+        ?>
+        </br>
+        <h1>Getränk des Tages</h1>
+        <?php
+        $drink = $recipeManager->getOneRandomRecipeByCategory("Getränk");
+        $recipeManager->displayRecipe($drink);
+        ?>
     </div>
-</main>
 
-<!-- footer -->
-<?php include 'inc/footer.inc.php'; ?>
+    <?php
+    include "inc/footer.inc.php";
+    ?>
+</div>
 
 </body>
 </html>

@@ -6,32 +6,34 @@ class Recipe
     public string $title;
     public string $content;
     public string $slug;
-    public int $user_id;
-    public int $category_id;
-    public int $type_id;
+    public User $user;
+    public string $category;
+    public string $type;
     public string $photo_url;
     public DateTime $published_date;
+    public int $rating;
 
     /**
      * @param int $id
      * @param string $title
      * @param string $content
      * @param string $slug
-     * @param int $user_id
-     * @param int $category_id
-     * @param int $type_id
+     * @param User $user
+     * @param string $category
+     * @param string $type
      * @param string $photo_url
      * @param DateTime $published_date
+     * @param int $rating
      */
-    public function __construct(int $id, string $title, string $content, string $slug, int $user_id, int $category_id, int $type_id, string $photo_url, DateTime $published_date)
+    public function __construct(int $id, string $title, string $content, string $slug, User $user, string $category, string $type, string $photo_url, DateTime $published_date, int $rating)
     {
         $this->id = $id;
         $this->title = $title;
         $this->content = $content;
         $this->slug = $slug;
-        $this->user_id = $user_id;
-        $this->category_id = $category_id;
-        $this->type_id = $type_id;
+        $this->user = $user;
+        $this->category = $category;
+        $this->type = $type;
         $this->photo_url = $photo_url;
         $this->published_date = $published_date;
     }
@@ -101,50 +103,50 @@ class Recipe
     }
 
     /**
-     * @return int
+     * @return User
      */
-    public function getUserId(): int
+    public function getUser(): int
     {
-        return $this->user_id;
+        return $this->user;
     }
 
     /**
      */
-    public function setUserId(int $user_id): void
+    public function setUser(User $user): void
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getCategoryId(): int
+    public function getCategory(): string
     {
-        return $this->category_id;
+        return $this->category;
     }
 
     /**
-     * @param int $category_id
+     * @param string $category
      */
-    public function setCategoryId(int $category_id): void
+    public function setCategory(string $category): void
     {
-        $this->category_id = $category_id;
+        $this->category = $category;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getTypeId(): int
+    public function getType(): string
     {
-        return $this->type_id;
+        return $this->type;
     }
 
     /**
-     * @param int $type_id
+     * @param string $type
      */
-    public function setTypeId(int $type_id): void
+    public function setType(string $type): void
     {
-        $this->type_id = $type_id;
+        $this->type = $type;
     }
 
     /**
@@ -178,4 +180,20 @@ class Recipe
     {
         $this->published_date = $published_date;
     }
+
+    /**
+     * @return int
+     */
+    public function getRating(): int {
+        return $this->rating;
+    }
+
+    /**
+     * @param int $rating
+     */
+    public function setRating(int $rating): void {
+        $this->rating = $rating;
+    }
+
+
 }

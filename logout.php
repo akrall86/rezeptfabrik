@@ -21,7 +21,7 @@ if (isset($_POST['btlogout'])) {
 <?php include 'inc/header.inc.php'; ?>
 
 <!-- content -->
-<main class="center-wrapper">
+<main class="body">
     <h1>Logout</h1>
     <form action="logout.php" method="POST">
         <div>
