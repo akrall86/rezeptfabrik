@@ -1,5 +1,6 @@
 <?php
 require_once 'inc/maininclude.inc.php';
+require_once 'inc/logininclude.inc.php';
 ?>
 <!DOCTYPE HTML>
 <html lang="de">
@@ -29,7 +30,7 @@ require_once 'inc/maininclude.inc.php';
             <input type="password" name="password" id="password">
         </div>
         <div>
-            <button name="btsubmit">Login</button>
+            <button name="btlogin">Login</button>
         </div>
 </main>
 

@@ -85,14 +85,17 @@ class UserManager
 
         $_SESSION['loggedin'] = true;
         $_SESSION['user_id'] = $user->id;
-        $roles = $this->getUserRoles($user->id);
+        $_SESSION['admin'] = false;
+        $_SESSION['user'] = false;
+        echo $_SESSION['admin'];
+        $roles[] = $this->getUserRoles($user->id);
         if (in_array('ADMIN', $roles)) {
             $_SESSION['admin'] = true;
         }
         if (in_array('USER', $roles)) {
             $_SESSION['user'] = true;
         }
-      
+
         return $user;
     }
 
@@ -117,13 +120,14 @@ class UserManager
         if ($this->isLoggedIn() && isset($_SESSION['admin']) && $_SESSION['admin'] === true) {
             return true;
         }
-        return  false;
+        return false;
     }
 
     /**
      * methods for logout destroy the Session
      */
-    function logout() {
+    function logout()
+    {
         if ($this->isLoggedIn()) {
             $_SESSION['loggedin'] = false;
             $_SESSION['user_id'] = '';
@@ -204,15 +208,18 @@ class UserManager
         }
         return $roles;
     }
+
     /*
      *
      */
     function getUserRoles($user_id): array
     {
-        $result = $this->conn->query('SELECT * FROM user_has_role WHERE user_id = $user_id');
+        $ps = $this->conn->prepare('SELECT * FROM user_has_role WHERE user_id = :user_id');
+        $ps->bindValue('user_id', $user_id);
+        $ps->execute();
         $roles = [];
-        while ($row = $result->fetch()) {
-            $roles[] = new Role($row['role_id']);
+        while ($row = $ps->fetch()) {
+            $roles[] = new Role($row['role_name']);
         }
         return $roles;
     }
@@ -224,18 +231,33 @@ class UserManager
      */
     function setUserRoleToUserById(int $id)
     {
-        $roles[] = $this->getRoles();
-        if (count($roles) == 0) {
-            return false;
-        }
+        $roles = $this->getRoles();
+        $user_role = "";
+
         foreach ($roles as $role) {
             if (($role->name) === 'USER') {
-                $user = $role;
+                $user_role = $role->name;
             }
         }
-        $ps = $this->conn->prepare('INSERT INTO user_has_role (user_id, role_id)  VALUES (:user_id, :role_id)');
+        $ps = $this->conn->prepare('INSERT INTO user_has_role (user_id, role_name)  VALUES (:user_id, :role_name)');
         $ps->bindValue('user_id', $id);
-        $ps->bindValue('role_id', $user->getName());
+        $ps->bindValue('role_name', $user_role);
+        $ps->execute();
+    }
+
+    function updateUser(User $user) {
+        $passwordhash = password_hash($user->password, PASSWORD_BCRYPT);
+        $ps = $this->conn->prepare('UPDATE user
+        SET firstname = :firstname, lastname = :lastname, user_name = :user_name, email = :email, password = :password
+        WHERE  id = :id');
+        $ps->bindValue('firstname', $user->firstname);
+        $ps->bindValue('lastname', $user->lastname);
+        $ps->bindValue('user_name', $user->user_name);
+        $ps->bindValue('email', $user->email);
+        $ps->bindValue('password', $passwordhash);
+        $ps->bindValue('id', $user->id);
+        $ps->execute();
+
     }
 
 }

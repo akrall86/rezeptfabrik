@@ -1,5 +1,6 @@
 <?php
-require_once 'inc/maininclude.inc.php'
+require_once 'inc/maininclude.inc.php';
+require_once 'inc/registerinclude.inc.php';
 ?>
 <!DOCTYPE HTML>
 <html lang="de">
@@ -18,7 +19,7 @@ require_once 'inc/maininclude.inc.php'
 <!-- content -->
 <main class="body">
     <h1>Registrierung</h1>
-    <form action="register.php" method="POST">
+    <form name="register" action="register.php" method="POST">
         <?php include 'inc/errormessages.inc.php' ?>
         <div>
             <label for="firstname">Vorname:</label>
@@ -46,7 +47,7 @@ require_once 'inc/maininclude.inc.php'
         </div>
 
         <div>
-            <button name="btsubmit">Registrieren</button>
+            <button name="btregister">Registrieren</button>
         </div>
     </form>
 </main>

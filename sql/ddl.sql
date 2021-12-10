@@ -20,15 +20,16 @@ CREATE TABLE rezeptfabrik.role
 );
 
 INSERT INTO rezeptfabrik.role (name)
-VALUES ('ADMIN'), ('USER');
+VALUES ('ADMIN'),
+       ('USER');
 
 CREATE TABLE rezeptfabrik.user_has_role
 (
     user_id INTEGER     NOT NULL,
-    role_id VARCHAR(30) NOT NULL,
-    PRIMARY KEY (user_id, role_id),
+    role_name VARCHAR(30) NOT NULL,
+    PRIMARY KEY (user_id, role_name),
     CONSTRAINT fk_uhr_uid FOREIGN KEY (user_id) REFERENCES user (id),
-    CONSTRAINT fk_uhr_rid FOREIGN KEY (role_id) REFERENCES role (name)
+    CONSTRAINT fk_uhr_rid FOREIGN KEY (role_name) REFERENCES role (name)
 );
 
 CREATE TABLE rezeptfabrik.recipe
@@ -42,6 +43,7 @@ CREATE TABLE rezeptfabrik.recipe
     type_name      VARCHAR(30) NOT NULL,
     photo_url      TEXT,
     published_date DATETIME    NOT NULL,
+    rating         INTEGER     NOT NULL,
     PRIMARY KEY (id),
     UNIQUE (title),
     UNIQUE (slug)
@@ -56,19 +58,28 @@ CREATE TABLE rezeptfabrik.ingredient
 
 CREATE TABLE rezeptfabrik.unit_of_measurement
 (
-    id INTEGER AUTO_INCREMENT,
+    id   INTEGER AUTO_INCREMENT,
     name VARCHAR(15),
     PRIMARY KEY (id)
 );
 
 INSERT INTO rezeptfabrik.unit_of_measurement (name)
-VALUES ('g'), ('dag'), ('kg'), ('ml'), ('cl'), ('l'), ('Teelöffel'), ('Esslöffel'), ('Prise'), ('Schuss');
+VALUES ('g'),
+       ('dag'),
+       ('kg'),
+       ('ml'),
+       ('cl'),
+       ('l'),
+       ('Teelöffel'),
+       ('Esslöffel'),
+       ('Prise'),
+       ('Schuss');
 
 CREATE TABLE rezeptfabrik.recipe_has_ingredient_has_unit_of_measurement
 (
-    recipe_id                INTEGER    NOT NULL,
-    ingredient_id            INTEGER    NOT NULL,
-    unit_of_measurement_id   INTEGER   NOT NULL,
+    recipe_id              INTEGER NOT NULL,
+    ingredient_id          INTEGER NOT NULL,
+    unit_of_measurement_id INTEGER NOT NULL,
     CONSTRAINT fk_riuom_rid FOREIGN KEY (recipe_id) REFERENCES recipe (id),
     CONSTRAINT fk_riuom_iid FOREIGN KEY (ingredient_id) REFERENCES ingredient (id),
     CONSTRAINT fk_riuom_uomid FOREIGN KEY (unit_of_measurement_id) REFERENCES unit_of_measurement (id)
@@ -81,7 +92,13 @@ CREATE TABLE rezeptfabrik.category
 );
 
 INSERT INTO rezeptfabrik.category (name)
-VALUES ('Frühstück'), ('Vorspeise'), ('Dessert'), ('Hauptspeise'), ('Getränk'), ('Suppe'), ('Abendessen');
+VALUES ('Frühstück'),
+       ('Vorspeise'),
+       ('Dessert'),
+       ('Hauptspeise'),
+       ('Getränk'),
+       ('Suppe'),
+       ('Abendessen');
 
 CREATE TABLE rezeptfabrik.type
 (
@@ -90,7 +107,9 @@ CREATE TABLE rezeptfabrik.type
 );
 
 INSERT INTO rezeptfabrik.type (name)
-VALUES ('mit Fleisch'), ('vegetarisch'), ('vegan');
+VALUES ('mit Fleisch'),
+       ('vegetarisch'),
+       ('vegan');
 
 CREATE TABLE rezeptfabrik.user_has_favorites
 (
