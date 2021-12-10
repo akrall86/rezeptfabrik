@@ -117,7 +117,7 @@ class RecipeManager {
 
         return $recipes;
     }
-}
+
 
     function getRecipesByCategory(string $category): array {
         $result = $this->conn->query('
