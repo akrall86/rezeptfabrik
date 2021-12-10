@@ -17,7 +17,7 @@ require_once 'inc/logininclude.inc.php';
 <?php include 'inc/header.inc.php'; ?>
 
 <!-- content -->
-<main class="center-wrapper">
+<main class="body">
     <h1>Login</h1>
     <form action="login.php" method="POST">
         <?php include 'inc/errormessages.inc.php' ?>

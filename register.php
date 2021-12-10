@@ -17,7 +17,7 @@ require_once 'inc/registerinclude.inc.php';
 <?php include 'inc/header.inc.php' ?>
 
 <!-- content -->
-<main class="center-wrapper">
+<main class="body">
     <h1>Registrierung</h1>
     <form name="register" action="register.php" method="POST">
         <?php include 'inc/errormessages.inc.php' ?>

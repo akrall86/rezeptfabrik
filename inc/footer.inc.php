@@ -1,5 +1,5 @@
-<header class="center-wrapper">
+<footer>
     <div class="footer">
         <span>&copy Fabi & Andi</span>
     </div>
-</header>
+</footer>
