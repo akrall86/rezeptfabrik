@@ -11,18 +11,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['user_id'] != null) {
 
 if (isset($_POST['btupdate']) && $_POST['password']) {
 
-    if (strlen(trim($_POST['firstname'])) == 0) {
-        $errors['firstname'] = 'Vorname eingeben.';
-    }
-    if (strlen(trim($_POST['lastname'])) == 0) {
-        $errors['lastname'] = 'Nachnamen eingeben.';
-    }
-    if (strlen(trim($_POST['user_name'])) < 4) {
-        $errors['user_name'] = 'Benutzername muss mindestens 4 Zeichen haben.';
-    }
-    if (strlen(trim($_POST['email'])) < 5 || strpos($_POST['email'], '@') == false) {
-        $errors['emails'] = 'E-Mail eingeben.';
-    }
+    require_once __DIR__ . './registerupdateerrormessages.inc.php';
     if (strlen(trim($_POST['newpassword'])) != 0) {
         if (strlen(trim($_POST['newpassword'])) < 6) {
             $errors['newpassword'] = 'neues Passwort muss mindestens 6 Zeichen haben.';
