@@ -27,7 +27,7 @@ require_once 'inc/logininclude.inc.php';
     <div class="content">
 
         <h1>Login</h1>
-        <form class="authentication" action="login.php" method="POST">
+        <form action="login.php" method="POST">
             <?php include 'inc/errormessages.inc.php' ?>
             <div>
                 <label for="email">E-Mail:</label>
