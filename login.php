@@ -31,7 +31,7 @@ require_once 'inc/logininclude.inc.php';
             <?php include 'inc/errormessages.inc.php' ?>
             <div>
                 <label for="email">E-Mail:</label>
-                <input type="email" name="email" id="email">
+                <input name="email" id="email">
             </div>
             <div>
                 <label for="password">Passwort:</label>
