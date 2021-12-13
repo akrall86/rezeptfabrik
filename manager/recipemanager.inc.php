@@ -121,18 +121,20 @@ class RecipeManager {
 
     function getRecipesByCategory(string $category): array {
         $result = $this->conn->query('
-            SELECT * FROM recipe WHERE category_name = $category');
-        while ($row = $result->fetch()) {
-            $recipes[] = new Recipe(
-                $row['id'], $row['title'], $row['content'], $row['slug'], $row['user_id'],
-                $row['category_id'], $row['type_id'], $row['photo_url'], $row['published_date'], $row['rating']);
-        }
+            SELECT * FROM recipe WHERE category_name = '.$category);
+        if ($result->fetch()) {
+            while ($row = $result->fetch()) {
+                $recipes[] = new Recipe(
+                    $row['id'], $row['title'], $row['content'], $row['slug'], $row['user_id'],
+                    $row['category_id'], $row['type_id'], $row['photo_url'], $row['published_date'], $row['rating']);
+            }
+        }else echo "<p> noch kein Rezept vorhanden.</p>";
         return $recipes;
     }
 
     function getOneRandomRecipeByCategory(string $category): Recipe {
-        $recipe = $recipeManager->getRecipesByCategory($category);
-        return $recipe[rand(0, sizeof($recipeManager->getRecipeByCategory($category)) - 1)];
+        $recipes = $this->getRecipesByCategory($category);
+        return $recipes[rand(0, sizeof($recipeManager->getRecipeByCategory($category)) - 1)];
     }
 
     function displayRecipe(Recipe $recipe) {

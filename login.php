@@ -13,29 +13,39 @@ require_once 'inc/logininclude.inc.php';
     <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-<!-- header -->
-<?php include 'inc/header.inc.php'; ?>
+<div class="body">
 
-<!-- content -->
-<main class="body">
-    <h1>Login</h1>
-    <form action="login.php" method="POST">
-        <?php include 'inc/errormessages.inc.php' ?>
-        <div>
-            <label for="email">E-Mail:</label>
-            <input type="email" name="email" id="email">
-        </div>
-        <div>
-            <label for="password">Passwort:</label>
-            <input type="password" name="password" id="password">
-        </div>
-        <div>
-            <button name="btlogin">Login</button>
-        </div>
-</main>
+        <!-- header -->
+    <header>
+        <?php include 'inc/header.inc.php';
+        include "inc/navbar.inc.php";
+        ?>
+    </header>
 
-<!-- footer -->
-<?php include 'inc/footer.inc.php'; ?>
+        <!-- content -->
+
+    <div class="content">
+
+        <h1>Login</h1>
+        <form class="authentication" action="login.php" method="POST">
+            <?php include 'inc/errormessages.inc.php' ?>
+            <div>
+                <label for="email">E-Mail:</label>
+                <input type="email" name="email" id="email">
+            </div>
+            <div>
+                <label for="password">Passwort:</label>
+                <input type="password" name="password" id="password">
+            </div>
+            <div>
+                <button name="btlogin">Login</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- footer -->
+    <?php include 'inc/footer.inc.php'; ?>
+</div>
 
 </body>
 </html>

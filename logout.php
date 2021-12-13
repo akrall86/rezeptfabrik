@@ -13,20 +13,30 @@ require_once 'inc/logoutinclude.inc.php';
     <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-<!-- header -->
-<?php include 'inc/header.inc.php'; ?>
+<div class="body">
+    <header>
+        <!-- header -->
+        <?php
+        include 'inc/header.inc.php';
+        include "inc/navbar.inc.php";
+        ?>
 
-<!-- content -->
-<main class="body">
-    <h1>Logout</h1>
-    <form action="logout.php" method="POST">
-        <div>
-            <button name="btlogout">Logout</button>
-        </div>
-</main>
+        <!-- content -->
+    </header>
 
-<!-- footer -->
-<?php include 'inc/footer.inc.php'; ?>
+    <div class="content">
+        <h1>Logout</h1>
+        <form class="authentication" action="logout.php" method="POST">
+            <div>
+                <button name="btlogout">Logout</button>
+            </div>
+        </form>
+    </div>
+
+
+    <!-- footer -->
+    <?php include 'inc/footer.inc.php'; ?>
+</div>
 
 </body>
 </html>

@@ -1,4 +1,11 @@
-<?php include 'inc/errormessages.inc.php'; ?>
+<?php
+include 'inc/errormessages.inc.php';
+include 'manager/measuringunitmanager.inc.php';
+
+$measurementUnits = $measuringUnitManager->getMeasuringUnits();
+?>
+
+    <h1>Rezept ändern</h1>
     <form action="./create_recipe.php" method="post">
         <div>
             <label for="typ">Typ:</label><br>

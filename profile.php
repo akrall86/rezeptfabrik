@@ -14,12 +14,17 @@ require_once 'inc/profileinclude.inc.php';
     <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-<!-- header -->
-<?php include 'inc/header.inc.php'; ?>
+<div class="body">
+    <!-- header -->
+    <header>
+        <?php
+        include "inc/header.inc.php";
+        include "inc/navbar.inc.php";
+        ?>
+    </header>
 
-<!-- content -->
-<main class="center-wrapper">
-    <div id="content">
+    <!-- content -->
+    <div class="content">
         <div>
             <h2>Persönliche Daten</h2>
             <?php include 'inc/errormessages.inc.php' ?>
@@ -38,10 +43,10 @@ require_once 'inc/profileinclude.inc.php';
             <h2>Meine Favoriten</h2>
         </div>
     </div>
-</main>
 
-<!-- footer -->
-<?php include 'inc/footer.inc.php'; ?>
+    <!-- footer -->
+    <?php include 'inc/footer.inc.php'; ?>
 
+</div>
 </body>
 </html>
