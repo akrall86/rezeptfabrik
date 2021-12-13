@@ -14,7 +14,6 @@ require_once 'inc/profileupdateinclude.inc.php';
     <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-
 <div class="body">
     <!-- header -->
     <header>
@@ -27,6 +26,7 @@ require_once 'inc/profileupdateinclude.inc.php';
     <!-- content -->
     <div class="content">
         <form action="profile.update.php" method="POST">
+
             <?php include 'inc/errormessages.inc.php' ?>
             <input type="hidden" name="id" value="<?php echo $user->id ?>">
             <div>
@@ -63,7 +63,7 @@ require_once 'inc/profileupdateinclude.inc.php';
             </div>
         </form>
     </div>
-  
+
     <!-- footer -->
     <?php include 'inc/footer.inc.php'; ?>
 </div>
