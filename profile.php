@@ -31,10 +31,11 @@ require_once 'inc/profileinclude.inc.php';
             Vorname: <?php echo $user->getFirstname() ?><br/>
             Nachname: <?php echo $user->getLastname() ?><br/>
             Benutzername: <?php echo $user->getUserName() ?><br/>
-            E-Mail: <?php echo $user->getEmail() ?><br/>
+            E-Mail: <?php echo $user->getEmail() ?><br/><br/>
             <form action="profile.php" method="POST">
                 <button name="btsubmit">Daten Bearbeiten</button>
             </form>
+
         </div>
         <div>
             <h2>Meine Rezepte</h2>
