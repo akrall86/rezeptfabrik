@@ -63,7 +63,6 @@ require_once 'inc/profileupdateinclude.inc.php';
         </form>
     </div>
 
-
     <!-- footer -->
     <?php include 'inc/footer.inc.php'; ?>
 </div>
