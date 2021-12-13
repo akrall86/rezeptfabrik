@@ -25,7 +25,8 @@ require_once 'inc/profileupdateinclude.inc.php';
 
     <!-- content -->
     <div class="content">
-        <form action="profileupdate.php" method="POST">
+
+        <form action="profile.update.php" method="POST">
             <?php include 'inc/errormessages.inc.php' ?>
             <input type="hidden" name="id" value="<?php echo $user->id ?>">
             <div>
