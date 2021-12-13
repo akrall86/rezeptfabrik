@@ -6,7 +6,6 @@ require_once __DIR__ . '/../inc/maininclude.inc.php';
  * The RecipeManager class contains methods for managing recipes and editing recipes in db
  */
 class RecipeManager {
-
     private PDO $conn;
 
     /**
