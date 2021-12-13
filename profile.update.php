@@ -23,7 +23,6 @@ require_once 'inc/profileupdateinclude.inc.php';
         ?>
     </header>
 
-
     <!-- content -->
     <div class="content">
         <form action="profile.update.php" method="POST">
