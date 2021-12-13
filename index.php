@@ -1,6 +1,5 @@
 <?php
 require_once 'inc/maininclude.inc.php';
-require_once 'db/dbtoolkit.php';
 ?>
 
 <!DOCTYPE HTML>

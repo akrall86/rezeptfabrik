@@ -13,47 +13,55 @@ require_once 'inc/registerinclude.inc.php';
     <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-<!-- header -->
-<?php include 'inc/header.inc.php' ?>
+<div class="body">
 
-<!-- content -->
-<main class="body">
-    <h1>Registrierung</h1>
-    <form name="register" action="register.php" method="POST">
-        <?php include 'inc/errormessages.inc.php' ?>
-        <div>
-            <label for="firstname">Vorname:</label>
-            <input type="text" name="firstname" id="firstname">
-        </div>
-        <div>
-            <label for="lastname">Nachname:</label>
-            <input type="text" name="lastname" id="lastname">
-        </div>
-        <div>
-            <label for="user_name">Benutzername:</label>
-            <input type="text" name="user_name" id="user_name">
-        </div>
-        <div>
-            <label for="email">E-Mail:</label>
-            <input type="email" name="email" id="email">
-        </div>
-        <div>
-            <label for="password">Passwort:</label>
-            <input type="password" name="password" id="password">
-        </div>
-        <div>
-            <label for="passwordrepeat">Passwort wiederholen:</label>
-            <input type="password" name="passwordrepeat" id="passwordrepeat">
-        </div>
+    <!-- header -->
+    <header>
+        <?php include 'inc/header.inc.php';
+        include "inc/navbar.inc.php";
+        ?>
+    </header>
+    <!-- content -->
+    <div class="content">
+        <h1>Registrierung</h1>
+        <div class="authentication">
+        <form  name="register" action="register.php" method="POST">
+            <?php include 'inc/errormessages.inc.php' ?>
+            <div>
+                <label for="firstname">Vorname:</label>
+                <input type="text" name="firstname" id="firstname">
+            </div>
+            <div>
+                <label for="lastname">Nachname:</label>
+                <input type="text" name="lastname" id="lastname">
+            </div>
+            <div>
+                <label for="user_name">Benutzername:</label>
+                <input type="text" name="user_name" id="user_name">
+            </div>
+            <div>
+                <label for="email">E-Mail:</label>
+                <input type="email" name="email" id="email">
+            </div>
+            <div>
+                <label for="password">Passwort:</label>
+                <input type="password" name="password" id="password">
+            </div>
+            <div>
+                <label for="passwordrepeat">Passwort wiederholen:</label>
+                <input type="password" name="passwordrepeat" id="passwordrepeat">
+            </div>
 
-        <div>
-            <button name="btregister">Registrieren</button>
-        </div>
-    </form>
-</main>
+            <div>
+                <button name="btregister">Registrieren</button>
+            </div>
+        </form>
+    </div>
+    </div>
 
-<!-- footer -->
-<?php include 'inc/footer.inc.php'; ?>
+    <!-- footer -->
+    <?php include 'inc/footer.inc.php'; ?>
+</div>
 
 </body>
 </html>

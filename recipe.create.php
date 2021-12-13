@@ -5,10 +5,8 @@ include 'manager/measuringunitmanager.inc.php';
 $measurementUnits = $measuringUnitManager -> getMeasuringUnits();
 
 ?>
-
     <h1>Neues Rezept erstellen</h1>
     <form action="./recipe.create.php" method="post">
-
         <div>
             <label for="typ">Typ:</label><br>
             <input type="text" name="typ" id="typ">
@@ -24,7 +22,6 @@ $measurementUnits = $measuringUnitManager -> getMeasuringUnits();
         <div>
             <label for="title">Zutaten:</label><br>
             <input type="text" name="title" id="title" >
-
 
             <select name="unit_of_measurement">
                  <?php foreach ($measurementUnits as $measurementUnit){
