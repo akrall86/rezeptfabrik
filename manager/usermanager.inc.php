@@ -138,6 +138,20 @@ class UserManager
     }
 
     /**
+     * @return array
+     */
+    function getUsers(): array
+    {
+        $result = $this->conn->query('SELECT * FROM user');
+
+        $users = [];
+        while ($row = $result->fetch()) {
+            $users[] = new User($row['id'], $row['firstname'], $row['lastname'], $row['user_name'], $row['email'], $row['password']);
+        }
+        return $users;
+    }
+
+    /**
      * Search in DB with email
      * if email was found returns new User object with data from DB
      * if email not found returns false
@@ -245,7 +259,8 @@ class UserManager
         $ps->execute();
     }
 
-    function updateUser(User $user) {
+    function updateUser(User $user)
+    {
         $passwordhash = password_hash($user->password, PASSWORD_BCRYPT);
         $ps = $this->conn->prepare('UPDATE user
         SET firstname = :firstname, lastname = :lastname, user_name = :user_name, email = :email, password = :password

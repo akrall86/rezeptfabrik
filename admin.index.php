@@ -1,7 +1,8 @@
 <?php
 require_once 'inc/maininclude.inc.php';
 require_once 'inc/logininclude.inc.php';
-require_once 'inc/requireadmin.inc.php';
+require_once 'inc/admin.index.inc.php';
+//require_once 'inc/requireadmin.inc.php';
 ?>
 
 <!DOCTYPE HTML>
@@ -24,22 +25,22 @@ require_once 'inc/requireadmin.inc.php';
     </header>
 
     <div class="content">
-        <div class="content">
-            <div>
-                <h2>User Übersicht</h2>
-                <form action="admin.index.php" method="POST">
-                    <button name="btgetusers">Alle Benutzer Anzeigen</button>
-                </form>
-            </div>
-            <div>
-                <h2>Rezepte Übersicht</h2>
-            </div>
-        </div>
 
-        <?php
-        include "inc/footer.inc.php";
-        ?>
+        <div>
+            <h2>User Übersicht</h2>
+            <form action="admin.index.php" method="POST">
+                <button name="btgetusers">Alle Benutzer Anzeigen</button>
+            </form>
+        </div>
+        <div>
+            <h2>Rezepte Übersicht</h2>
+        </div>
     </div>
+
+    <?php
+    include "inc/footer.inc.php";
+    ?>
+</div>
 
 </body>
 </html>
