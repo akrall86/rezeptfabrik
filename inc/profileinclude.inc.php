@@ -9,6 +9,6 @@ if (isset($_SESSION['loggedin']) && $_SESSION['user_id'] != null) {
     }
 }
 if (isset($_POST['btsubmit'])) {
-    header("Location: ./profileupdate.php");
+    header("Location: ./profile.update.php");
     return;
 }
