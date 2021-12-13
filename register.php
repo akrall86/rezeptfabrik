@@ -24,7 +24,6 @@ require_once 'inc/registerinclude.inc.php';
     <!-- content -->
     <div class="content">
         <h1>Registrierung</h1>
-        <div class="authentication">
         <form  name="register" action="register.php" method="POST">
             <?php include 'inc/errormessages.inc.php' ?>
             <div>
@@ -57,7 +56,7 @@ require_once 'inc/registerinclude.inc.php';
             </div>
         </form>
     </div>
-    </div>
+
 
     <!-- footer -->
     <?php include 'inc/footer.inc.php'; ?>

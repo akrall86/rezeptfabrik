@@ -19,20 +19,40 @@
 header {
   width: 100%;
   height: 50px;
+  display: inline-block;
   text-align: center;
   margin-bottom: 8px;
-}
-.title {
-  font-size: 70px;
-  padding: 8px;
-  display: inline-block;
-  width: 84%;
-  text-align: center;
-  font-weight: bold;
 }
 .logo {
   display: inline-block;
   padding: 10px;
+  width: 15%;
+}
+.title {
+  display: inline-block;
+  font-size: 70px;
+  line-height: 200px;
+  vertical-align: top;
+  width: 50%;
+  text-align: center;
+  font-weight: bold;
+}
+/* link to login, logout, register, profile */
+.authentication {
+  display: inline-block;
+  width: 15%;
+  line-height: 50px;
+  font-size: 20px;
+  text-align: center;
+}
+.authentication a {
+  color: black;
+  text-decoration: none;
+}
+.authentication a:hover {
+  color: black;
+  text-decoration: none;
+  font-size: 22px;
 }
 /* navbar */
 .menu {
@@ -97,22 +117,6 @@ footer {
   margin-top: 8px;
 }
 /* display recipe */
-/* link to login, logout, register, profile */
-.authentication {
-  width: 15%;
-  line-height: 50px;
-  font-size: 20px;
-  text-align: center;
-}
-.authentication a {
-  color: black;
-  text-decoration: none;
-}
-.authentication a:hover {
-  color: black;
-  text-decoration: none;
-  font-size: 22px;
-}
 .success {
   font-weight: bold;
   border: 5px dotted green;
@@ -129,7 +133,6 @@ footer {
 form div {
   margin: 8px;
 }
-/* form */
 .text {
   display: inline-block;
   width: 180px;
