@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../model/category.inc.php';
+require_once __DIR__ . '/../model/unit_of_measurement.inc.php';
+require_once __DIR__ . '/../inc/maininclude.inc.php';
 
 /**
  * The MeasuringUnitManager class contains methods for editing the table unit_of_measurement.
@@ -8,10 +9,10 @@ class MeasuringUnitManager {
     private PDO $conn;
 
     /**
-     * @param PDO $conn the connection to the db
+     * @param PDO $connection the connection to the db
      */
-    public function __construct(PDO $conn) {
-        $this->conn = $conn;
+    public function __construct(PDO $connection) {
+        $this->conn = $connection;
     }
 
     /**
