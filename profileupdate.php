@@ -54,7 +54,7 @@ require_once 'inc/profileupdateinclude.inc.php';
                 <input type="password" name="newpasswordrepeat" id="newpasswordrepeat">
             </div>
             <div>
-                <label for="password">Mit Passwort änderung Bestätigen:</label>
+                <label for="password">Mit Passwort Änderung bestätigen:</label>
                 <input type="password" name="password" id="password">
             </div>
             <div>
