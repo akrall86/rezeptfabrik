@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../model/recipe.inc.php';
+require_once __DIR__ . '/../model/recipe_ingredient.inc.php';
 require_once __DIR__ . '/../inc/maininclude.inc.php';
 
 /**
@@ -21,24 +22,25 @@ class RecipeManager {
      * @param string $content
      * @param string $slug
      * @param User $user
-     * @param string $category_name
-     * @param string $type_name
+     * @param Category $category
+     * @param Type $type
      * @param string $photo_url
-     * @param DateTime $published_date
+     * @param array $recipe_ingredients
      * @return string $id of the recipe or $errors[] if title is already in use
      */
     function createRecipe(
-        string $title, string $content, User $user, string $category_name, string $type_name,
-        string $photo_url, array $ingredients) {
+        string $title, string $content, User $user, Category $category, Type $type,
+        string $photo_url, array $recipe_ingredients) : int|array {
         if ($this->getTitle($title) == true) {
             return $errors['title'] = 'Titel wird schon verwendet!';
         }
         $slug = $recipemanager->createSlug($title);
         $user_id = $user->getId();
-
+        $category_id = $category->getId();
+        $type_id = $type->getId();
         $ps = $this->conn->prepare('
         INSERT INTO recipe
-        (title, content, slug, user_id, category_name, type_name, photo_url, published_date, rating)
+        (title, content, slug, user_id, category_id, type_id, photo_url, published_date, rating)
         VALUES 
         (:title, :content, :slug, :user_id, :category_name, :type_name, :photo_url, :published_date, :rating)');
 
@@ -46,8 +48,8 @@ class RecipeManager {
         $ps->bindValue('content', $content);
         $ps->bindValue('slug', $slug);
         $ps->bindValue('user_id', $user_id);
-        $ps->bindValue('category_name', $category_name);
-        $ps->bindValue('type_name', $type_name);
+        $ps->bindValue('category_id', $category_id);
+        $ps->bindValue('type_id', $type_id);
         $ps->bindValue('photo_url', $photo_url);
         $ps->bindValue('published_date', date('Y-m-d H:i:s'));
         $ps->bindValue('rating', 0);
@@ -55,7 +57,10 @@ class RecipeManager {
 
         $recipe_id = $this->conn->lastInsertId();
 
-        foreach ($ingredients as $ingredient => $unit_of_measurement) {
+        foreach ($recipe_ingredients as $recipe_ingredient) {
+            $ingredient = $recipe_ingredient->getIngredient();
+            $unit_Of_Measurement = $recipe_ingredient->getUnitOfMeasurement();
+            $amount = $recipe_ingredient->getAmount();
             $ingredient_id = $ingredientManager->createIngredient($ingredient);
             $unit_of_measurement_id = $measuringUnitManager->getMeasuringUnitId($unit_of_measurement);
         }
