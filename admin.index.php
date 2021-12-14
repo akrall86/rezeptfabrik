@@ -2,7 +2,7 @@
 require_once 'inc/maininclude.inc.php';
 require_once 'inc/logininclude.inc.php';
 require_once 'inc/admin.index.inc.php';
-//require_once 'inc/requireadmin.inc.php';
+require_once 'inc/requireadmin.inc.php';
 ?>
 
 <!DOCTYPE HTML>
