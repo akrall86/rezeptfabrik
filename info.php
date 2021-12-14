@@ -12,12 +12,18 @@ require_once 'inc/maininclude.inc.php';
     <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-<!-- header -->
-<?php include 'inc/header.inc.php'; ?>
 
-<!-- content -->
-<main class="body">
-    <div id="content">
+<div class="body">
+
+<header>
+    <?php
+    include "inc/header.inc.php";
+    include "inc/navbar.inc.php";
+    ?>
+</header>
+
+
+    <div class="content">
         <h1>Was ist rezeptfabrik</h1>
     </br>
         <p>
@@ -31,11 +37,11 @@ require_once 'inc/maininclude.inc.php';
 
         </p>
     </div>
-</main>
+
 
 <!-- footer -->
 <?php include 'inc/footer.inc.php'; ?>
-
+</div>
 </body>
 </html>
 
