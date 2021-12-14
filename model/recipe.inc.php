@@ -6,8 +6,8 @@ class Recipe {
     public string $content;
     public string $slug;
     public User $user;
-    public string $category;
-    public string $type;
+    public Category $category;
+    public Type $type;
     public string $photo_url;
     public DateTime $published_date;
     public int $rating;
