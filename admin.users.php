@@ -1,7 +1,8 @@
 <?php
 require_once 'inc/maininclude.inc.php';
 require_once 'inc/logininclude.inc.php';
-require_once 'inc/requireadmin.inc.php';
+//require_once 'inc/requireadmin.inc.php';
+$users = $userManager->getUsers();
 ?>
 
 <!DOCTYPE HTML>
@@ -24,8 +25,33 @@ require_once 'inc/requireadmin.inc.php';
     </header>
 
     <div class="content">
-        <div class="content">
+        <form action="admin.users.php" method="POST">
+            <table>
+                <?php if (count($users) == 0) {
+                    echo '<p> Es wurden keine Benutzer gefunden! </p>';
+                } else {
+                    echo ' 
+                    <tr>
+                        <th>Vorname</th>
+                        <th>Nachname</th>
+                        <th>Benutzername</th>
+                        <th>E-Mail</th>
+                        <th>Bearbeiten</th>
+                   </tr>';
+                }
 
-
+                foreach ($users as $user) {
+                    echo "<tr>
+                                <td>$user->firstname</td>
+                                <td>$user->lastname</td>
+                                <td>$user->user_name</td>
+                                <td>$user->email</td>
+                                <td><button name='btedit' value='$user->id'>Bearbeiten</button> </td>
+                           </tr>";
+                }
+                ?>
+            </table>
+        </form>
+    </div>
 </body>
 </html>
