@@ -49,7 +49,6 @@ $ingredients = array();
                         }
                         ?>
                     </select>
-
                 </div>
                 <div>
                     <label for="type">Typ:</label><br/>
