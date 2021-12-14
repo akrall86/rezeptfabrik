@@ -25,7 +25,7 @@ VALUES ('ADMIN'),
 
 CREATE TABLE rezeptfabrik.user_has_role
 (
-    user_id INTEGER     NOT NULL,
+    user_id   INTEGER     NOT NULL,
     role_name VARCHAR(30) NOT NULL,
     PRIMARY KEY (user_id, role_name),
     CONSTRAINT fk_uhr_uid FOREIGN KEY (user_id) REFERENCES user (id),
@@ -80,6 +80,7 @@ CREATE TABLE rezeptfabrik.recipe_has_ingredient_has_unit_of_measurement
     recipe_id              INTEGER NOT NULL,
     ingredient_id          INTEGER NOT NULL,
     unit_of_measurement_id INTEGER NOT NULL,
+    amount                 INTEGER NOT NULL,
     CONSTRAINT fk_riuom_rid FOREIGN KEY (recipe_id) REFERENCES recipe (id),
     CONSTRAINT fk_riuom_iid FOREIGN KEY (ingredient_id) REFERENCES ingredient (id),
     CONSTRAINT fk_riuom_uomid FOREIGN KEY (unit_of_measurement_id) REFERENCES unit_of_measurement (id)
