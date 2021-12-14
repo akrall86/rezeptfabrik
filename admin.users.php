@@ -1,7 +1,8 @@
 <?php
 require_once 'inc/maininclude.inc.php';
 require_once 'inc/logininclude.inc.php';
-//require_once 'inc/requireadmin.inc.php';
+require_once 'inc/requireadmin.inc.php';
+require_once 'inc/admin.users.inc.php';
 $users = $userManager->getUsers();
 ?>
 
@@ -41,12 +42,13 @@ $users = $userManager->getUsers();
                 }
 
                 foreach ($users as $user) {
-                    echo "<tr>
+                    echo "<tr xmlns=\"http://www.w3.org/1999/html\">
                                 <td>$user->firstname</td>
                                 <td>$user->lastname</td>
                                 <td>$user->user_name</td>
                                 <td>$user->email</td>
-                                <td><button name='btedit' value='$user->id'>Bearbeiten</button> </td>
+                                <input type='hidden' name='user_id' value='$user->id'>
+                                <td><button name='btedit'>Bearbeiten</button> </td>
                            </tr>";
                 }
                 ?>

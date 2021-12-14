@@ -28,10 +28,10 @@ require_once 'inc/profileinclude.inc.php';
         <div>
             <h2>Persönliche Daten</h2>
             <?php include 'inc/errormessages.inc.php' ?>
-            Vorname: <?php echo $user->getFirstname() ?><br/>
-            Nachname: <?php echo $user->getLastname() ?><br/>
-            Benutzername: <?php echo $user->getUserName() ?><br/>
-            E-Mail: <?php echo $user->getEmail() ?><br/><br/>
+            Vorname: <?php echo $user->firstname ?><br/>
+            Nachname: <?php echo $user->lastname ?><br/>
+            Benutzername: <?php echo $user->user_name ?><br/>
+            E-Mail: <?php echo $user->email ?><br/><br/>
             <form action="profile.php" method="POST">
                 <button name="btsubmit">Daten Bearbeiten</button>
             </form>

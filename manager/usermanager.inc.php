@@ -85,17 +85,15 @@ class UserManager
 
         $_SESSION['loggedin'] = true;
         $_SESSION['user_id'] = $user->id;
-        $_SESSION['admin'] = false;
-        $_SESSION['user'] = false;
-        echo $_SESSION['admin'];
-        $roles[] = $this->getUserRoles($user->id);
-        if (in_array('ADMIN', $roles)) {
-            $_SESSION['admin'] = true;
+        $roles = $this->getUserRoles($user->id);
+        foreach ($roles as $role) {
+            if ($role->name === 'ADMIN') {
+                $_SESSION['admin'] = true;
+            }
+            if ($role->name === 'USER') {
+                $_SESSION['user'] = true;
+            }
         }
-        if (in_array('USER', $roles)) {
-            $_SESSION['user'] = true;
-        }
-
         return $user;
     }
 

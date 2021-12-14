@@ -9,8 +9,8 @@
             <li><a href="./recipe.create.php">Rezept erstellen</a></li>
         <?php endif; ?>
         <?php if ($userManager->isAdmin()): ?>
-            <li><a href="./admin.user.php">Administrator Benutzerverwaltung</a></li>
-            <li><a href="./admin.recipe.php">Administrator Rezepteverwaltung</a></li>
+            <li><a href="./admin.index.php">Administrator Bereich</a></li>
+
         <?php endif; ?>
     </ul>
 </div>
