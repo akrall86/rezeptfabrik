@@ -6,7 +6,7 @@ $measurementUnits = $measuringUnitManager->getMeasuringUnits();
 ?>
 
     <h1>Rezept ändern</h1>
-    <form action="./create_recipe.php" method="post">
+    <form action="./recipe.update.php" method="post">
         <div>
             <label for="typ">Typ:</label><br>
             <input type="text" name="typ" id="typ" value="<?php echo $recipe->typ ?>">
