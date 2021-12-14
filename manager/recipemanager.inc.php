@@ -58,7 +58,7 @@ class RecipeManager {
         foreach ($ingredients as $ingredient => $unit_of_measurement) {
             $ingredient_id = $ingredientManager->createIngredient($ingredient);
             $unit_of_measurement_id = $measuringUnitManager->getMeasuringUnitId($unit_of_measurement);
-            }
+        }
 
         $ps2 = $this->conn->prepare('
         INSERT INTO recipe_has_ingredient_has_unit_of_measurement
@@ -71,36 +71,29 @@ class RecipeManager {
     }
 
     /**
-     * @param $slug
-     * @return bool|Recipe
+     * @return Recipe
      */
-    function getSlug($slug): bool|Recipe {
-        $ps = $this->conn->prepare('SELECT * FROM recipe WHERE slug = :slug');
-        $ps->bindValue('slug', $slug);
-        $ps->execute();
-        if ($row = $ps->fetch()) {
-            return new Recipe(
+    function getRecipe($id): Recipe|bool {
+        $result = $this->conn->query('
+SELECT * 
+FROM recipe r 
+INNER JOIN type t ON r.type_id = t.id
+INNER JOIN category c ON r.category_id = c.id
+INNER JOIN recipe_has_ingredient_has_unit_of_measurement rhihuom ON r.id = rhihuom.recipe_id
+INNER JOIN ingredient i ON rhihuom.ingredient_id = i.id
+INNER JOIN unit_of_measurement uom ON rhihuom.unit_of_measurement_id = uom.id
+WHERE r.id=$id');
+
+        while ($row = $ps->fetch()) {
+            $recipe = new Recipe(
                 $row['id'], $row['title'], $row['content'], $row['slug'], $row['user_id'], $row['category_id'],
-                $row['type_id'], $row['photo_url'], $row['published_date'], $row['rating']);
+                $row['type_id'], $row['photo_url'], $row['published_date'], $row['rating'], $row['recipe_ingredients']);
+
+
         }
         return false;
     }
 
-    /**
-     * @param $title
-     * @return bool|Recipe
-     */
-    function getTitle($title): bool|Recipe {
-        $ps = $this->conn->prepare('SELECT * FROM recipe WHERE title = :title');
-        $ps->bindValue('title', $title);
-        $ps->execute();
-        if ($row = $ps->fetch()) {
-            return new Recipe(
-                $row['id'], $row['title'], $row['content'], $row['slug'], $row['user_id'], $row['category_id'],
-                $row['type_id'], $row['photo_url'], $row['published_date'], $row['rating']);
-        }
-        return false;
-    }
 
     /**
      * @return array
@@ -120,14 +113,14 @@ class RecipeManager {
 
     function getRecipesByCategory(string $category): array {
         $result = $this->conn->query('
-            SELECT * FROM recipe WHERE category_name = '.$category);
+            SELECT * FROM recipe WHERE category_name = ' . $category);
         if ($result->fetch()) {
             while ($row = $result->fetch()) {
                 $recipes[] = new Recipe(
                     $row['id'], $row['title'], $row['content'], $row['slug'], $row['user_id'],
                     $row['category_id'], $row['type_id'], $row['photo_url'], $row['published_date'], $row['rating']);
             }
-        }else echo "<p> noch kein Rezept vorhanden.</p>";
+        } else echo "<p> noch kein Rezept vorhanden.</p>";
         return $recipes;
     }
 
@@ -142,7 +135,7 @@ class RecipeManager {
             <div class= 'flex_container_recipe'> 
                 <div class= 'flex_item_recipe_content'>
                     <p>" . $user->getUserName() . "hat dieses Rezept am " .
-                        $recipe->getPublishedDate()->format('Y-m-d H:i:s') . " gepostet.
+            $recipe->getPublishedDate()->format('Y-m-d H:i:s') . " gepostet.
                     </p> 
                     <h2>" . $recipe->getTitle() . "</h2> 
                     <p>" . $recipe->getCategory() . " " . $recipe->getType() . "</p> 
