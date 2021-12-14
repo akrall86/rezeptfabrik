@@ -5,7 +5,7 @@
     <div class="menu">
         <ul>
             <li><a href="./info.php">Über rezeptfabrik</a></li>
-            <li><a href="./inpressum.php">Impressum</a></li>
+            <li><a href="./impressum.php">Impressum</a></li>
         </ul>
     </div>
 </footer>
