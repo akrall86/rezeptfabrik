@@ -2,6 +2,12 @@
 require_once 'inc/maininclude.inc.php';
 require_once 'inc/requirelogin.inc.php';
 require_once 'inc/requireadmin.inc.php';
+if (isset($_REQUEST['id']) && $_REQUEST['id'] != 0) {
+    $user = $userManager->getUserById($_REQUEST['id']);
+    if ($user === false) {
+        $errors[] = 'Benutzer nicht gefunden';
+    }
+}
 ?>
 <!DOCTYPE HTML>
 <html lang="de">
