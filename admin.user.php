@@ -68,7 +68,8 @@ require_once 'inc/admin.userinclude.inc.php';
             </form>
         </div>
         <div class="admin_user_roles">
-            <?php if (isset($_POST['btgetroles'])): ?>
+            <?php $count = 1;
+            if (isset($_POST['btgetroles'])): ?>
                 <form action="admin.user.php" method="POST">
                     <table border="solid">
                         <tr>
@@ -78,7 +79,7 @@ require_once 'inc/admin.userinclude.inc.php';
                         <?php foreach ($roles as $role): ?>
                         <tr>
                             <td><?php echo $role->name?></td>
-                            <td><input type="checkbox" name="has_role" id="has_role"></td>
+                            <td><input type="checkbox" name="has_role<?php echo $count?>" id="has_role=<?php echo $count?>" <?php $count++; foreach ($userManager->getUserRoles($user->id) as $userrole ) if ($userrole->name === $role->name) echo 'checked' ?>></td>
                         </tr>
                         <?php endforeach; ?>
                     </table>
