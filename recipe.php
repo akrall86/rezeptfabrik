@@ -30,10 +30,16 @@ $types = $typeManager->getTypes();
         <form action="./recipe.php" method="post">
             <div>
                 <label for="title">Filtern nach Kategorie:</label><br>
-                <select name="category">
-                    <?php foreach ($categories as $category) {
-                        echo "<option value=" . $category . "</option>";
-                    } ?>
+                <select name="category" id="category">
+                    <?php
+                    foreach ($categories as $category) {
+                        $name = $category->getName()
+                        ?>
+                        <option value='<?php $name ?>'><?php echo $name ?></option>";
+                        <?php
+                    }
+                    ?>
+                </select>
             </div>
             <div>
                 <button name="filterCategory">filtern</button>
@@ -41,11 +47,17 @@ $types = $typeManager->getTypes();
         </form>
         <form action="./recipe.php" method="post">
             <div>
-                <label for="title">Filtern nach Typ:</label><br>
-                <select name="type">
-                    <?php foreach ($types as $type) {
-                        echo "<option value=" . $type . "</option>";
-                    } ?>
+                <label for="type">Filtern nach Typ:</label><br>
+                <select name="type" id="type">
+                <?php
+                foreach ($types as $type) {
+                    $name = $type->getName()
+                    ?>
+                    <option value='<?php $name ?>'><?php echo $name ?></option>";
+                    <?php
+                }
+                ?>
+                </select>
             </div>
             <div>
                 <button name="filterType">filtern</button>
