@@ -22,7 +22,7 @@ class RecipeIngredientManager {
      * @param string $name the name of the ingredient
      * @return string the id
      */
-    function createRecipe_Ingredient(Recipe_Ingredient $recipe_Ingredient)  {
+    function createRecipe_Ingredient(string $zutat_name, int $amount, string $unit_Of_Measurement)  {
         $ingredient = $recipe_Ingredient->getIngredient();
         $unit_Of_Measurement = $recipe_Ingredient->getUnitOfMeasurement();
         $amount = $recipe_Ingredient->getAmount();

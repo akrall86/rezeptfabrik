@@ -36,7 +36,7 @@ class TypeManager
         $result = $this->conn->query('SELECT * FROM type');
         $types = [];
         while ($row = $result->fetch()) {
-            $types[] = new Type($row['name']);
+            $types[] = new Type($row['id'], $row['name']);
         }
         return $types;
     }
