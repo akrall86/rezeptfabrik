@@ -1,47 +1,47 @@
 <?php
 
 class Recipe_Ingredient{
-   public Ingredient $ingredient;
-   public Unit_Of_Measurement $unit_Of_Measurement;
+   public string $ingredient_name;
+   public string $unit_Of_Measurement_name;
    public int $amount;
 
     /**
-     * @param Ingredient $ingredient
-     * @param Unit_Of_Measurement $unit_Of_Measurement
+     * @param string $ingredient
+     * @param string $unit_Of_Measurement
      * @param int $amount
      */
-    public function __construct(Ingredient $ingredient, Unit_Of_Measurement $unit_Of_Measurement, int $amount) {
-        $this->ingredient = $ingredient;
-        $this->unit_Of_Measurement = $unit_Of_Measurement;
+    public function __construct(string $ingredient, string $unit_Of_Measurement, int $amount) {
+        $this->ingredient_name = $ingredient;
+        $this->unit_Of_Measurement_name = $unit_Of_Measurement;
         $this->amount = $amount;
     }
 
     /**
-     * @return Ingredient
+     * @return string
      */
-    public function getIngredient(): Ingredient {
-        return $this->ingredient;
+    public function getIngredientName(): string {
+        return $this->ingredient_name;
     }
 
     /**
-     * @param Ingredient $ingredient
+     * @param string $ingredient_name
      */
-    public function setIngredient(Ingredient $ingredient): void {
-        $this->ingredient = $ingredient;
+    public function setIngredientName(string $ingredient_name): void {
+        $this->ingredient_name = $ingredient_name;
     }
 
     /**
-     * @return Unit_Of_Measurement
+     * @return string
      */
-    public function getUnitOfMeasurement(): Unit_Of_Measurement {
-        return $this->unit_Of_Measurement;
+    public function getUnitOfMeasurementName(): string {
+        return $this->unit_Of_Measurement_name;
     }
 
     /**
-     * @param Unit_Of_Measurement $unit_Of_Measurement
+     * @param string $unit_Of_Measurement_name
      */
-    public function setUnitOfMeasurement(Unit_Of_Measurement $unit_Of_Measurement): void {
-        $this->unit_Of_Measurement = $unit_Of_Measurement;
+    public function setUnitOfMeasurementName(string $unit_Of_Measurement_name): void {
+        $this->unit_Of_Measurement_name = $unit_Of_Measurement_name;
     }
 
     /**

@@ -16,6 +16,8 @@ require_once __DIR__ . '/../manager/measuringunitmanager.inc.php';
 require_once __DIR__ . '/../manager/categorymanager.inc.php';
 // Type Manager include
 require_once __DIR__ . '/../manager/typemanager.inc.php';
+// RecipeIngredient Manager include
+require_once __DIR__ . '/../manager/recipeingredientmanager.inc.php';
 
 // Object from Class UserManager
 $userManager = new UserManager($connection);
@@ -29,6 +31,8 @@ $measuringUnitManager = new MeasuringUnitManager($connection);
 $categoryManager = new CategoryManager($connection);
 // Object from Class TypeManager
 $typeManager = new TypeManager($connection);
+// Object from Class RecipeIngredientManager
+$recipeIngredientManager = new RecipeIngredientManager($connection);
 
 // array to store errors
 $errors = [];
