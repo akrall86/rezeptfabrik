@@ -27,7 +27,7 @@ class RecipeIngredientManager {
     function createRecipe_Ingredient(string $zutat_name, int $amount, string $unit_Of_Measurement) {
         $ingredient_id = $ingredientmanager->createIngredient($zutat_name);
         $ingredient = new string($ingredient_id, $zutat_name);
-        $unit_Of_Measurement;
+
 
 
         $ps = $this->conn->prepare('

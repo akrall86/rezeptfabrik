@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../model/type.php';
+require_once __DIR__ . '/../model/type.inc.php';
 
 /**
  * The TypeManager class contains methods for editing the table type.

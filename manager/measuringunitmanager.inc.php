@@ -33,7 +33,7 @@ class MeasuringUnitManager {
         $result = $this->conn->query('SELECT * FROM unit_of_measurement');
         $measurementUnits = [];
         while ($row = $result->fetch()) {
-            $measurementUnits[] = new string($row['name']);
+            $measurementUnits[] = new Unit_of_measurement($row['name']);
         }
         return $measurementUnits;
     }
