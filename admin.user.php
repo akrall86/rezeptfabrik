@@ -34,7 +34,10 @@ if (isset($_REQUEST['id']) && $_REQUEST['id'] != 0) {
         <form action="profile.update.php" method="POST">
 
             <?php include 'inc/errormessages.inc.php' ?>
-            <input type="hidden" name="id" value="<?php echo $user->id ?>">
+            <div>
+                <label for="id">Id:</label>
+                <input type="text" name="id" id="id" value="<?php echo $user->id ?>" readonly>
+            </div>
             <div>
                 <label for="firstname">Vorname:</label>
                 <input type="text" name="firstname" id="firstname" value="<?php echo $user->firstname ?>">
@@ -57,15 +60,13 @@ if (isset($_REQUEST['id']) && $_REQUEST['id'] != 0) {
                 <input type="password" name="newpassword" id="newpassword">
             </div>
             <div>
-                <label for="newpasswordrepeat">Neues Passwort wiederholen:</label>
-                <input type="password" name="newpasswordrepeat" id="newpasswordrepeat">
-            </div>
-            <div>
-                <label for="password">Mit Passwort Änderung bestätigen:</label>
+                <label for="password">Mit Admin Passowrt bestätigen</label>
                 <input type="password" name="password" id="password">
             </div>
+
             <div>
                 <button name="btupdate">Daten aktualisieren</button>
+                <button name="btdelete">Benutzer löschen</button>
             </div>
         </form>
     </div>
