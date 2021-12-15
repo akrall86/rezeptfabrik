@@ -75,10 +75,12 @@ require_once 'inc/admin.userinclude.inc.php';
                             <th>Rollen</th>
                             <th><label for="has_role">Zugewiesen</label></th>
                         </tr>
+                        <?php foreach ($roles as $role): ?>
                         <tr>
-                            <td>Hier könnte eine Rolle stehen</td>
+                            <td><?php echo $role->name?></td>
                             <td><input type="checkbox" name="has_role" id="has_role"></td>
                         </tr>
+                        <?php endforeach; ?>
                     </table>
                     <button name="btupdaterole">Rollen zuweisen</button>
                 </form>
