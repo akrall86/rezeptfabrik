@@ -32,7 +32,7 @@ class CategoryManager {
         $result = $this->conn->query('SELECT * FROM category');
         $categories = [];
         while ($row = $result->fetch()) {
-            $categories[] = new Category($row['id'], ['name']);
+            $categories[] = new Category($row['id'], $row['name']);
         }
         return $categories;
     }
