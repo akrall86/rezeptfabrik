@@ -1,5 +1,8 @@
 <?php
 require_once 'inc/maininclude.inc.php';
+require_once 'manager/measuringunitmanager.inc.php';
+require_once 'manager/recipeingredientmanager.inc.php';
+require_once 'manager/categorymanager.inc.php';
 
 $categories = $categoryManager->getCategories();
 $types = $typeManager->getTypes();

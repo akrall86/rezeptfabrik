@@ -1,8 +1,12 @@
 <?php
-include 'inc/errormessages.inc.php';
-include 'manager/measuringunitmanager.inc.php';
+require_once 'inc/maininclude.inc.php';
+require_once 'manager/measuringunitmanager.inc.php';
+require_once 'manager/recipeingredientmanager.inc.php';
+require_once 'manager/categorymanager.inc.php';
 
 $measurementUnits = $measuringUnitManager->getMeasuringUnits();
+$categories = $categoryManager->getCategories();
+$types = $typeManager->getTypes();
 ?>
 
 
