@@ -7,7 +7,9 @@ require_once 'manager/recipeingredientmanager.inc.php';
 $categories = $categoryManager->getCategories();
 $types = $typeManager->getTypes();
 $measurementUnits = $measuringUnitManager->getMeasuringUnits();
-$recipe_Ingredients [] = array();
+if (!isset ($_SESSION['recipe_ingredients'])) {
+    $recipe_ingredients [] = array();
+}
 
 // Button add ingredient
 if (isset($_POST['add_ingredient'])) {
@@ -17,15 +19,15 @@ if (isset($_POST['add_ingredient'])) {
     if (strlen(trim($_POST['measure'])) == 0) {
         $errors['measure'] = 'Menge eingeben.';
     }
-    if (strlen(trim($_POST['measurementUnit'])) == 0) {
-        $errors['measurementUnit'] = 'Maßeinheit eingeben.';
-    } else if (!is_numeric($_POST['measure'])) {
+    if (!is_numeric($_POST['measure'])) {
         $errors['measure'] = 'Menge ist keine Zahl.';
     }
-
     if (count($errors) == 0) {
-        $recipe_Ingredient = new Recipe_Ingredient(
-            $_POST['ingredient'], $_POST['measure'], $_POST['measurementUnit']);
+        $recipe_ingredient = new Recipe_Ingredient(
+            $_POST['ingredient'],$_POST['measurementUnit'], $_POST['measure']);
+        $recipe_ingredients[] = $_SESSION['recipe_ingredients'];
+        $recipe_ingredients[] = $recipe_ingredient;
+        $_SESSION['recipe_ingredients'] = $recipe_ingredients;
     }
 
 // Button submit
@@ -34,15 +36,14 @@ if (isset($_POST['add_ingredient'])) {
         $errors['title'] = 'Titel eingeben.';
     }
     if ($recipe_Ingredients == 0) {
-        $errors['recipe_Ingredients'] = 'Zutat hinzufügen.';
+        $errors['recipe_ingredients'] = 'Zutat hinzufügen.';
     }
-    else if (strlen(trim($_POST['description'])) == 0) {
+    if (strlen(trim($_POST['description'])) == 0) {
         $errors['description'] = 'Beschreibung eingeben.';
-    if (strlen(trim($_POST['picture'])) != 0) {
-    $tmpUploadPfad = $_FILES['picture']['tmp_name'];
-    $originalFileName = $_FILES['picture']['name'];
+    } else if (strlen(trim($_POST['picture'])) != 0) {
+        $tmpUploadPfad = $_FILES['picture']['tmp_name'];
+        $originalFileName = $_FILES['picture']['name'];
     }
-
 
 }
 ?>
@@ -69,6 +70,7 @@ if (isset($_POST['add_ingredient'])) {
     <div class="content">
         <h1>Neues Rezept erstellen</h1>
         <form enctype="multipart/form-data" action="./recipe.create.php" method="post">
+            <?php include 'inc/errormessages.inc.php'; ?>
             <div>
                 <div>
                     <label for="title">Titel:</label><br/>
@@ -103,8 +105,13 @@ if (isset($_POST['add_ingredient'])) {
                 </div>
                 <div>
                     <?php
-                    foreach ($recipe_Ingredients as $ingredient) {
-                        echo $ingredient[2] . " " . $ingredient[1] . " " . $ingredient[0];
+                    if (isset ($_SESSION['recipe_ingredients'])) {
+                        $recipe_ingredients = $_SESSION['recipe_ingredients'];
+                        foreach ($recipe_ingredients as $recipe_ingredient) {
+                            echo $recipe_ingredient->getAmount() . " " .
+                                $recipe_ingredient->getUnitOfMeasurementName() . " " .
+                                $recipe_ingredient->getIngredientName() . "<br/><br/>";
+                        }
                     }
                     ?>
                     <label for="ingredient">Zutat:</label>
