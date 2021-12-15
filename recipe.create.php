@@ -1,12 +1,50 @@
 <?php
 require_once 'inc/maininclude.inc.php';
 require_once 'manager/measuringunitmanager.inc.php';
+require_once 'manager/recipeingredientmanager.inc.php';
 
 
 $categories = $categoryManager->getCategories();
 $types = $typeManager->getTypes();
 $measurementUnits = $measuringUnitManager->getMeasuringUnits();
-$ingredients = array();
+$recipe_Ingredients [] = array();
+
+// Button add ingredient
+if (isset($_POST['add_ingredient'])) {
+    if (strlen(trim($_POST['ingredient'])) == 0) {
+        $errors['ingredient'] = 'Zutat eingeben.';
+    }
+    if (strlen(trim($_POST['measure'])) == 0) {
+        $errors['measure'] = 'Menge eingeben.';
+    }
+    if (strlen(trim($_POST['measurementUnit'])) == 0) {
+        $errors['measurementUnit'] = 'Maßeinheit eingeben.';
+    } else if (!is_numeric($_POST['measure'])) {
+        $errors['measure'] = 'Menge ist keine Zahl.';
+    }
+
+    if (count($errors) == 0) {
+        $recipe_Ingredient = new Recipe_Ingredient(
+            $_POST['ingredient'], $_POST['measure'], $_POST['measurementUnit']);
+    }
+
+// Button submit
+} else if (isset($_POST['submit'])) {
+    if (strlen(trim($_POST['title'])) == 0) {
+        $errors['title'] = 'Titel eingeben.';
+    }
+    if ($recipe_Ingredients == 0) {
+        $errors['recipe_Ingredients'] = 'Zutat hinzufügen.';
+    }
+    else if (strlen(trim($_POST['description'])) == 0) {
+        $errors['description'] = 'Beschreibung eingeben.';
+    if (strlen(trim($_POST['picture'])) != 0) {
+    $tmpUploadPfad = $_FILES['picture']['tmp_name'];
+    $originalFileName = $_FILES['picture']['name'];
+    }
+
+
+}
 ?>
 
 <!DOCTYPE HTML>
@@ -63,38 +101,38 @@ $ingredients = array();
                         ?>
                     </select>
                 </div>
-                    <div>
-                        <label for="ingredient">Zutat:</label>
-                        <label class="input_measure" for="measure">Menge:</label><br/>
+                <div>
+                    <?php
+                    foreach ($recipe_Ingredients as $ingredient) {
+                        echo $ingredient[2] . " " . $ingredient[1] . " " . $ingredient[0];
+                    }
+                    ?>
+                    <label for="ingredient">Zutat:</label>
+                    <label class="input_measure" for="measure">Menge:</label><br/>
+                    <input class="input_ingredients" type="text" name="ingredient" id="ingredient">
+                    <input class="input_ingredients" type="text" name="measure" id="measure">
+                    <select class="select_unit_of_measurement" name="measurementUnit" id="measurementUnit">
                         <?php
-                            foreach ($ingredients as $ingredient){
-                                echo "$ingredient";
-                            }
-                        ?>
-                        <input class="input_ingredients" type="text" name="ingredient" id="ingredient">
-                        <input class="input_ingredients" type="text" name="measure" id="measure">
-                        <select class="select_unit_of_measurement" name="ingredient" id="ingredient">
-                            <?php
-                            foreach ($measurementUnits as $measurementUnit) {
-                                $name = $measurementUnit->getName()
-                                ?>
-                                <option value='<?php $name ?>'><?php echo $name ?></option>";
-                                <?php
-                            }
+                        foreach ($measurementUnits as $measurementUnit) {
+                            $name = $measurementUnit->getName()
                             ?>
-                        </select>
-                        <button name="add_ingredient">hinzufügen</button>
-                        <?php if (isset($_POST['add_ingredient'])) {
-                            $ingredients [] = $_POST['ingredient'];
-                        } ?>
-                    </div>
+                            <option value='<?php $name ?>'><?php echo $name ?></option>";
+                            <?php
+                        }
+                        ?>
+                    </select>
+                    <button name="add_ingredient">hinzufügen</button>
+                    <?php if (isset($_POST['add_ingredient'])) {
+                        $recipe_Ingredient [] = $_POST['ingredient'];
+                    } ?>
+                </div>
                 <div>
                     <label for="description">Beschreibung:</label><br/>
                     <textarea class="description" type="text" name="description" id="description"></textarea>
                 </div>
                 <div>
-                    <label for="bild">Bild:</label><br>
-                    <input class="file_upload" type="file" name="bild" id="bild" accept="image/jpeg, image/png" ">
+                    <label for="picture">Bild:</label><br>
+                    <input class="file_upload" type="file" name="picture" id="picture" accept="image/jpeg, image/png" ">
                 </div>
                 <br/>
                 <div>
