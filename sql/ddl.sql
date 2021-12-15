@@ -88,8 +88,9 @@ CREATE TABLE rezeptfabrik.recipe_has_ingredient_has_unit_of_measurement
 
 CREATE TABLE rezeptfabrik.category
 (
+    id   INTEGER NOT NULL AUTO_INCREMENT,
     name VARCHAR(30),
-    PRIMARY KEY (name)
+    PRIMARY KEY (id)
 );
 
 INSERT INTO rezeptfabrik.category (name)
@@ -103,8 +104,9 @@ VALUES ('Frühstück'),
 
 CREATE TABLE rezeptfabrik.type
 (
+    id   INTEGER NOT NULL AUTO_INCREMENT,
     name VARCHAR(30),
-    PRIMARY KEY (name)
+    PRIMARY KEY (id)
 );
 
 INSERT INTO rezeptfabrik.type (name)
