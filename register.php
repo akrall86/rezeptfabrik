@@ -28,19 +28,19 @@ require_once 'inc/registerinclude.inc.php';
             <?php include 'inc/errormessages.inc.php' ?>
             <div>
                 <label for="firstname">Vorname:</label>
-                <input type="text" name="firstname" id="firstname">
+                <input type="text" name="firstname" id="firstname" value="<?php if ($_REQUEST != null && $_REQUEST['firstname'] != null) echo $_REQUEST['firstname'] ?>">
             </div>
             <div>
                 <label for="lastname">Nachname:</label>
-                <input type="text" name="lastname" id="lastname">
+                <input type="text" name="lastname" id="lastname" value="<?php if ($_REQUEST != null && $_REQUEST['lastname'] != null) echo $_REQUEST['lastname'] ?>">
             </div>
             <div>
                 <label for="user_name">Benutzername:</label>
-                <input type="text" name="user_name" id="user_name">
+                <input type="text" name="user_name" id="user_name"value="<?php if ($_REQUEST != null && $_REQUEST['user_name'] != null) echo $_REQUEST['user_name'] ?>">
             </div>
             <div>
                 <label for="email">E-Mail:</label>
-                <input type="email" name="email" id="email">
+                <input type="email" name="email" id="email" value="<?php if ($_REQUEST != null && $_REQUEST['email'] != null) echo $_REQUEST['email'] ?>">
             </div>
             <div>
                 <label for="password">Passwort:</label>
