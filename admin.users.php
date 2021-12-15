@@ -54,6 +54,10 @@ $users = $userManager->getUsers();
                 ?>
             </table>
         </form>
+        <?php
+        include "inc/footer.inc.php";
+        ?>
     </div>
+</div>
 </body>
 </html>
