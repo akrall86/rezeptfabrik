@@ -60,7 +60,7 @@ if (isset($_REQUEST['id']) && $_REQUEST['id'] != 0) {
                 <input type="password" name="newpassword" id="newpassword">
             </div>
             <div>
-                <label for="password">Mit Admin Passowrt bestätigen</label>
+                <label for="password">Mit Admin Passwort bestätigen</label>
                 <input type="password" name="password" id="password">
             </div>
 
