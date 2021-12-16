@@ -11,6 +11,7 @@ $types = $typeManager->getTypes();
 $measurementUnits = $measuringUnitManager->getMeasuringUnits();
 $count = 0;
 
+// Session with array of ingredients, quantities and units of measure
 if (!isset ($_SESSION['recipe_ingredients'])) {
     $recipe_ingredient_array = array();
 } else {
@@ -33,22 +34,26 @@ if (isset($_POST['add_ingredient'])) {
             $_POST['ingredient'], $_POST['measurementUnit'], $_POST['measure']);
         $_SESSION['recipe_ingredients'] = $recipe_ingredient_array;
     }
+}
 
 // Button submit
-} else if (isset($_POST['submit'])) {
+if (isset($_POST['submit'])) {
     if (strlen(trim($_POST['title'])) == 0) {
         $errors['title'] = 'Titel eingeben.';
     }
-    if ($recipe_ingredients == 0) {
+    if ($recipe_ingredient_array == 0) {
         $errors['recipe_ingredients'] = 'Zutat hinzufügen.';
     }
     if (strlen(trim($_POST['description'])) == 0) {
         $errors['description'] = 'Beschreibung eingeben.';
-    } else if (strlen(trim($_POST['picture'])) != 0) {
-        $tmpUploadPfad = $_FILES['picture']['tmp_name'];
-        $originalFileName = $_FILES['picture']['name'];
     }
 
+    if (count($errors) == 0) {
+        $recipe_id = $recipeManager->createRecipe(($_POST['title']), ($_POST['description']), $_SESSION['user_id'],
+            $_SESSION['category'], $_SESSION['type'], "", $recipe_ingredients);
+        $photoUrl = $fileUploadManager->uploadImage($_SESSION['user_id'], $recipe_id, ($_POST['picture']));
+        $recipeManager->updatePhotoUrl($photoUrl, $recipe_id);
+    }
 }
 ?>
 
@@ -73,7 +78,7 @@ if (isset($_POST['add_ingredient'])) {
 
     <div class="content">
         <h1>Neues Rezept erstellen</h1>
-        <form enctype="multipart/form-data" action="./recipe.create.php" method="post">
+        <form enctype="multipart/form-data" action="recipe.create.form.php" method="post">
             <?php include 'inc/errormessages.inc.php'; ?>
             <div>
                 <div>
@@ -120,12 +125,11 @@ if (isset($_POST['add_ingredient'])) {
                             if (isset($_POST[$delete_ingredient])) {
                                 unset($recipe_ingredient_array[$count]);
                                 $_SESSION['recipe_ingredients'] = $recipe_ingredient_array;
-                                header('Location: ./recipe.create.php');
+                                header('Location: ./recipe.create.form.php');
                             }
                             $count++;
                         }
                     }
-
                     ?>
                     <label for="ingredient">Zutat:</label>
                     <label class="input_measure" for="measure">Menge:</label><br/>

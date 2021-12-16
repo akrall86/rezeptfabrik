@@ -6,13 +6,13 @@ class Recipe_Ingredient{
    public int $amount;
 
     /**
-     * @param string $ingredient
-     * @param string $unit_Of_Measurement
+     * @param string $ingredient_name
+     * @param string $unit_Of_Measurement_name
      * @param int $amount
      */
-    public function __construct(string $ingredient, string $unit_Of_Measurement, int $amount) {
-        $this->ingredient_name = $ingredient;
-        $this->unit_Of_Measurement_name = $unit_Of_Measurement;
+    public function __construct(string $ingredient_name, string $unit_Of_Measurement_name, int $amount) {
+        $this->ingredient_name = $ingredient_name;
+        $this->unit_Of_Measurement_name = $unit_Of_Measurement_name;
         $this->amount = $amount;
     }
 
