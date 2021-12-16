@@ -33,7 +33,7 @@ class MeasuringUnitManager {
         $result = $this->conn->query('SELECT * FROM unit_of_measurement');
         $measurementUnits = [];
         while ($row = $result->fetch()) {
-            $measurementUnits[] = new Unit_of_Measurement($row['name']);
+            $measurementUnits[] = new Unit_of_Measurement($row['id'], $row['name']);
         }
         return $measurementUnits;
     }
@@ -43,7 +43,7 @@ class MeasuringUnitManager {
      * @return array of measurement units
      */
     function getMeasuringUnitId(string $name): int {
-        $result = $this->conn->query('SELECT id FROM unit_of_measurement WHERE name = $name');
+        $result = $this->conn->query('SELECT id FROM unit_of_measurement WHERE name = '.$name);
       return $result->fetch();
     }
 
