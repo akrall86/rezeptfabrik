@@ -9,12 +9,12 @@ require_once 'model/recipe_ingredient.inc.php';
 $categories = $categoryManager->getCategories();
 $types = $typeManager->getTypes();
 $measurementUnits = $measuringUnitManager->getMeasuringUnits();
+$count = 0;
+
 if (!isset ($_SESSION['recipe_ingredients'])) {
     $recipe_ingredient_array = array();
-
 } else {
-     $recipe_ingredient_array = $_SESSION['recipe_ingredients'];
-
+    $recipe_ingredient_array = $_SESSION['recipe_ingredients'];
 }
 
 // Button add ingredient
@@ -29,7 +29,7 @@ if (isset($_POST['add_ingredient'])) {
         $errors['measure'] = 'Menge ist keine Zahl.';
     }
     if (count($errors) == 0) {
-          $recipe_ingredient_array [] = new Recipe_Ingredient(
+        $recipe_ingredient_array [] = new Recipe_Ingredient(
             $_POST['ingredient'], $_POST['measurementUnit'], $_POST['measure']);
         $_SESSION['recipe_ingredients'] = $recipe_ingredient_array;
     }
@@ -101,7 +101,7 @@ if (isset($_POST['add_ingredient'])) {
                         foreach ($types as $type) {
                             $name = $type->getName()
                             ?>
-                            <option value='<?php $name ?>'><?php echo $name ?></option>";
+                            <option value='<?php echo $name ?>'><?php echo $name ?></option>";
                             <?php
                         }
                         ?>
@@ -111,12 +111,21 @@ if (isset($_POST['add_ingredient'])) {
                     <?php
                     if (isset ($_SESSION['recipe_ingredients'])) {
                         $recipe_ingredient_array = $_SESSION['recipe_ingredients'];
-                        foreach ($recipe_ingredient_array as $recipe_ingredient) {
-                            echo $recipe_ingredient->getAmount() . " " .
-                                $recipe_ingredient->getUnitOfMeasurementName() . " " .
-                                $recipe_ingredient->getIngredientName() . "<br/><br/>";
+                        foreach ($recipe_ingredient_array as $r) {
+                            $delete_ingredient = $r->getIngredientName();
+                            echo $r->getAmount() . " " .
+                                $r->getUnitOfMeasurementName() . " " .
+                                $r->getIngredientName() .
+                                "<button name=$delete_ingredient>x</button><br/><br/>";
+                            if (isset($_POST[$delete_ingredient])) {
+                                unset($recipe_ingredient_array[$count]);
+                                $_SESSION['recipe_ingredients'] = $recipe_ingredient_array;
+                                header('Location: ./recipe.create.php');
+                            }
+                            $count++;
                         }
                     }
+
                     ?>
                     <label for="ingredient">Zutat:</label>
                     <label class="input_measure" for="measure">Menge:</label><br/>
@@ -127,7 +136,7 @@ if (isset($_POST['add_ingredient'])) {
                         foreach ($measurementUnits as $measurementUnit) {
                             $name = $measurementUnit->getName()
                             ?>
-                            <option value=<?php $name?>><?php echo $name ?></option>";
+                            <option value=" <?php echo $name ?> "><?php echo $name ?></option>";
                             <?php
                         }
                         ?>
