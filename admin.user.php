@@ -63,7 +63,7 @@ require_once 'inc/admin.user.inc.php';
                 <div>
                     <button name="btupdate">Daten aktualisieren</button>
                     <button name="btgetroles">Benutzer Rollen anzeigen</button>
-                    <button name="btdelete">Benutzer löschen</button>
+                    <button name="btdelete" <?php if ($_SESSION['user_id'] === $_REQUEST['id']) echo 'disabled'; ?>>Benutzer löschen</button>
                 </div>
             </form>
         </div>
