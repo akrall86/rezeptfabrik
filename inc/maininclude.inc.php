@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../model/recipe_ingredient.inc.php';
+
 // Session start
 session_start();
 

@@ -11,6 +11,8 @@ $types = $typeManager->getTypes();
 $measurementUnits = $measuringUnitManager->getMeasuringUnits();
 if (!isset ($_SESSION['recipe_ingredients'])) {
     $recipe_ingredient_array = array();
+} else {
+     $recipe_ingredient_array = $_SESSION['recipe_ingredients'];
 }
 
 // Button add ingredient
@@ -123,15 +125,12 @@ if (isset($_POST['add_ingredient'])) {
                         foreach ($measurementUnits as $measurementUnit) {
                             $name = $measurementUnit->getName()
                             ?>
-                            <option value='<?php $name ?>'><?php echo $name ?></option>";
+                            <option value=<?php $name?>><?php echo $name ?></option>";
                             <?php
                         }
                         ?>
                     </select>
                     <button name="add_ingredient">hinzufügen</button>
-                    <?php if (isset($_POST['add_ingredient'])) {
-                        $recipe_Ingredient [] = $_POST['ingredient'];
-                    } ?>
                 </div>
                 <div>
                     <label for="description">Beschreibung:</label><br/>
