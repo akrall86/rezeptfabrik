@@ -4,14 +4,16 @@ require_once 'manager/measuringunitmanager.inc.php';
 require_once 'manager/recipeingredientmanager.inc.php';
 require_once 'manager/categorymanager.inc.php';
 require_once 'model/recipe_ingredient.inc.php';
-
+require_once 'model/type.inc.php';
+require_once 'model/category.inc.php';
+include 'inc/errormessages.inc.php';
 
 $categories = $categoryManager->getCategories();
 $types = $typeManager->getTypes();
 $measurementUnits = $measuringUnitManager->getMeasuringUnits();
 $count = 0;
 
-// Session with array of ingredients, quantities and units of measure
+// Session for array of Recipe_Ingredients (ingredients, quantities and units of measure)
 if (!isset ($_SESSION['recipe_ingredients'])) {
     $recipe_ingredient_array = array();
 } else {
@@ -41,19 +43,28 @@ if (isset($_POST['submit'])) {
     if (strlen(trim($_POST['title'])) == 0) {
         $errors['title'] = 'Titel eingeben.';
     }
-    if ($recipe_ingredient_array == 0) {
+    if (sizeof($recipe_ingredient_array) == 0) {
         $errors['recipe_ingredients'] = 'Zutat hinzufügen.';
     }
     if (strlen(trim($_POST['description'])) == 0) {
         $errors['description'] = 'Beschreibung eingeben.';
     }
-
     if (count($errors) == 0) {
+        $category_id = $categoryManager->getCategoryId($_POST['category']);
+        $category = new Category($category_id, $_POST['category']);
+        $type_id = $typeManager->getTypeId($_POST['type']);
+        $type = new Type($type_id, $_POST['type']);
         $recipe_id = $recipeManager->createRecipe(($_POST['title']), ($_POST['description']), $_SESSION['user_id'],
-            $_SESSION['category'], $_SESSION['type'], "", $recipe_ingredients);
-        $photoUrl = $fileUploadManager->uploadImage($_SESSION['user_id'], $recipe_id, ($_POST['picture']));
-        $recipeManager->updatePhotoUrl($photoUrl, $recipe_id);
+            $category, $type, $recipe_ingredient_array);
+        if (isset($_POST['picture'])) {
+            $photoUrl = $fileUploadManager->uploadImage($_SESSION['user_id'], $recipe_id, ($_POST['picture']));
+            $recipeManager->updatePhotoUrl($photoUrl, $recipe_id);
+        }
+        unset($_SESSION['recipe_ingredients']);
+        header('Location: ./confirmation.php');
     }
+
+
 }
 ?>
 
@@ -83,7 +94,8 @@ if (isset($_POST['submit'])) {
             <div>
                 <div>
                     <label for="title">Titel:</label><br/>
-                    <input type="text" name="title" id="title">
+                    <input type="text" name="title" id="title"
+                           value="<?php if ($_REQUEST != null && $_REQUEST['title'] != null) echo $_REQUEST['title'] ?>">
                 </div>
 
                 <div>
@@ -91,7 +103,7 @@ if (isset($_POST['submit'])) {
                     <select name="category" id="category">
                         <?php
                         foreach ($categories as $category) {
-                            $name = $category->getName()
+                            $name = $category->getName();
                             ?>
                             <option value='<?php $name ?>'><?php echo $name ?></option>";
                             <?php
@@ -149,11 +161,14 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div>
                     <label for="description">Beschreibung:</label><br/>
-                    <textarea class="description" type="text" name="description" id="description"></textarea>
+                    <textarea class="description" type="text" name="description" id="description">
+                       <?php if ($_REQUEST != null && $_REQUEST['description'] != null)
+                           echo ltrim($_REQUEST['description'])?>
+                    </textarea>
                 </div>
                 <div>
                     <label for="picture">Bild:</label><br>
-                    <input class="file_upload" type="file" name="picture" id="picture" accept="image/jpeg, image/png" ">
+                    <input class="file_upload" type="file" name="picture" id="picture" accept="image/jpeg, image/png">
                 </div>
                 <br/>
                 <div>
