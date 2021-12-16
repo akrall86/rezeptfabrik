@@ -38,6 +38,17 @@ class CategoryManager {
     }
 
     /**
+     * get id from given category name
+     * @return int id
+     */
+    function getCategoryId($name): int {
+        $result = $this->conn->query("SELECT id FROM category WHERE name ='. $name.'");
+        $id = $result->fetch();
+
+        return $id;
+    }
+
+    /**
      * deletes one category from db
      * @param string $name the name of the category to be deleted
      */
@@ -46,5 +57,7 @@ class CategoryManager {
         $ps->bindValue('id', $id);
         $ps->execute();
     }
+
+
 
 }

@@ -3,6 +3,7 @@ require_once __DIR__ . '/../model/recipe.inc.php';
 require_once __DIR__ . '/../model/recipe_ingredient.inc.php';
 require_once __DIR__ . '/../inc/maininclude.inc.php';
 
+
 /**
  * The RecipeManager class contains methods for managing recipes and editing recipes in db
  */
@@ -20,21 +21,21 @@ class RecipeManager {
      * insert recipe, ingredients and unit_of_measurement into DB
      * @param string $title_name
      * @param string $content
-     * @param User $user
+     * @param int $user_id
      * @param Category $category
      * @param Type $type
      * @param array $recipe_ingredients
      * @return string $id of the recipe or $errors[] if title is already in use
      */
     function createRecipe(
-        string $title_name, string $content, User $user, Category $category, Type $type,
-        array $recipe_ingredients) : int {
+        string $title_name, string $content, int $user_id, Category $category, Type $type,
+        array $recipe_ingredients) : int|array{
         if ($this->titleExists($title_name) == true) {
-            return $errors['title'] = 'Titel wird schon verwendet!';
+           $errors['title'] = 'Titel wird schon verwendet!';
+           return $errors;
         }
 
         $slug = $this->createSlug($title_name);
-        $user_id = $user->getId();
         $category_id = $category->getId();
         $type_id = $type->getId();
 
@@ -59,7 +60,7 @@ class RecipeManager {
 
         foreach ($recipe_ingredients as $r) {
             $ingredient_name = $r->getIngredientName();
-            $ingredient_id = $ingredientManager->createIngredient();
+            $ingredient_id = $ingredientManager->createIngredient($ingredient_name);
             $unitOfMeasurement_name = $r->getUnitOfMeasurementName();
             $unitOfMeasurement_id = $measuringUnitManager->getMeasuringUnitId($unitOfMeasurement_name);
             $amount = $r->getAmount();
@@ -120,8 +121,8 @@ WHERE r.id=$id');
 
 
     function getRecipesByCategory(string $category): array {
-        $result = $this->conn->query('
-            SELECT * FROM recipe WHERE category_name = ' . $category);
+        $result = $this->conn->query("
+            SELECT * FROM recipe WHERE category_name ='.$category.'");
         if ($result->fetch()) {
             while ($row = $result->fetch()) {
                 $recipes[] = new Recipe(
@@ -165,7 +166,7 @@ WHERE r.id=$id');
     }
 
     function updatePhotoUrl(string $photoUrl, int $recipe_id) {
-        $ps = $this->conn->query('UPDATE recipe SET photo_url = :photoUrl WHERE id='.$recipe_id);
+        $ps = $this->conn->query("UPDATE recipe SET photo_url = :photoUrl WHERE id='.$recipe_id.'");
         $ps->bindValue('photo_url', $photoUrl);
         $ps->execute();
     }
@@ -176,9 +177,9 @@ WHERE r.id=$id');
         return $slug;
     }
 
-    private function titleExists(string $name): bool {
-        $result = $this->conn->query('SELECT * FROM title WHERE name='.$name);
-        if($result->fetch()) {
+    private function titleExists(string $title): bool {
+        $result = $this->conn->query("SELECT COUNT(*) title FROM recipe WHERE title='.$title.'");
+        if($result->fetch()>0) {
             return true;
         } else return false;
     }

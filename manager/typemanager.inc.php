@@ -42,6 +42,16 @@ class TypeManager
     }
 
     /**
+     * get id from given type name
+     * @return int id
+     */
+    function getTypeId($name): int {
+        $result = $this->conn->query("SELECT id FROM type WHERE name ='. $name.'");
+            $id= $result->fetch();
+        return $id;
+    }
+
+    /**
      * deletes one type from db
      * @param string $name the name of the type to be deleted
      */
