@@ -272,5 +272,9 @@ class UserManager
         $ps->execute();
 
     }
+    function deleteUserById(int $id) {
+
+
+    }
 
 }
