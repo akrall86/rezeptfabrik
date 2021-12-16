@@ -49,6 +49,7 @@ if (isset($_POST['submit'])) {
     if (strlen(trim($_POST['description'])) == 0) {
         $errors['description'] = 'Beschreibung eingeben.';
     }
+    echo count($errors);
     if (count($errors) == 0) {
         $category_id = $categoryManager->getCategoryId($_POST['category']);
         $category = new Category($category_id, $_POST['category']);
