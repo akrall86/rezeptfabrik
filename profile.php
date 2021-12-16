@@ -39,6 +39,7 @@ require_once 'inc/profileinclude.inc.php';
         </div>
         <div>
             <h2>Meine Rezepte</h2>
+            <li><a href="./recipe.update.form.php">Rezept bearbeiten</a></li>
         </div>
         <div>
             <h2>Meine Favoriten</h2>
