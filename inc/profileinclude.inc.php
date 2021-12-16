@@ -7,8 +7,8 @@ if (isset($_SESSION['loggedin']) && $_SESSION['user_id'] != null) {
         header("Location: ./");
         return;
     }
-}
-if (isset($_POST['btsubmit'])) {
-    header("Location: ./profile.update.php");
-    return;
+    if (isset($_POST['btsubmit'])) {
+        header("Location: ./profile.update.php");
+        return;
+    }
 }
