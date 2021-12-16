@@ -7,7 +7,6 @@
             <li><a href="./">Home</a></li>
             <li><a href="./recipe.view.php">Rezepte</a></li>
             <li><a href="./recipe.create.form.php">Rezept erstellen</a></li>
-            <li><a href="./recipe.update.form.php">Rezept bearbeiten</a></li>
         <?php endif; ?>
         <?php if ($userManager->isAdmin()): ?>
             <li><a href="./admin.index.php">Administrator Bereich</a></li>
