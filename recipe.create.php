@@ -11,8 +11,10 @@ $types = $typeManager->getTypes();
 $measurementUnits = $measuringUnitManager->getMeasuringUnits();
 if (!isset ($_SESSION['recipe_ingredients'])) {
     $recipe_ingredient_array = array();
+
 } else {
      $recipe_ingredient_array = $_SESSION['recipe_ingredients'];
+
 }
 
 // Button add ingredient
