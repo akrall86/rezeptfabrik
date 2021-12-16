@@ -2,13 +2,15 @@
 require_once 'inc/maininclude.inc.php';
 require_once 'manager/measuringunitmanager.inc.php';
 require_once 'manager/recipeingredientmanager.inc.php';
+require_once 'manager/categorymanager.inc.php';
+require_once 'model/recipe_ingredient.inc.php';
 
 
 $categories = $categoryManager->getCategories();
 $types = $typeManager->getTypes();
 $measurementUnits = $measuringUnitManager->getMeasuringUnits();
 if (!isset ($_SESSION['recipe_ingredients'])) {
-    $recipe_ingredients [] = array();
+    $recipe_ingredient_array = array();
 }
 
 // Button add ingredient
@@ -23,11 +25,9 @@ if (isset($_POST['add_ingredient'])) {
         $errors['measure'] = 'Menge ist keine Zahl.';
     }
     if (count($errors) == 0) {
-        $recipe_ingredient = new Recipe_Ingredient(
-            $_POST['ingredient'],$_POST['measurementUnit'], $_POST['measure']);
-        $recipe_ingredients[] = $_SESSION['recipe_ingredients'];
-        $recipe_ingredients[] = $recipe_ingredient;
-        $_SESSION['recipe_ingredients'] = $recipe_ingredients;
+          $recipe_ingredient_array [] = new Recipe_Ingredient(
+            $_POST['ingredient'], $_POST['measurementUnit'], $_POST['measure']);
+        $_SESSION['recipe_ingredients'] = $recipe_ingredient_array;
     }
 
 // Button submit
@@ -35,7 +35,7 @@ if (isset($_POST['add_ingredient'])) {
     if (strlen(trim($_POST['title'])) == 0) {
         $errors['title'] = 'Titel eingeben.';
     }
-    if ($recipe_Ingredients == 0) {
+    if ($recipe_ingredients == 0) {
         $errors['recipe_ingredients'] = 'Zutat hinzufügen.';
     }
     if (strlen(trim($_POST['description'])) == 0) {
@@ -106,8 +106,8 @@ if (isset($_POST['add_ingredient'])) {
                 <div>
                     <?php
                     if (isset ($_SESSION['recipe_ingredients'])) {
-                        $recipe_ingredients = $_SESSION['recipe_ingredients'];
-                        foreach ($recipe_ingredients as $recipe_ingredient) {
+                        $recipe_ingredient_array = $_SESSION['recipe_ingredients'];
+                        foreach ($recipe_ingredient_array as $recipe_ingredient) {
                             echo $recipe_ingredient->getAmount() . " " .
                                 $recipe_ingredient->getUnitOfMeasurementName() . " " .
                                 $recipe_ingredient->getIngredientName() . "<br/><br/>";
