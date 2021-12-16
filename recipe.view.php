@@ -30,7 +30,7 @@ $types = $typeManager->getTypes();
     <div class="content">
 
         <h1>Rezepte</h1>
-        <form action="./recipe.php" method="post">
+        <form action="recipe.view.php" method="post">
             <div>
                 <label for="title">Filtern nach Kategorie:</label><br>
                 <select name="category" id="category">
@@ -48,7 +48,7 @@ $types = $typeManager->getTypes();
                 <button name="filterCategory">filtern</button>
             </div>
         </form>
-        <form action="./recipe.php" method="post">
+        <form action="recipe.view.php" method="post">
             <div>
                 <label for="type">Filtern nach Typ:</label><br>
                 <select name="type" id="type">

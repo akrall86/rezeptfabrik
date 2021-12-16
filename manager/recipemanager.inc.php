@@ -18,65 +18,68 @@ class RecipeManager {
 
     /**
      * insert recipe, ingredients and unit_of_measurement into DB
-     * @param string $title
+     * @param string $title_name
      * @param string $content
-     * @param string $slug
      * @param User $user
      * @param Category $category
      * @param Type $type
-     * @param string $photo_url
      * @param array $recipe_ingredients
      * @return string $id of the recipe or $errors[] if title is already in use
      */
     function createRecipe(
-        string $title, string $content, User $user, Category $category, Type $type,
-        string $photo_url, array $recipe_ingredients) : int|array {
-        if ($this->getTitle($title) == true) {
+        string $title_name, string $content, User $user, Category $category, Type $type,
+        array $recipe_ingredients) : int {
+        if ($this->titleExists($title_name) == true) {
             return $errors['title'] = 'Titel wird schon verwendet!';
         }
-        $slug = $recipemanager->createSlug($title);
+
+        $slug = $this->createSlug($title_name);
         $user_id = $user->getId();
         $category_id = $category->getId();
         $type_id = $type->getId();
+
         $ps = $this->conn->prepare('
         INSERT INTO recipe
         (title, content, slug, user_id, category_id, type_id, photo_url, published_date, rating)
         VALUES 
         (:title, :content, :slug, :user_id, :category_name, :type_name, :photo_url, :published_date, :rating)');
 
-        $ps->bindValue('title', $title);
+        $ps->bindValue('title', $title_name);
         $ps->bindValue('content', $content);
         $ps->bindValue('slug', $slug);
         $ps->bindValue('user_id', $user_id);
         $ps->bindValue('category_id', $category_id);
         $ps->bindValue('type_id', $type_id);
-        $ps->bindValue('photo_url', $photo_url);
-        $ps->bindValue('published_date', date('Y-m-d H:i:s'));
+        $ps->bindValue('photo_url', "");
+        $ps->bindValue('published_date', date('Y-m-d H:i:s', (new DateTime('now'))));
         $ps->bindValue('rating', 0);
         $ps->execute();
 
         $recipe_id = $this->conn->lastInsertId();
 
-        foreach ($recipe_ingredients as $recipe_ingredient) {
-            $ingredient = $recipe_ingredient->getIngredient();
-            $unit_Of_Measurement = $recipe_ingredient->getUnitOfMeasurement();
-            $amount = $recipe_ingredient->getAmount();
-            $ingredient_id = $ingredientManager->createIngredient($ingredient);
-            $unit_of_measurement_id = $measuringUnitManager->getMeasuringUnitId($unit_of_measurement);
-        }
-
-        $ps2 = $this->conn->prepare('
+        foreach ($recipe_ingredients as $r) {
+            $ingredient_name = $r->getIngredientName();
+            $ingredient_id = $ingredientManager->createIngredient();
+            $unitOfMeasurement_name = $r->getUnitOfMeasurementName();
+            $unitOfMeasurement_id = $measuringUnitManager->getMeasuringUnitId($unitOfMeasurement_name);
+            $amount = $r->getAmount();
+            $ps2 = $this->conn->prepare('
         INSERT INTO recipe_has_ingredient_has_unit_of_measurement
-        (recipe_id, ingredient_id, unit_of_measurement_id)
+        (recipe_id, ingredient_id, unit_of_measurement_id, amount)
         VALUES 
-        (:recipe_id, :ingredient_id, :unit_of_measurement_id)');
-        $ps2->bindValue('recipe_id', $recipe_id);
-        $ps2->bindValue('ingredient_id', $ingredient_id);
-        $ps2->bindValue('unit_of_measurement_id', $unit_of_measurement_id);
+        (:recipe_id, :ingredient_id, :unit_of_measurement_id, :amount)');
+            $ps2->bindValue('recipe_id', $recipe_id);
+            $ps2->bindValue('ingredient_id', $ingredient_id);
+            $ps2->bindValue('unit_of_measurement_id', $unitOfMeasurement_id);
+            $ps2->bindValue('amount', $amount);
+            $ps->execute();
+        }
+        return $recipe_id;
     }
 
     /**
-     * @return Recipe
+     * @param $id
+     * @return Recipe|bool
      */
     function getRecipe($id): Recipe|bool {
         $result = $this->conn->query('
@@ -161,11 +164,25 @@ WHERE r.id=$id');
 
     }
 
+    function updatePhotoUrl(string $photoUrl, int $recipe_id) {
+        $ps = $this->conn->query('UPDATE recipe SET photo_url = :photoUrl WHERE id='.$recipe_id);
+        $ps->bindValue('photo_url', $photoUrl);
+        $ps->execute();
+    }
+
     private function createSlug(string $title): string {
         $string = str_replace(" ", "-", $title);
         $slug = str_replace(array("#", "'", ";", ".", "\"", ",", ":"), "", $string);
         return $slug;
     }
+
+    private function titleExists(string $name): bool {
+        $result = $this->conn->query('SELECT * FROM title WHERE name='.$name);
+        if($result->fetch()) {
+            return true;
+        } else return false;
+    }
+
 
 
 }

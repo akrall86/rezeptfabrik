@@ -30,8 +30,8 @@ $types = $typeManager->getTypes();
     </header>
 
     <div class="content">
-        <h1>Neues Rezept erstellen</h1>
-        <form enctype="multipart/form-data" action="./recipe.create.php" method="post">
+        <h1>Rezept bearbeiten</h1>
+        <form enctype="multipart/form-data" action="recipe.create.form.php" method="post">
             <?php include 'inc/errormessages.inc.php'; ?>
             <div>
                 <div>

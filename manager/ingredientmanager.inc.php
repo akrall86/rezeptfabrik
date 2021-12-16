@@ -25,7 +25,9 @@ class IngredientManager {
             $ps->bindValue('name', $name);
             $ps->execute();
             return $this->conn->lastInsertId();
-        } else return $this->getIngredient($name)->getId();
+        } else {
+           $ingredient = $this->getIngredient($name);
+        } return $this->$ingredient->getId();
     }
 
     /**
