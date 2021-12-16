@@ -257,6 +257,10 @@ class UserManager
         $ps->execute();
     }
 
+    /**
+     * @param User $user
+     * @return void
+     */
     function updateUser(User $user)
     {
         $passwordhash = password_hash($user->password, PASSWORD_BCRYPT);
@@ -272,9 +276,14 @@ class UserManager
         $ps->execute();
 
     }
-    function deleteUserById(int $id) {
 
+    function deleteUserById(int $id)
+    {
+        $this->deleteUser_has_roleById($id);
+        $this->conn->query("DELETE FROM user WHERE id = $id");
 
     }
-
+     function deleteUser_has_roleById($id) {
+        $this->conn->query("DELETE FROM user_has_role WHERE user_id = $id");
+     }
 }
