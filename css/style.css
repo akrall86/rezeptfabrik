@@ -27,6 +27,7 @@ header {
 .logo {
   display: inline-block;
   padding: 10px;
+  padding-top: 30px;
   width: 15%;
 }
 .title {
@@ -108,17 +109,15 @@ header {
   width: 250px;
 }
 /* display recipe */
-.success {
-  font-weight: bold;
-  border: 5px dotted green;
-  padding: 16px;
-}
 /* errors */
 .error {
   font-weight: bold;
-  background-color: red;
-  color: white;
+  border: 5px solid red;
+  color: black;
   padding: 16px;
+}
+.error li {
+  list-style-image: url(../img/error.png);
 }
 /* form */
 form div {
@@ -177,5 +176,9 @@ footer {
   text-align: center;
   border-top: 1px solid grey;
   margin-top: 8px;
+}
+.confirmation {
+  font-weight: bold;
+  text-align: center;
 }
 /*# sourceMappingURL=style.css.map */
