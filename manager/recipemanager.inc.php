@@ -1,7 +1,9 @@
 <?php
 require_once __DIR__ . '/../model/recipe.inc.php';
 require_once __DIR__ . '/../model/recipe_ingredient.inc.php';
-require_once __DIR__ . '/../inc/maininclude.inc.php';
+require_once __DIR__ . '/../model/category.inc.php';
+require_once __DIR__ . '/../model/ingredient.inc.php';
+require_once __DIR__ . '/../model/unit_of_measurement.inc.php';
 
 
 /**
@@ -29,10 +31,10 @@ class RecipeManager {
      */
     function createRecipe(
         string $title_name, string $content, int $user_id, Category $category, Type $type,
-        array $recipe_ingredients) : int|array{
+        array  $recipe_ingredients): string|array {
         if ($this->titleExists($title_name) == true) {
-           $errors['title'] = 'Titel wird schon verwendet!';
-           return $errors;
+            $errors['title'] = 'Titel wird schon verwendet!';
+            return $errors;
         }
 
         $slug = $this->createSlug($title_name);
@@ -43,7 +45,7 @@ class RecipeManager {
         INSERT INTO recipe
         (title, content, slug, user_id, category_id, type_id, photo_url, published_date, rating)
         VALUES 
-        (:title, :content, :slug, :user_id, :category_name, :type_name, :photo_url, :published_date, :rating)');
+        (:title, :content, :slug, :user_id, :category_id, :type_id, :photo_url, :published_date, :rating)');
 
         $ps->bindValue('title', $title_name);
         $ps->bindValue('content', $content);
@@ -179,11 +181,10 @@ WHERE r.id=$id');
 
     private function titleExists(string $title): bool {
         $result = $this->conn->query("SELECT COUNT(*) title FROM recipe WHERE title='.$title.'");
-        if($result->fetch()>0) {
+        if ($result->fetch() > 0) {
             return true;
         } else return false;
     }
-
 
 
 }
