@@ -27,7 +27,7 @@ class RecipeManager {
      * @param Category $category
      * @param Type $type
      * @param array $recipe_ingredients
-     * @return string $id of the recipe or $errors[] if title is already in use
+     * @return string|array $id of the recipe or $errors[] if title is already in use
      */
     function createRecipe(
         string $title_name, string $content, int $user_id, Category $category, Type $type,
