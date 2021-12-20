@@ -1,10 +1,15 @@
 <?php
-require_once __DIR__ . '/../model/recipe.inc.php';
-require_once __DIR__ . '/../model/recipe_ingredient.inc.php';
+require_once __DIR__ . '/../inc/maininclude.inc.php';
+require_once __DIR__ . '/../manager/categorymanager.inc.php';
+require_once __DIR__ . '/../manager/fileuploadmanager.inc.php';
+require_once __DIR__ . '/../manager/ingredientmanager.inc.php';
+require_once __DIR__ . '/../manager/measuringunitmanager.inc.php';
+require_once __DIR__ . '/../manager/recipeingredientmanager.inc.php';
 require_once __DIR__ . '/../model/category.inc.php';
 require_once __DIR__ . '/../model/ingredient.inc.php';
+require_once __DIR__ . '/../model/recipe.inc.php';
+require_once __DIR__ . '/../model/recipe_ingredient.inc.php';
 require_once __DIR__ . '/../model/unit_of_measurement.inc.php';
-
 
 /**
  * The RecipeManager class contains methods for managing recipes and editing recipes in db
@@ -15,7 +20,7 @@ class RecipeManager {
     /**
      * @param PDO $connection the connection to the DB
      */
-    function __construct(PDO $connection) {
+    public function __construct(PDO $connection) {
         $this->conn = $connection;
     }
 
@@ -66,16 +71,7 @@ class RecipeManager {
             $unitOfMeasurement_name = $r->getUnitOfMeasurementName();
             $unitOfMeasurement_id = $measuringUnitManager->getMeasuringUnitId($unitOfMeasurement_name);
             $amount = $r->getAmount();
-            $ps2 = $this->conn->prepare('
-        INSERT INTO recipe_has_ingredient_has_unit_of_measurement
-        (recipe_id, ingredient_id, unit_of_measurement_id, amount)
-        VALUES 
-        (:recipe_id, :ingredient_id, :unit_of_measurement_id, :amount)');
-            $ps2->bindValue('recipe_id', $recipe_id);
-            $ps2->bindValue('ingredient_id', $ingredient_id);
-            $ps2->bindValue('unit_of_measurement_id', $unitOfMeasurement_id);
-            $ps2->bindValue('amount', $amount);
-            $ps->execute();
+            $recipeIngredientManager->createRecipe_Ingredient($recipe_id, $ingredient_id, $unitOfMeasurement_id, $amount);
         }
         return $recipe_id;
     }

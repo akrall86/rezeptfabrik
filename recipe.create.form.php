@@ -14,9 +14,9 @@ $measurementUnits = $measuringUnitManager->getMeasuringUnits();
 $count = 0;
 
 // Session for array of Recipe_Ingredients (ingredients, quantities and units of measure)
-if (!isset ($_SESSION['recipe_ingredients'])) {
-    $recipe_ingredient_array = array();
-} else {
+
+$recipe_ingredient_array = array();
+if (isset ($_SESSION['recipe_ingredients'])) {
     $recipe_ingredient_array = $_SESSION['recipe_ingredients'];
 }
 
@@ -54,17 +54,20 @@ if (isset($_POST['submit'])) {
         $category = new Category($category_id, $_POST['category']);
         $type_id = $typeManager->getTypeId($_POST['type']);
         $type = new Type($type_id, $_POST['type']);
-        $recipe_id = $recipeManager->createRecipe(($_POST['title']), ($_POST['description']), $_SESSION['user_id'],
+        $user_id = (int)$_SESSION['user_id'];
+        $recipe_ingredient_array = $_SESSION['recipe_ingredients'];
+        $recipe_id = $recipeManager->createRecipe(($_POST['title']), ($_POST['description']), $user_id,
             $category, $type, $recipe_ingredient_array);
         if (isset($_POST['picture'])) {
             $photoUrl = $fileUploadManager->uploadImage($_SESSION['user_id'], $recipe_id, ($_POST['picture']));
             $recipeManager->updatePhotoUrl($photoUrl, $recipe_id);
         }
         unset($_SESSION['recipe_ingredients']);
-       // header('Location: ./confirmation.php');
+        // header('Location: ./confirmation.php');
     }
 
 }
+error_reporting(E_ALL);
 ?>
 
 <!DOCTYPE HTML>
@@ -162,7 +165,7 @@ if (isset($_POST['submit'])) {
                     <label for="description">Beschreibung:</label><br/>
                     <textarea class="description" type="text" name="description" id="description">
                        <?php if ($_REQUEST != null && $_REQUEST['description'] != null)
-                           echo ltrim($_REQUEST['description'])?>
+                           echo ltrim($_REQUEST['description']) ?>
                     </textarea>
                 </div>
                 <div>

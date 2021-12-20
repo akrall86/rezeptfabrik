@@ -1,9 +1,8 @@
 <?php
+require_once __DIR__ . '/../inc/maininclude.inc.php';
 require_once __DIR__ . '/../model/ingredient.inc.php';
 require_once __DIR__ . '/../model/recipe_ingredient.inc.php';
 require_once __DIR__ . '/../model/unit_of_measurement.inc.php';
-require_once 'manager/ingredientmanager.inc.php';
-require_once 'manager/measuringunitmanager.inc.php';
 
 /**
  * The RecipeIngredientManager class contains methods for editing the tables ingredient, unit_of_measurement and
@@ -20,27 +19,20 @@ class RecipeIngredientManager {
     }
 
     /**
-     * insert ingredient into DB
+     * insert recipe id, ingredient id, unitOfMeasurement id and amount into table
+     * recipe_has_ingredient_has_unit_of_measurement
      * @param string $name the name of the ingredient
-     * @return string the id
      */
-    function createRecipe_Ingredient(string $zutat_name, int $amount, string $unit_Of_Measurement) {
-        $ingredient_id = $ingredientmanager->createIngredient($zutat_name);
-        $ingredient = new string($ingredient_id, $zutat_name);
-
-
-
+    function createRecipe_Ingredient(int $recipe_id, int $ingredient_id, int $unitOfMeasurement_id, $amount){
         $ps = $this->conn->prepare('
-        INSERT INTO recipe_has_ingredient_has_unit_of_measurement  (recipe_id,
-        ingredient_id, unit_of_measurement_id, amount) VALUES (
+        INSERT INTO recipe_has_ingredient_has_unit_of_measurement  
+            (recipe_id, ingredient_id, unit_of_measurement_id, amount) VALUES (
         :recipe_id, :ingredient_id, :unit_of_measurement_id, :amount)');
         $ps->bindValue('recipe_id', $recipe_id);
         $ps->bindValue('ingredient_id', $ingredient_id);
-        $ps->bindValue('unit_of_measurement_id', $unit_of_measurement_id);
+        $ps->bindValue('unit_of_measurement_id', $unitOfMeasurement_id);
         $ps->bindValue('amount', $amount);
         $ps->execute();
-
-
     }
 
 
