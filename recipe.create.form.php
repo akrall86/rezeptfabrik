@@ -61,7 +61,7 @@ if (isset($_POST['submit'])) {
             $recipeManager->updatePhotoUrl($photoUrl, $recipe_id);
         }
         unset($_SESSION['recipe_ingredients']);
-        header('Location: ./confirmation.php');
+       // header('Location: ./confirmation.php');
     }
 
 }
