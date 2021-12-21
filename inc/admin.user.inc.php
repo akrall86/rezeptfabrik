@@ -4,6 +4,44 @@ if (isset($_SESSION['loggedin']) && $_SESSION['user_id'] != null && $_SESSION['a
     if ($user === false) {
         $errors[] = 'Benutzer nicht gefunden';
     }
+    if (isset($_POST['btupdate']) && $_POST['password']) {
+
+        require_once __DIR__ . './registerupdateerrormessages.inc.php';
+        $newpasswordBool = false;
+        $newpassword = "";
+
+        if (strlen(trim($_POST['newpassword'])) != 0) {
+            if (strlen(trim($_POST['newpassword'])) < 6) {
+                $errors['newpassword'] = 'neues Passwort muss mindestens 6 Zeichen haben';
+            }
+        }
+        if (!password_verify($_POST['password'], $userManager->getUserById($_SESSION['user_id'])->password)) {
+            $errors['password'] = 'Admin Passwort stimmt nicht!';
+        }
+        if ($_POST['password'] == 0) {
+            $errors['passwordempty'] = 'Admin Passwort eingeben';
+        }
+        if (count($errors) == 0) {
+            if (isset($_POST['id']) && is_numeric($_POST['id']) && $_POST['id'] != 0) {
+                if (strlen(trim($_POST['newpassword'])) != 0) {
+                    $newpasswordBool = true;
+                    $newpassword = $_POST['newpassword'];
+                }
+                if ($newpasswordBool === false){
+                    $newpassword = $userManager->getUserById($_POST['id'])->password;
+                }
+                $updateUser = new User($_POST['id'], $_POST['firstname'], $_POST['lastname'], $_POST['user_name'], $_POST['email'], $newpassword);
+                if ($newpasswordBool === true) {
+                    $userManager->updateUser($updateUser);
+                } else{
+                    $userManager->updateUserWithOutHash($updateUser);
+                }
+                header("Location: ./admin.users.php");
+                return;
+            }
+        }
+    }
+
     if (isset($_POST['btgetroles']) && $user !== false) {
         $roles = $userManager->getRoles();
     }
@@ -16,7 +54,5 @@ if (isset($_SESSION['loggedin']) && $_SESSION['user_id'] != null && $_SESSION['a
             header("Location: ./admin.users.php");
             return;
         }
-
     }
-
 }
