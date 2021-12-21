@@ -4,15 +4,13 @@ require_once __DIR__ . '/../model/type.inc.php';
 /**
  * The TypeManager class contains methods for editing the table type.
  */
-class TypeManager
-{
+class TypeManager {
     private PDO $conn;
 
     /**
      * @param PDO $conn the connection to the db
      */
-    public function __construct(PDO $conn)
-    {
+    public function __construct(PDO $conn) {
         $this->conn = $conn;
     }
 
@@ -20,8 +18,7 @@ class TypeManager
      * insert type into DB
      * @param string $name the name of the type
      */
-    function createType(string $name)
-    {
+    function createType(string $name) {
         $ps = $this->conn->prepare('INSERT INTO type (name) VALUES (:name)');
         $ps->bindValue('name', $name);
         $ps->execute();
@@ -31,8 +28,7 @@ class TypeManager
      * get all types from db
      * @return array of types
      */
-    function getTypes(): array
-    {
+    function getTypes(): array {
         $result = $this->conn->query('SELECT * FROM type');
         $types = [];
         while ($row = $result->fetch()) {
@@ -43,20 +39,21 @@ class TypeManager
 
     /**
      * get id from given type name
-     * @return int id
+     * @return int|bool the id or false if there is no match
      */
-    function getTypeId($name): int {
-        $result = $this->conn->query("SELECT id FROM type WHERE name ='. $name.'");
-            $id= $result->fetch();
-        return $id;
+    function getTypeId($name): int|bool {
+        $result = $this->conn->query("SELECT id FROM type WHERE name = '" . $name . "'");
+        if ($row = $result->fetch()) {
+            return $row['id'];
+        }
+        return false;
     }
 
     /**
      * deletes one type from db
      * @param string $name the name of the type to be deleted
      */
-    function deleteType(string $name)
-    {
+    function deleteType(string $name) {
         $ps = $this->conn->query('DELETE FROM type WHERE name = (:name)');
         $ps->bindValue('name', $name);
         $ps->execute();

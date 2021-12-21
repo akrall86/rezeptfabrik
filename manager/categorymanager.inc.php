@@ -39,13 +39,14 @@ class CategoryManager {
 
     /**
      * get id from given category name
-     * @return int id
+     * @return int|bool the id or false if there is no match
      */
-    function getCategoryId($name): int {
-        $result = $this->conn->query("SELECT id FROM category WHERE name ='. $name.'");
-        $id = $result->fetch();
-
-        return $id;
+    function getCategoryId($name): int|bool {
+        $result = $this->conn->query("SELECT id FROM category WHERE name = '".$name."'");
+        if ($row = $result->fetch()) {
+            return $row['id'];
+        }
+        return false;
     }
 
     /**

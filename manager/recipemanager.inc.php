@@ -1,10 +1,5 @@
 <?php
 require_once __DIR__ . '/../inc/maininclude.inc.php';
-require_once __DIR__ . '/../manager/categorymanager.inc.php';
-require_once __DIR__ . '/../manager/fileuploadmanager.inc.php';
-require_once __DIR__ . '/../manager/ingredientmanager.inc.php';
-require_once __DIR__ . '/../manager/measuringunitmanager.inc.php';
-require_once __DIR__ . '/../manager/recipeingredientmanager.inc.php';
 require_once __DIR__ . '/../model/category.inc.php';
 require_once __DIR__ . '/../model/ingredient.inc.php';
 require_once __DIR__ . '/../model/recipe.inc.php';
@@ -15,13 +10,24 @@ require_once __DIR__ . '/../model/unit_of_measurement.inc.php';
  * The RecipeManager class contains methods for managing recipes and editing recipes in db
  */
 class RecipeManager {
-    private PDO $conn;
+    private PDO $connection;
+    private IngredientManager $ingredientManager ;
+    private MeasuringUnitManager $measuringUnitManager;
+    private RecipeIngredientManager $recipeIngredientManager;
 
     /**
-     * @param PDO $connection the connection to the DB
+     * @param PDO $conn the connection to the db
+     * @param IngredientManager $ingredientManager
+     * @param MeasuringUnitManager $measuringUnitManager
+     * @param RecipeIngredientManager $recipeIngredientManager
      */
-    public function __construct(PDO $connection) {
-        $this->conn = $connection;
+    public function __construct(PDO $connection, IngredientManager $ingredientManager,
+                                MeasuringUnitManager $measuringUnitManager,
+                                RecipeIngredientManager $recipeIngredientManager) {
+        $this->connection = $connection;
+        $this->ingredientManager = $ingredientManager;
+        $this->measuringUnitManager = $measuringUnitManager;
+        $this->recipeIngredientManager = $recipeIngredientManager;
     }
 
     /**
@@ -36,17 +42,13 @@ class RecipeManager {
      */
     function createRecipe(
         string $title_name, string $content, int $user_id, Category $category, Type $type,
-        array  $recipe_ingredients): string|array {
-        if ($this->titleExists($title_name) == true) {
-            $errors['title'] = 'Titel wird schon verwendet!';
-            return $errors;
-        }
-
-        $slug = $this->createSlug($title_name);
+        array  $recipe_ingredients): string{
+        $slug =strtolower($this->createSlug($title_name));
         $category_id = $category->getId();
         $type_id = $type->getId();
+        $date = new DateTime('now');
 
-        $ps = $this->conn->prepare('
+        $ps = $this->connection->prepare('
         INSERT INTO recipe
         (title, content, slug, user_id, category_id, type_id, photo_url, published_date, rating)
         VALUES 
@@ -59,19 +61,21 @@ class RecipeManager {
         $ps->bindValue('category_id', $category_id);
         $ps->bindValue('type_id', $type_id);
         $ps->bindValue('photo_url', "");
-        $ps->bindValue('published_date', date('Y-m-d H:i:s', (new DateTime('now'))));
+        $ps->bindValue('published_date', date('Y-m-d H:i:s', $date->getTimestamp()));
         $ps->bindValue('rating', 0);
         $ps->execute();
 
-        $recipe_id = $this->conn->lastInsertId();
+        $recipe_id = (int)($this->connection->lastInsertId());
 
         foreach ($recipe_ingredients as $r) {
             $ingredient_name = $r->getIngredientName();
-            $ingredient_id = $ingredientManager->createIngredient($ingredient_name);
-            $unitOfMeasurement_name = $r->getUnitOfMeasurementName();
-            $unitOfMeasurement_id = $measuringUnitManager->getMeasuringUnitId($unitOfMeasurement_name);
+            $ingredient_id = (int)($this->ingredientManager->createIngredient($ingredient_name));
+            $unitOfMeasurement_name = (string)($r->getUnitOfMeasurementName());
+            echo $unitOfMeasurement_name;
+            $unitOfMeasurement_id = (int)($this->measuringUnitManager->getMeasuringUnitId($unitOfMeasurement_name));
+            echo $unitOfMeasurement_id;
             $amount = $r->getAmount();
-            $recipeIngredientManager->createRecipe_Ingredient($recipe_id, $ingredient_id, $unitOfMeasurement_id, $amount);
+            $this->recipeIngredientManager->createRecipe_Ingredient($recipe_id, $ingredient_id, $unitOfMeasurement_id, $amount);
         }
         return $recipe_id;
     }
@@ -81,7 +85,7 @@ class RecipeManager {
      * @return Recipe|bool
      */
     function getRecipe($id): Recipe|bool {
-        $result = $this->conn->query('
+        $result = $this->connection->query('
 SELECT * 
 FROM recipe r 
 INNER JOIN type t ON r.type_id = t.id
@@ -106,7 +110,7 @@ WHERE r.id=$id');
      * @return array
      */
     function getRecipes(): array {
-        $result = $this->conn->query('SELECT * FROM recipe');
+        $result = $this->connection->query('SELECT * FROM recipe');
         $recipes = [];
         while ($row = $result->fetch()) {
             $recipes[] = new Recipe(
@@ -118,22 +122,28 @@ WHERE r.id=$id');
     }
 
 
-    function getRecipesByCategory(string $category): array {
-        $result = $this->conn->query("
-            SELECT * FROM recipe WHERE category_name ='.$category.'");
-        if ($result->fetch()) {
+    function getRecipesByCategory(string $category): array|bool {
+        $recipes [] = array();
+        $result = $this->connection->query("
+            SELECT * FROM recipe WHERE category_id ='.$category.'");
+        if ($result->fetch()!=null) {
             while ($row = $result->fetch()) {
                 $recipes[] = new Recipe(
                     $row['id'], $row['title'], $row['content'], $row['slug'], $row['user_id'],
                     $row['category_id'], $row['type_id'], $row['photo_url'], $row['published_date'], $row['rating']);
             }
-        } else echo "<p> noch kein Rezept vorhanden.</p>";
-        return $recipes;
+            return $recipes;
+        } else {
+            return false;
+        }
+
     }
 
-    function getOneRandomRecipeByCategory(string $category): Recipe {
+    function getOneRandomRecipeByCategory(string $category): Recipe|bool {
         $recipes = $this->getRecipesByCategory($category);
-        return $recipes[rand(0, sizeof($recipeManager->getRecipeByCategory($category)) - 1)];
+        if(!is_null($recipes)) {
+         return false;
+        } else return $recipes[rand(0, sizeof($recipes) - 1)];
     }
 
     function displayRecipe(Recipe $recipe) {
@@ -175,8 +185,13 @@ WHERE r.id=$id');
         return $slug;
     }
 
-    private function titleExists(string $title): bool {
-        $result = $this->conn->query("SELECT COUNT(*) title FROM recipe WHERE title='.$title.'");
+    /**
+     * checks whether the title already exists
+     * @param string $title
+     * @return bool  true, if title already exists, false otherwise
+     */
+    function titleExists(string $title): bool {
+        $result = $this->connection->query("SELECT id FROM recipe WHERE title='.$title.'");
         if ($result->fetch() > 0) {
             return true;
         } else return false;

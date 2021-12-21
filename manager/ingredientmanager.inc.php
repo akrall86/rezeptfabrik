@@ -35,10 +35,10 @@ class IngredientManager {
      * get one ingredient from table ingredient
      * @return array of ingredients
      */
-    function getIngredient(string $name): string|false {
-        $result = $this->conn->query('SELECT * FROM ingredient WHERE name=$name');
-        if($result->fetch()) {
-            return new string($row['id'], $row['name']);
+    function getIngredient(string $name): Ingredient|false {
+        $result = $this->conn->query("SELECT * FROM ingredient WHERE name='".$name."'");
+        if($row = $result->fetch()) {
+            return new Ingredient($row['id'], $row['name']);
         } else return false;
     }
 
@@ -50,7 +50,7 @@ class IngredientManager {
         $result = $this->conn->query('SELECT * FROM ingredient');
         $ingredients = [];
         while ($row = $result->fetch()) {
-            $ingredients[] = new string($row['id'], $row['name']);
+            $ingredients[] = new Ingredient($row['id'], $row['name']);
         }
         return $ingredients;
     }
