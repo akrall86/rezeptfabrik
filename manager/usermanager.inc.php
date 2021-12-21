@@ -221,8 +221,9 @@ class UserManager
         return $roles;
     }
 
-    /*
-     *
+    /**
+     * @param $user_id
+     * @return array
      */
     function getUserRoles($user_id): array
     {
@@ -258,12 +259,11 @@ class UserManager
     }
 
     /**
-     * @param User $user
+     * @param $user
      * @return void
      */
-    function updateUser(User $user)
+    function updateStatement($user)
     {
-        $passwordhash = password_hash($user->password, PASSWORD_BCRYPT);
         $ps = $this->conn->prepare('UPDATE user
         SET firstname = :firstname, lastname = :lastname, user_name = :user_name, email = :email, password = :password
         WHERE  id = :id');
@@ -271,19 +271,48 @@ class UserManager
         $ps->bindValue('lastname', $user->lastname);
         $ps->bindValue('user_name', $user->user_name);
         $ps->bindValue('email', $user->email);
-        $ps->bindValue('password', $passwordhash);
+        $ps->bindValue('password', $user->password);
         $ps->bindValue('id', $user->id);
         $ps->execute();
-
     }
 
+    /**
+     * @param User $user
+     * @return void
+     */
+    function updateUser(User $user)
+    {
+        $passwordhash = password_hash($user->password, PASSWORD_BCRYPT);
+        $user->setPassword($passwordhash);
+        $this->updateStatement($user);
+    }
+
+    /**
+     * @param $user
+     * @return void
+     */
+    function updateUserWithOutHash($user)
+    {
+        $this->updateStatement($user);
+    }
+
+    /**
+     * @param int $id
+     * @return void
+     */
     function deleteUserById(int $id)
     {
         $this->deleteUser_has_roleById($id);
         $this->conn->query("DELETE FROM user WHERE id = $id");
 
     }
-     function deleteUser_has_roleById($id) {
+
+    /**
+     * @param $id
+     * @return void
+     */
+    function deleteUser_has_roleById($id)
+    {
         $this->conn->query("DELETE FROM user_has_role WHERE user_id = $id");
-     }
+    }
 }
