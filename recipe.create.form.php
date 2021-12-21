@@ -43,6 +43,9 @@ if (isset($_POST['submit'])) {
     if (strlen(trim($_POST['title'])) == 0) {
         $errors['title'] = 'Titel eingeben.';
     }
+    if ($recipeManager->titleExists($_POST['title'])){
+        $errors['title_exists'] = 'Titel existiert schon.';
+    }
     if (sizeof($recipe_ingredient_array) == 0) {
         $errors['recipe_ingredients'] = 'Zutat hinzufügen.';
     }
