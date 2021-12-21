@@ -26,10 +26,11 @@ require_once 'inc/admin.user.inc.php';
 
     <!-- content -->
     <div class="content">
+        <a href="admin.users.php">Zurück</a>
         <div class="admin_user_data">
             <form action="admin.user.php" method="POST">
-
                 <?php include 'inc/errormessages.inc.php' ?>
+
                 <div>
                     <label for="id">Id:</label>
                     <input type="text" name="id" id="id" value="<?php echo $user->id ?>" readonly>
