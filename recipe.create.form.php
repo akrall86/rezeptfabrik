@@ -109,7 +109,7 @@ if (isset($_POST['submit'])) {
                         foreach ($categories as $category) {
                             $name = $category->getName();
                             ?>
-                            <option value='<?php $name ?>'><?php echo $name ?></option>";
+                            <option value='<?php echo $name ?>'><?php echo $name ?></option>";
                             <?php
                         }
                         ?>

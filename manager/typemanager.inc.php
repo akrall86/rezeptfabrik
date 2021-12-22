@@ -41,7 +41,7 @@ class TypeManager {
      * get id from given type name
      * @return int|bool the id or false if there is no match
      */
-    function getTypeId($name): int|bool {
+    function getTypeId(string $name): int|bool {
         $result = $this->conn->query("SELECT id FROM type WHERE name = '" . $name . "'");
         if ($row = $result->fetch()) {
             return $row['id'];

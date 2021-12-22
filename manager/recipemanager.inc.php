@@ -71,9 +71,7 @@ class RecipeManager {
             $ingredient_name = $r->getIngredientName();
             $ingredient_id = (int)($this->ingredientManager->createIngredient($ingredient_name));
             $unitOfMeasurement_name = (string)($r->getUnitOfMeasurementName());
-            echo $unitOfMeasurement_name;
             $unitOfMeasurement_id = (int)($this->measuringUnitManager->getMeasuringUnitId($unitOfMeasurement_name));
-            echo $unitOfMeasurement_id;
             $amount = $r->getAmount();
             $this->recipeIngredientManager->createRecipe_Ingredient($recipe_id, $ingredient_id, $unitOfMeasurement_id, $amount);
         }
