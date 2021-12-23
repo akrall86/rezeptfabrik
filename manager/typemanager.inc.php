@@ -25,6 +25,18 @@ class TypeManager {
     }
 
     /**
+     * get one type from DB
+     * @return Type
+     */
+    function getTypeById($id): Type {
+        $result = $this->conn->query("SELECT * FROM type WHERE id='$id'");
+        if ($row = $result->fetch()) {
+            $type = new Type($row['id'], $row['name']);
+        }
+        return $type;
+    }
+
+    /**
      * get all types from db
      * @return array of types
      */
@@ -42,7 +54,7 @@ class TypeManager {
      * @return int|bool the id or false if there is no match
      */
     function getTypeId(string $name): int|bool {
-        $result = $this->conn->query("SELECT id FROM type WHERE name = '" . $name . "'");
+        $result = $this->conn->query("SELECT id FROM type WHERE name = '$name'");
         if ($row = $result->fetch()) {
             return $row['id'];
         }

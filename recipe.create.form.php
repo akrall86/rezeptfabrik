@@ -14,7 +14,6 @@ $measurementUnits = $measuringUnitManager->getMeasuringUnits();
 $count = 0;
 
 // Session for array of Recipe_Ingredients (ingredients, quantities and units of measure)
-
 $recipe_ingredient_array = array();
 if (isset ($_SESSION['recipe_ingredients'])) {
     $recipe_ingredient_array = $_SESSION['recipe_ingredients'];
@@ -109,7 +108,7 @@ if (isset($_POST['submit'])) {
                         foreach ($categories as $category) {
                             $name = $category->getName();
                             ?>
-                            <option value='<?php echo $name ?>'><?php echo $name ?></option>";
+                            <option value='<?php echo $name ?>'><?php echo $name ?></option>;
                             <?php
                         }
                         ?>
@@ -122,7 +121,7 @@ if (isset($_POST['submit'])) {
                         foreach ($types as $type) {
                             $name = $type->getName()
                             ?>
-                            <option value='<?php echo $name ?>'><?php echo $name ?></option>";
+                            <option value='<?php echo $name ?>'><?php echo $name ?></option>;
                             <?php
                         }
                         ?>
@@ -156,7 +155,7 @@ if (isset($_POST['submit'])) {
                         foreach ($measurementUnits as $measurementUnit) {
                             $name = $measurementUnit->getName()
                             ?>
-                            <option value=" <?php echo $name ?> "><?php echo $name ?></option>";
+                            <option value='<?php echo $name ?>'><?php echo $name ?></option>;
                             <?php
                         }
                         ?>

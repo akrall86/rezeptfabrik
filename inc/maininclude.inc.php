@@ -31,12 +31,13 @@ $ingredientManager = new IngredientManager($connection);
 $measuringUnitManager = new MeasuringUnitManager($connection);
 // Object from Class RecipeIngredientManager
 $recipeIngredientManager = new RecipeIngredientManager($connection);
-// Object from Class MeasuringUnitManager
-$recipeManager = new RecipeManager($connection, $ingredientManager, $measuringUnitManager, $recipeIngredientManager);
 // Object from Class CategoryManager
 $categoryManager = new CategoryManager($connection);
 // Object from Class TypeManager
 $typeManager = new TypeManager($connection);
+// Object from Class MeasuringUnitManager
+$recipeManager = new RecipeManager($connection, $ingredientManager, $measuringUnitManager,
+    $recipeIngredientManager, $userManager, $categoryManager, $typeManager);
 // Object from Class FileUploadManager
 $fileUploadManager = new FileUploadManager();
 

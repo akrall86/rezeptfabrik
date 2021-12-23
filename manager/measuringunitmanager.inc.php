@@ -44,7 +44,7 @@ class MeasuringUnitManager {
      * @return int|bool the id or false if there is no match
      */
     function getMeasuringUnitId(string $name): int|bool {
-        $result = $this->conn->query("SELECT id FROM unit_of_measurement WHERE name = '".$name."'");
+        $result = $this->conn->query("SELECT id FROM unit_of_measurement WHERE name = '$name'");
         if ($row = $result->fetch()) {
             return $row['id'];
         }

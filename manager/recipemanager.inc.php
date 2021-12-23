@@ -11,23 +11,36 @@ require_once __DIR__ . '/../model/unit_of_measurement.inc.php';
  */
 class RecipeManager {
     private PDO $connection;
-    private IngredientManager $ingredientManager ;
+    private IngredientManager $ingredientManager;
     private MeasuringUnitManager $measuringUnitManager;
     private RecipeIngredientManager $recipeIngredientManager;
+    private UserManager $userManager;
+    private CategoryManager $categoryManager;
+    private TypeManager $typeManager;
 
     /**
      * @param PDO $conn the connection to the db
      * @param IngredientManager $ingredientManager
      * @param MeasuringUnitManager $measuringUnitManager
      * @param RecipeIngredientManager $recipeIngredientManager
+     * @param UserManager $userManager
+     * @param CategoryManager $categoryManager
+     * @param TypeManager $typeManager
      */
-    public function __construct(PDO $connection, IngredientManager $ingredientManager,
-                                MeasuringUnitManager $measuringUnitManager,
-                                RecipeIngredientManager $recipeIngredientManager) {
+    public function __construct(PDO                     $connection,
+                                IngredientManager       $ingredientManager,
+                                MeasuringUnitManager    $measuringUnitManager,
+                                RecipeIngredientManager $recipeIngredientManager,
+                                UserManager             $userManager,
+                                CategoryManager         $categoryManager,
+                                TypeManager             $typeManager) {
         $this->connection = $connection;
         $this->ingredientManager = $ingredientManager;
         $this->measuringUnitManager = $measuringUnitManager;
         $this->recipeIngredientManager = $recipeIngredientManager;
+        $this->userManager = $userManager;
+        $this->categoryManager = $categoryManager;
+        $this->typeManager = $typeManager;
     }
 
     /**
@@ -42,8 +55,8 @@ class RecipeManager {
      */
     function createRecipe(
         string $title_name, string $content, int $user_id, Category $category, Type $type,
-        array  $recipe_ingredients): string{
-        $slug =strtolower($this->createSlug($title_name));
+        array  $recipe_ingredients): string {
+        $slug = strtolower($this->createSlug($title_name));
         $category_id = $category->getId();
         $type_id = $type->getId();
         $date = new DateTime('now');
@@ -53,7 +66,6 @@ class RecipeManager {
         (title, content, slug, user_id, category_id, type_id, photo_url, published_date, rating)
         VALUES 
         (:title, :content, :slug, :user_id, :category_id, :type_id, :photo_url, :published_date, :rating)');
-
         $ps->bindValue('title', $title_name);
         $ps->bindValue('content', $content);
         $ps->bindValue('slug', $slug);
@@ -79,73 +91,92 @@ class RecipeManager {
     }
 
     /**
-     * @param $id
-     * @return Recipe|bool
+     * get one recipe from DB
+     * @param int $id of the recipe to be fetched
+     * @return Recipe|bool recipe or false if there is no match
      */
-    function getRecipe($id): Recipe|bool {
-        $result = $this->connection->query('
-SELECT * 
-FROM recipe r 
-INNER JOIN type t ON r.type_id = t.id
-INNER JOIN category c ON r.category_id = c.id
-INNER JOIN recipe_has_ingredient_has_unit_of_measurement rhihuom ON r.id = rhihuom.recipe_id
-INNER JOIN ingredient i ON rhihuom.ingredient_id = i.id
-INNER JOIN unit_of_measurement uom ON rhihuom.unit_of_measurement_id = uom.id
-WHERE r.id=$id');
-
-        while ($row = $ps->fetch()) {
+    function getRecipe(int $id): Recipe|bool {
+        $result = $this->connection->query("
+            SELECT r.id AS recipe_id, r.title, r.content, r.slug, r.user_id, r.photo_url, r.published_date, r.rating,
+                   t.id AS type_id,	t.name AS type_name, c.id AS category_id, c.name AS category_name, 
+                   rhihuom.amount, i.id AS ingredient_id, i.name AS ingredient_name, uom.id AS uom_id, uom.name AS uom_name 	
+            FROM recipe r 
+            INNER JOIN type t ON r.type_id = t.id 
+            INNER JOIN category c ON r.category_id = c.id
+            INNER JOIN recipe_has_ingredient_has_unit_of_measurement rhihuom ON r.id = rhihuom.recipe_id
+            INNER JOIN ingredient i ON rhihuom.ingredient_id = i.id
+            INNER JOIN unit_of_measurement uom ON rhihuom.unit_of_measurement_id = uom.id
+            WHERE r.id='$id'");
+        $recipe_ingredients[] = array();
+        if ($row = $result->fetch()) {
+            while ($subset = $result->fetch()) {
+                $recipe_ingredients [] = new Recipe_Ingredient($subset['ingredient_name'], $subset['uom_name'], $subset['amount']);
+            }
+            $user = $this->userManager->getUserById($row['user_id']);
+            $category = $this->categoryManager->getCategoryById($row['category_id']);
+            $type = $this->typeManager->getTypeById($row['type_id']);
+            $published_date = (DateTime::createFromFormat('Y-m-d H:i:s', $row['published_date']));
             $recipe = new Recipe(
-                $row['id'], $row['title'], $row['content'], $row['slug'], $row['user_id'], $row['category_id'],
-                $row['type_id'], $row['photo_url'], $row['published_date'], $row['rating'], $row['recipe_ingredients']);
-
-
+                $row['recipe_id'], $row['title'], $row['content'], $row['slug'], $user, $category, $type,
+                $row['photo_url'], $published_date, $row['rating'], $recipe_ingredients);
+            return $recipe;
         }
         return false;
     }
 
 
     /**
-     * @return array
+     * get all recipes from DB
+     * @return array of recipes or false if there is no match
      */
-    function getRecipes(): array {
-        $result = $this->connection->query('SELECT * FROM recipe');
-        $recipes = [];
-        while ($row = $result->fetch()) {
-            $recipes[] = new Recipe(
-                $row['id'], $row['title'], $row['content'], $row['slug'], $row['user_id'], $row['category_id'],
-                $row['type_id'], $row['photo_url'], $row['published_date'], $row['rating']);
-        }
-
-        return $recipes;
-    }
-
-
-    function getRecipesByCategory(string $category): array|bool {
-        $recipes [] = array();
-        $result = $this->connection->query("
-            SELECT * FROM recipe WHERE category_id ='.$category.'");
-        if ($result->fetch()!=null) {
+    function getAllRecipes(): array|bool {
+        $recipe_ids [] = array();
+        $result = $this->connection->query('SELECT id FROM recipe');
+        if ($result->fetch() != null) {
             while ($row = $result->fetch()) {
-                $recipes[] = new Recipe(
-                    $row['id'], $row['title'], $row['content'], $row['slug'], $row['user_id'],
-                    $row['category_id'], $row['type_id'], $row['photo_url'], $row['published_date'], $row['rating']);
+                $recipe_ids [] = $row['id'];
+            }
+            foreach ($recipe_ids as $id) {
+                $recipes [] = $this->getRecipe($id);
             }
             return $recipes;
-        } else {
-            return false;
         }
-
+        return false;
     }
+
+    /**
+     * get all recipes from a specific category from DB
+     * @param $category
+     * @return array of recipes or false if there is no match
+     */
+    function getRecipesByCategory(string $category): array|bool {
+        $category_id = $this->categoryManager->getCategoryId($category);
+        $recipes [] = array();
+        $result = $this->connection->query("
+            SELECT id FROM recipe WHERE category_id ='$category_id'");
+        if ($result->fetch() != null) {
+            while ($row = $result->fetch()) {
+                $recipe_ids [] = $row['id'];
+            }
+            foreach ($recipe_ids as $id) {
+                $recipes [] = $this->getRecipe($id);
+            }
+            return $recipes;
+        }
+        return false;
+    }
+
 
     function getOneRandomRecipeByCategory(string $category): Recipe|bool {
         $recipes = $this->getRecipesByCategory($category);
-        if(!is_null($recipes)) {
-         return false;
-        } else return $recipes[rand(0, sizeof($recipes) - 1)];
+        if ($recipes != false) {
+            return $recipes[rand(0, (sizeof($recipes) - 1))];
+        }
+        return false;
     }
 
     function displayRecipe(Recipe $recipe) {
-        $user = $userManager->$recipe->getUser();
+        $user = $recipe->getUser();
         echo "
             <div class= 'flex_container_recipe'> 
                 <div class= 'flex_item_recipe_content'>
@@ -172,12 +203,13 @@ WHERE r.id=$id');
     }
 
     function updatePhotoUrl(string $photoUrl, int $recipe_id) {
-        $ps = $this->conn->query("UPDATE recipe SET photo_url = :photoUrl WHERE id='.$recipe_id.'");
+        $ps = $this->conn->query("UPDATE recipe SET photo_url = :photoUrl WHERE id='$recipe_id'");
         $ps->bindValue('photo_url', $photoUrl);
         $ps->execute();
     }
 
-    private function createSlug(string $title): string {
+    private
+    function createSlug(string $title): string {
         $string = str_replace(" ", "-", $title);
         $slug = str_replace(array("#", "'", ";", ".", "\"", ",", ":"), "", $string);
         return $slug;

@@ -41,7 +41,7 @@ class RecipeIngredientManager {
      * @return array of ingredients
      */
     function getIngredient(string $name): string|false {
-        $result = $this->conn->query('SELECT * FROM ingredient WHERE name=$name');
+        $result = $this->conn->query("SELECT * FROM ingredient WHERE name='$name'");
         if ($result->fetch()) {
             return new string($row['id'], $row['name']);
         } else return false;

@@ -26,8 +26,8 @@ class Recipe {
      * @param int $rating
      * @param array $recipe_ingredients
      */
-    public function __construct(int    $id, string $title, string $content, string $slug, User $user, string $category,
-                                string $type, string $photo_url, DateTime $published_date, int $rating,
+    public function __construct(int    $id, string $title, string $content, string $slug, User $user, Category $category,
+                                Type $type, string $photo_url, DateTime $published_date, int $rating,
                                 array  $recipe_ingredients) {
         $this->id = $id;
         $this->title = $title;
@@ -101,7 +101,7 @@ class Recipe {
     /**
      * @return User
      */
-    public function getUser(): int {
+    public function getUser(): User {
         return $this->user;
     }
 
