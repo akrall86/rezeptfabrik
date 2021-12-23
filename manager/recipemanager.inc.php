@@ -186,15 +186,16 @@ class RecipeManager {
         $user = $recipe->getUser();
         $category = $recipe->getCategory();
         $type = $recipe->getType();
+        $date = $recipe->getPublishedDate();
         echo "
             <div class= 'flex_container_recipe'> 
                 <div class= 'flex_item_recipe_content'>
                     <p>" . $user->getUserName() . " hat dieses Rezept am " .
-            $recipe->getPublishedDate()->format('Y-m-d H:i:s') . " gepostet.
+            $date->format('d.m.Y') . " um " . $date->format('H:i:s') . " gepostet.
                     </p> 
                     <h2>" . $recipe->getTitle() . "</h2> 
-                    <p>" . $category->getName() . " " . $type->getName() . "</p> 
-                    <p>" . $recipe->getRating() . "</p> 
+                    <p>" . $category->getName() . " | " . $type->getName() . "</p> 
+                    <p>Bewertung: " . $recipe->getRating() . "</p> 
                     <p>" . $recipe->getContent() . "</p>
                 </div>
                 <div class= 'flex_item_recipe_picture'>";
