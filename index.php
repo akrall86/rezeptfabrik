@@ -26,18 +26,18 @@ require_once 'inc/maininclude.inc.php';
         <h1>Frühstücksrezept des Tages</h1>
         <?php
         $breakfast = $recipeManager->getOneRandomRecipeByCategory("Frühstück");
-        if ($breakfast == false) {
+        if ($breakfast === false) {
             echo "noch kein Frühstücksrezept vorhanden.";
         } else {
             $recipeManager->displayRecipe($breakfast);
         }
         ?>
-        </br>
+        <br/>
         <h1>Rezept des Tages</h1>
         <p>Vorspeise:</p>
         <?php
         $starter = $recipeManager->getOneRandomRecipeByCategory("Vorspeise");
-        if ($starter == false) {
+        if ($starter === false) {
             echo "noch keine Vorspeise vorhanden.";
         } else {
             $recipeManager->displayRecipe($starter);
@@ -46,7 +46,7 @@ require_once 'inc/maininclude.inc.php';
         <p>Hauptspeise:</p>
         <?php
         $dinner = $recipeManager->getOneRandomRecipeByCategory("Hauptspeise");
-        if ($dinner == false) {
+        if ($dinner === false) {
             echo "noch keine Hauptspeise vorhanden.";
         } else {
             $recipeManager->displayRecipe($dinner);
@@ -55,17 +55,17 @@ require_once 'inc/maininclude.inc.php';
         <p>Nachspeise:</p>
         <?php
         $dessert = $recipeManager->getOneRandomRecipeByCategory("Nachspeise");
-        if ($dessert == false) {
+        if ($dessert === false) {
             echo "noch kein Dessert vorhanden.";
         } else {
             $recipeManager->displayRecipe($dessert);
         }
         ?>
-        </br>
+        <br/>
         <h1>Getränk des Tages</h1>
         <?php
         $drink = $recipeManager->getOneRandomRecipeByCategory("Getränk");
-        if ($drink == false) {
+        if ($drink === false) {
             echo "noch kein Getränk vorhanden.";
         } else {
             $recipeManager->displayRecipe($drink);

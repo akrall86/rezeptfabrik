@@ -19,8 +19,8 @@ class Recipe {
      * @param string $content
      * @param string $slug
      * @param User $user
-     * @param string $category
-     * @param string $type
+     * @param Category $category
+     * @param Type $type
      * @param string $photo_url
      * @param DateTime $published_date
      * @param int $rating
@@ -114,7 +114,7 @@ class Recipe {
     /**
      * @return string
      */
-    public function getCategory(): string {
+    public function getCategory(): Category {
         return $this->category;
     }
 
@@ -128,7 +128,7 @@ class Recipe {
     /**
      * @return string
      */
-    public function getType(): string {
+    public function getType(): Type {
         return $this->type;
     }
 

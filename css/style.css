@@ -40,7 +40,7 @@ header {
   text-align: center;
   font-weight: bold;
 }
-/* link to login, logout, register, profile */
+/* links to login, logout, register, profile */
 .authentication {
   display: inline-block;
   width: 15%;
@@ -97,17 +97,16 @@ header {
   display: flex;
   width: 900px;
   flex-wrap: wrap;
-  background-color: aqua;
 }
 .flex_item_recipe_picture {
   background-image: url(../img/placeholder.jpg);
   background-repeat: no-repeat;
   background-size: 100%;
   margin-top: 30px;
-  width: 150px;
+  width: 400px;
 }
 .flex_item_recipe_content {
-  width: 250px;
+  width: 500px;
 }
 /* display recipe */
 /* errors */

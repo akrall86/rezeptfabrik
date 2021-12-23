@@ -127,7 +127,7 @@ class RecipeManager {
 
     /**
      * get all recipes from DB
-     * @return array of recipes or false if there is no match
+     * @return array array of recipes or false if there is no match
      */
     function getAllRecipes(): array|bool {
         $recipe_ids [] = array();
@@ -147,14 +147,18 @@ class RecipeManager {
     /**
      * get all recipes from a specific category from DB
      * @param $category
-     * @return array of recipes or false if there is no match
+     * @return array one recipe or array of recipes or false if there is no match
      */
-    function getRecipesByCategory(string $category): array|bool {
+    function getRecipesByCategory(string $category): Recipe|array|bool {
         $category_id = $this->categoryManager->getCategoryId($category);
         $recipes [] = array();
+        $recipe_ids [] = array();
         $result = $this->connection->query("
             SELECT id FROM recipe WHERE category_id ='$category_id'");
-        if ($result->fetch() != null) {
+        if ($result->rowCount() === 1) {
+            $row = $result->fetch();
+            return $this->getRecipe($row['id']);
+        } else if ($result->rowCount() > 1) {
             while ($row = $result->fetch()) {
                 $recipe_ids [] = $row['id'];
             }
@@ -166,25 +170,30 @@ class RecipeManager {
         return false;
     }
 
-
     function getOneRandomRecipeByCategory(string $category): Recipe|bool {
         $recipes = $this->getRecipesByCategory($category);
-        if ($recipes != false) {
-            return $recipes[rand(0, (sizeof($recipes) - 1))];
+        if (gettype($recipes) == array()) {
+            $random_number = rand(0, (sizeof($recipes) - 1));
+            $recipe = $recipes[$random_number];
+            return $recipe;
+        } else if ($recipes instanceof Recipe) {
+            return $recipes;
         }
         return false;
     }
 
     function displayRecipe(Recipe $recipe) {
         $user = $recipe->getUser();
+        $category = $recipe->getCategory();
+        $type = $recipe->getType();
         echo "
             <div class= 'flex_container_recipe'> 
                 <div class= 'flex_item_recipe_content'>
-                    <p>" . $user->getUserName() . "hat dieses Rezept am " .
+                    <p>" . $user->getUserName() . " hat dieses Rezept am " .
             $recipe->getPublishedDate()->format('Y-m-d H:i:s') . " gepostet.
                     </p> 
                     <h2>" . $recipe->getTitle() . "</h2> 
-                    <p>" . $recipe->getCategory() . " " . $recipe->getType() . "</p> 
+                    <p>" . $category->getName() . " " . $type->getName() . "</p> 
                     <p>" . $recipe->getRating() . "</p> 
                     <p>" . $recipe->getContent() . "</p>
                 </div>
@@ -222,7 +231,7 @@ class RecipeManager {
      */
     function titleExists(string $title): bool {
         $result = $this->connection->query("SELECT id FROM recipe WHERE title='.$title.'");
-        if ($result->fetch() > 0) {
+        if ($result->fetch()) {
             return true;
         } else return false;
     }
