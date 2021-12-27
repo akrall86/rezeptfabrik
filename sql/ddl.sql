@@ -71,8 +71,8 @@ VALUES ('g'),
        ('cl'),
        ('l'),
        ('Stück'),
-       ('Teelöffel'),
-       ('Esslöffel'),
+       ('TL'),
+       ('EL'),
        ('Prise'),
        ('Schuss');
 
