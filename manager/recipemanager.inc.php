@@ -5,6 +5,7 @@ require_once __DIR__ . '/../model/ingredient.inc.php';
 require_once __DIR__ . '/../model/recipe.inc.php';
 require_once __DIR__ . '/../model/recipe_ingredient.inc.php';
 require_once __DIR__ . '/../model/unit_of_measurement.inc.php';
+require_once __DIR__ . '/../model/recipe_ingredients.inc.php';
 
 /**
  * The RecipeManager class contains methods for managing recipes and editing recipes in db
@@ -50,12 +51,12 @@ class RecipeManager {
      * @param int $user_id
      * @param Category $category
      * @param Type $type
-     * @param array $recipe_ingredients
+     * @param Recipe_Ingredients $recipe_ingredients
      * @return string|array $id of the recipe or $errors[] if title is already in use
      */
     function createRecipe(
-        string $title_name, string $content, int $user_id, Category $category, Type $type,
-        array  $recipe_ingredients): string {
+        string             $title_name, string $content, int $user_id, Category $category, Type $type,
+        Recipe_Ingredients $recipe_ingredients): string {
         $slug = strtolower($this->createSlug($title_name));
         $category_id = $category->getId();
         $type_id = $type->getId();
@@ -77,13 +78,13 @@ class RecipeManager {
         $ps->bindValue('rating', 0);
         $ps->execute();
 
-        $recipe_id = (int)($this->connection->lastInsertId());
+        $recipe_id = ($this->connection->lastInsertId());
 
         foreach ($recipe_ingredients as $r) {
             $ingredient_name = $r->getIngredientName();
-            $ingredient_id = (int)($this->ingredientManager->createIngredient($ingredient_name));
-            $unitOfMeasurement_name = (string)($r->getUnitOfMeasurementName());
-            $unitOfMeasurement_id = (int)($this->measuringUnitManager->getMeasuringUnitId($unitOfMeasurement_name));
+            $ingredient_id = ($this->ingredientManager->createIngredient($ingredient_name));
+            $unitOfMeasurement_name = ($r->getUnitOfMeasurementName());
+            $unitOfMeasurement_id = ($this->measuringUnitManager->getMeasuringUnitId($unitOfMeasurement_name));
             $amount = $r->getAmount();
             $this->recipeIngredientManager->createRecipe_Ingredient($recipe_id, $ingredient_id, $unitOfMeasurement_id, $amount);
         }
@@ -99,7 +100,7 @@ class RecipeManager {
         $result = $this->connection->query("
             SELECT r.id AS recipe_id, r.title, r.content, r.slug, r.user_id, r.photo_url, r.published_date, r.rating,
                    t.id AS type_id,	t.name AS type_name, c.id AS category_id, c.name AS category_name, 
-                   rhihuom.amount, i.id AS ingredient_id, i.name AS ingredient_name, uom.id AS uom_id, uom.name AS uom_name 	
+                   rhihuom.amount AS amount, i.id AS ingredient_id, i.name AS ingredient_name, uom.id AS uom_id, uom.name AS uom_name 	
             FROM recipe r 
             INNER JOIN type t ON r.type_id = t.id 
             INNER JOIN category c ON r.category_id = c.id
@@ -107,10 +108,11 @@ class RecipeManager {
             INNER JOIN ingredient i ON rhihuom.ingredient_id = i.id
             INNER JOIN unit_of_measurement uom ON rhihuom.unit_of_measurement_id = uom.id
             WHERE r.id='$id'");
-        $recipe_ingredients[] = array();
+        $recipe_ingredients = new Recipe_Ingredients();
         if ($row = $result->fetch()) {
             while ($subset = $result->fetch()) {
-                $recipe_ingredients [] = new Recipe_Ingredient($subset['ingredient_name'], $subset['uom_name'], $subset['amount']);
+                $recipe_ingredients->add(
+                    new Recipe_Ingredient($subset['ingredient_name'], $subset['uom_name'], $subset['amount']));
             }
             $user = $this->userManager->getUserById($row['user_id']);
             $category = $this->categoryManager->getCategoryById($row['category_id']);
@@ -187,6 +189,7 @@ class RecipeManager {
         $category = $recipe->getCategory();
         $type = $recipe->getType();
         $date = $recipe->getPublishedDate();
+        $recipe_ingredients = $recipe->getRecipeIngredients();
         echo "
             <div class= 'flex_container_recipe'> 
                 <div class= 'flex_item_recipe_content'>
@@ -195,16 +198,33 @@ class RecipeManager {
                     </p> 
                     <h2>" . $recipe->getTitle() . "</h2> 
                     <p>" . $category->getName() . " | " . $type->getName() . "</p> 
-                    <p>Bewertung: " . $recipe->getRating() . "</p> 
-                    <p>" . $recipe->getContent() . "</p>
-                </div>
-                <div class= 'flex_item_recipe_picture'>";
+                    <p>Bewertung: " . $recipe->getRating() . "</p> " . "
+                    Zutaten: </br/>";
+        echo "<table>
+                    ";
+        foreach ($recipe_ingredients as $recipe_ingredient) {
+            echo " <tr>
+                    <td> " .
+                $recipe_ingredient->getAmount() . "</td>
+               <td>" . $recipe_ingredient->getUnitOfMeasurementName() . "</td>
+               <td> " . $recipe_ingredient->getIngredientName()  . " </td>
+                    </td>
+                      </tr>";
+        }
+        echo "
+                
+                  </table>";
+
+        echo " <p>" . $recipe->getContent() . " </p >
+                </div >
+                <div class= 'flex_item_recipe_picture' > ";
         $photoUrl = $recipe->getPhotoUrl();
         if (strlen($photoUrl) != 0) {
-            echo "<img src=$photoUrl alt='Bild des Rezeptes'>";
+            echo "<img src = $photoUrl alt = 'Bild des Rezeptes' > ";
         }
-        echo " </div>
-            </div>";
+
+        echo " </div >
+            </div > ";
     }
 
 
@@ -213,14 +233,14 @@ class RecipeManager {
     }
 
     function updatePhotoUrl(string $photoUrl, int $recipe_id) {
-        $ps = $this->conn->query("UPDATE recipe SET photo_url = :photoUrl WHERE id='$recipe_id'");
+        $ps = $this->conn->query("UPDATE recipe SET photo_url = :photoUrl WHERE id = '$recipe_id'");
         $ps->bindValue('photo_url', $photoUrl);
         $ps->execute();
     }
 
     private
     function createSlug(string $title): string {
-        $string = str_replace(" ", "-", $title);
+        $string = str_replace(" ", " - ", $title);
         $slug = str_replace(array("#", "'", ";", ".", "\"", ",", ":"), "", $string);
         return $slug;
     }
