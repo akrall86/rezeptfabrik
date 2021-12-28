@@ -123,7 +123,7 @@ class RecipeManager {
                 $row['photo_url'], $published_date, $row['rating'], $recipe_ingredients);
             return $recipe;
         }
-        return false;
+        else return false;
     }
 
 
@@ -154,20 +154,15 @@ class RecipeManager {
     function getRecipesByCategory(string $category): Recipe|array|bool {
         $category_id = $this->categoryManager->getCategoryId($category);
         $recipes [] = array();
-        $recipe_ids [] = array();
         $result = $this->connection->query("
             SELECT id FROM recipe WHERE category_id ='$category_id'");
-        if ($result->rowCount() === 1) {
-            $row = $result->fetch();
+        if ($row = $result->fetch()){
             return $this->getRecipe($row['id']);
-        } else if ($result->rowCount() > 1) {
+        }if ($row_count > 1){
             while ($row = $result->fetch()) {
-                $recipe_ids [] = $row['id'];
+                $recipes [] = $this->getRecipe($row['id']);
             }
-            foreach ($recipe_ids as $id) {
-                $recipes [] = $this->getRecipe($id);
-            }
-            return $recipes;
+        return $recipes;
         }
         return false;
     }
@@ -240,7 +235,7 @@ class RecipeManager {
 
     private
     function createSlug(string $title): string {
-        $string = str_replace(" ", " - ", $title);
+        $string = str_replace(" ", "-", $title);
         $slug = str_replace(array("#", "'", ";", ".", "\"", ",", ":"), "", $string);
         return $slug;
     }

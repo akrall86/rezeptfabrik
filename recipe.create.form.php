@@ -33,7 +33,7 @@ if (isset($_POST['add_ingredient'])) {
         $recipe_ingredients = $_SESSION['recipe_ingredients'];
         $recipe_ingredients->add(new Recipe_Ingredient(
             $_POST['ingredient'], $_POST['measurementUnit'], $_POST['measure']));
-
+        $_SESSION['recipe_ingredients'] = $recipe_ingredients;
     }
 }
 
