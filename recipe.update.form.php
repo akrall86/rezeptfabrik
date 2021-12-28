@@ -3,14 +3,19 @@ require_once 'inc/maininclude.inc.php';
 require_once 'manager/measuringunitmanager.inc.php';
 require_once 'manager/recipeingredientmanager.inc.php';
 require_once 'manager/categorymanager.inc.php';
+require_once 'manager/typemanager.inc.php';
+require_once 'manager/recipemanager.inc.php';
+
+$id = (int) $_GET["id"];
 
 $measurementUnits = $measuringUnitManager->getMeasuringUnits();
 $categories = $categoryManager->getCategories();
 $types = $typeManager->getTypes();
+$recipe = $recipeManager->getRecipe($id);
 ?>
 
 
-!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html lang="de">
 <head>
     <meta charset="utf-8"/>
@@ -31,12 +36,12 @@ $types = $typeManager->getTypes();
 
     <div class="content">
         <h1>Rezept bearbeiten</h1>
-        <form enctype="multipart/form-data" action="recipe.create.form.php" method="post">
+        <form enctype="multipart/form-data" action="./profile.php" method="post">
             <?php include 'inc/errormessages.inc.php'; ?>
             <div>
                 <div>
                     <label for="title">Titel:</label><br/>
-                    <input type="text" name="title" id="title">
+                    <input type="text" name="title" id="title" value="<?php echo $recipe->getTitle() ?>">
                 </div>
 
                 <div>
@@ -97,7 +102,8 @@ $types = $typeManager->getTypes();
                 </div>
                 <div>
                     <label for="description">Beschreibung:</label><br/>
-                    <textarea class="description" type="text" name="description" id="description"></textarea>
+                    <textarea class="description" type="text" name="description" id="description"
+                              value="<?php echo $recipe->getContent() ?>"></textarea>
                 </div>
                 <div>
                     <label for="picture">Bild:</label><br>
@@ -106,6 +112,8 @@ $types = $typeManager->getTypes();
                 <br/>
                 <div>
                     <button name="submit">Speichern</button>
+                    <button name="delete">Rezept löschen</button>
+                    </form>
                 </div>
         </form>
 

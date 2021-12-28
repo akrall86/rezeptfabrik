@@ -39,7 +39,26 @@ require_once 'inc/profileinclude.inc.php';
         </div>
         <div>
             <h2>Meine Rezepte</h2>
-            <li><a href="./recipe.update.form.php">Rezept bearbeiten</a></li>
+            <?php
+            $my_recipes = $recipeManager->getRecipesByUser($_SESSION['user_id']);
+            foreach ($my_recipes as $recipe) {
+                $id = $recipe->getId();
+                $category = $recipe->getCategory();
+                $type = $recipe->getType();
+                $date = $recipe->getPublishedDate();
+                echo " <h3>" . $recipe->getTitle() . "</h3> 
+                       erstellt am " . $date->format('d.m.Y') . " um " . $date->format('H:i:s') . "<br/>
+                       <p>Bewertung: " . $recipe->getRating() . "</p> ";
+                ?>
+                <form action="profile.php" method="POST">
+                    <button name="update">Rezept bearbeiten</button>
+                </form>
+                <?php
+                if (isset($_POST['update'])) {
+                    header("Location: ./recipe.update.form.php?id=$id");
+                }
+            }
+            ?>
         </div>
         <div>
             <h2>Meine Favoriten</h2>
