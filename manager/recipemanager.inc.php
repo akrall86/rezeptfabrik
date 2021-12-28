@@ -228,8 +228,9 @@ class RecipeManager {
     }
 
     function updatePhotoUrl(string $photoUrl, int $recipe_id) {
-        $ps = $this->conn->query("UPDATE recipe SET photo_url = :photoUrl WHERE id = '$recipe_id'");
+        $ps = $this->connection->prepare('UPDATE recipe SET photo_url = :photo_url WHERE id = :recipe_id');
         $ps->bindValue('photo_url', $photoUrl);
+        $ps->bindValue('recipe_id', $recipe_id);
         $ps->execute();
     }
 

@@ -3,6 +3,7 @@ require_once 'inc/maininclude.inc.php';
 require_once 'manager/measuringunitmanager.inc.php';
 require_once 'manager/recipeingredientmanager.inc.php';
 require_once 'manager/categorymanager.inc.php';
+require_once 'manager/fileuploadmanager.inc.php';
 require_once 'model/recipe_ingredient.inc.php';
 require_once 'model/type.inc.php';
 require_once 'model/category.inc.php';
@@ -43,7 +44,7 @@ if (isset($_POST['submit'])) {
     if (strlen(trim($_POST['title'])) == 0) {
         $errors['title'] = 'Titel eingeben.';
     }
-    if ($recipeManager->titleExists($_POST['title'])){
+    if ($recipeManager->titleExists($_POST['title'])) {
         $errors['title_exists'] = 'Titel existiert schon.';
     }
     if ($_SESSION['recipe_ingredients']->count() == 0) {
@@ -60,13 +61,13 @@ if (isset($_POST['submit'])) {
         $user_id = $_SESSION['user_id'];
         $recipe_id = $recipeManager->createRecipe(($_POST['title']), ($_POST['description']), $user_id,
             $category, $type, $recipe_ingredients);
-        if (isset($_POST['picture'])) {
-            $photoUrl = $fileUploadManager->uploadImage($_SESSION['user_id'], $recipe_id, ($_POST['picture']));
-            $recipeManager->updatePhotoUrl($photoUrl, $recipe_id);
-        }
-        unset($_SESSION['recipe_ingredients']);
-        header('Location: ./confirmation.php');
+
+        $filename = $fileUploadManager->uploadImage($user_id, $recipe_id);
+        $recipeManager->updatePhotoUrl($filename, $recipe_id);
     }
+    unset($_SESSION['recipe_ingredients']);
+    //header('Location: ./confirmation.php');
+
 
 }
 ?>
