@@ -156,9 +156,11 @@ class RecipeManager {
         $recipes [] = array();
         $result = $this->connection->query("
             SELECT id FROM recipe WHERE category_id ='$category_id'");
-        if ($row = $result->fetch()){
+        $row_count = $result->rowCount();
+        if ($row_count > 0){
+            $row = $result->fetch();
             return $this->getRecipe($row['id']);
-        }if ($row_count > 1){
+        }if ($row_count > 0){
             while ($row = $result->fetch()) {
                 $recipes [] = $this->getRecipe($row['id']);
             }
