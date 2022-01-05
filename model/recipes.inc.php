@@ -16,4 +16,9 @@ class recipes extends ArrayIterator {
         $this->append($recipe);
     }
 
+    public function count(): int {
+        $array = $this->getArrayCopy();
+        return count($array);
+    }
+
 }
