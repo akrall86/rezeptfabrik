@@ -32,8 +32,7 @@ class UserManager
      */
     function createUser(string $firstname, string $lastname, string $user_name, string $email, string $password): string
     {
-        // password hash
-        $password = password_hash($password, PASSWORD_BCRYPT);
+
 
         // check email of it exist
         if ($this->getUserByEmail($email) == true) {
@@ -44,6 +43,8 @@ class UserManager
             return $errors['user_name'] = 'Benutzername schon vorhanden!';
 
         }
+        // password hash
+        $password = password_hash($password, PASSWORD_BCRYPT);
 
         // insert user into DB
         $ps = $this->conn->prepare('INSERT INTO user 
