@@ -62,7 +62,7 @@ header {
   a:hover {
     color: black;
     text-decoration: none;
-    padding: 10px;
+    transform: scale(1.2);
     font-size: 22px;
   }
 }
@@ -88,8 +88,7 @@ header {
 
       a:hover {
         color: black;
-        padding: 10px;
-        font-size: 22px;
+        transform: scale(1.2);
         text-decoration: none;
       }
     }
@@ -107,14 +106,13 @@ header {
   padding-bottom: 10px;
 }
 
-/*content index*/
+/* display recipe */
 .flex_container_recipe {
   margin-top: 20px;
   margin-bottom: 20px;
   display: flex;
   width: 900px;
   flex-wrap: wrap;
-
 }
 
 .flex_item_recipe_picture {
@@ -128,9 +126,33 @@ header {
 
 .flex_item_recipe_content {
   width: 650px;
+
+  .cookerhood {
+    width: 30px;
+    height: 30px;
+  }
+
+  .unit_of_measurements {
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: right;
+  }
+
+  .ingredients {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  tr:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
 }
 
-/* display recipe */
+.filter_recipe {
+  display: inline-block;
+  margin-bottom: 50px;
+}
 
 
 /* errors */
@@ -185,7 +207,6 @@ form div {
 }
 
 /* button */
-
 button, .button {
   background-color: khaki;
   border: 1px solid black;
@@ -199,7 +220,7 @@ button:hover, .button:hover {
   background-color: white;
   color: black;
   border: 1px solid black;
-  font-size: 16px;
+  transform: scale(1.2);
 }
 
 /* footer */

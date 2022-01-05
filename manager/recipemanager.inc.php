@@ -129,17 +129,19 @@ class RecipeManager {
 
     /**
      * get all recipes from DB
-     * @return array array of recipes or false if there is no match
+     * @return array one recipe or array of recipes or false if there is no recipe in the DB
      */
-    function getAllRecipes(): array|bool {
-        $recipe_ids [] = array();
+    function getAllRecipes(): recipe|array|bool {
         $result = $this->connection->query('SELECT id FROM recipe');
-        if ($result->fetch() != null) {
+        $row_count = $result->rowCount();
+        if ($row_count == 1) {
+            $row = $result->fetch();
+            $id = $row['id'];
+            return $this->getRecipe($id);
+        }
+        if ($row_count > 1) {
             while ($row = $result->fetch()) {
-                $recipe_ids [] = $row['id'];
-            }
-            foreach ($recipe_ids as $id) {
-                $recipes [] = $this->getRecipe($id);
+                $recipes [] = $this->getRecipe($row['id']);
             }
             return $recipes;
         }
@@ -151,7 +153,7 @@ class RecipeManager {
      * @param int $id the id from the user
      * @return array array of recipes or false if there is no match
      */
-    public function getRecipesByUser($id): Recipes | bool{
+    public function getRecipesByUser($id): Recipes|bool {
         $recipes = new Recipes();
         $result = $this->connection->query("
             SELECT id FROM recipe WHERE user_id ='$id'");
@@ -160,7 +162,8 @@ class RecipeManager {
                 $recipes->add($this->getRecipe($row['id']));
             }
             return $recipes;
-        } return false;
+        }
+        return false;
     }
 
     /**
@@ -222,21 +225,31 @@ class RecipeManager {
                     </p> 
                     <h2>" . $recipe->getTitle() . "</h2> 
                     <p>" . $category->getName() . " | " . $type->getName() . "</p> 
-                    <p>Bewertung: " . $recipe->getRating() . "</p> " . "
-                    Zutaten: </br/>";
-        echo "<table>
-                    ";
-        foreach ($recipe_ingredients as $recipe_ingredient) {
-            echo " <tr>
-                    <td> " .
-                $recipe_ingredient->getAmount() . "</td>
-               <td>" . $recipe_ingredient->getUnitOfMeasurementName() . "</td>
-               <td> " . $recipe_ingredient->getIngredientName() . " </td>
-                    </td>
-                      </tr>";
+                    <p>
+        <img class='cookerhood' src = ./img/cookerhood.png>
+        <img class='cookerhood' src = ./img/cookerhood.png>
+        <img class='cookerhood' src = ./img/cookerhood.png>
+        <img class='cookerhood' src = ./img/cookerhood.png>
+        <img class='cookerhood' src = ./img/cookerhood.png>";
+
+        if ($recipe->getRating() < 0) {
+            echo "(" . $recipe->getRating() . " von 5)";
+        } else {
+            echo "noch keine Bewertungen.";
         }
-        echo "</table>";
-        echo " <p>" . $recipe->getContent() . " </p >
+        echo " </p> 
+        Zutaten: <br/>
+        <table >";
+        foreach ($recipe_ingredients as $recipe_ingredient) {
+            echo " <tr >
+                    <td class='unit_of_measurements' > " .
+                $recipe_ingredient->getAmount() . " " . $recipe_ingredient->getUnitOfMeasurementName() . " </td >
+               <td class='ingredients' > " . $recipe_ingredient->getIngredientName() . " </td >
+                    </td >
+                      </tr > ";
+        }
+        echo "</table > ";
+        echo " <p > " . $recipe->getContent() . " </p >
                 </div >
                 <div class= 'flex_item_recipe_picture' > ";
         $photoUrl = $recipe->getPhotoUrl();
@@ -271,7 +284,7 @@ class RecipeManager {
      */
     private
     function createSlug(string $title): string {
-        $string = str_replace(" ", "-", $title);
+        $string = str_replace(" ", " - ", $title);
         $slug = str_replace(array("#", "'", ";", ".", "\"", ",", ":"), "", $string);
         return $slug;
     }
@@ -292,14 +305,13 @@ class RecipeManager {
      * delete the given recipe from DB
      * @param string $category the id from the recipe
      */
-    function deleteRecipe(Recipe $recipe){
+    function deleteRecipe(Recipe $recipe) {
         $id = $recipe->getId();
         $this->connection->query("
             DELETE FROM recipe_has_ingredient_has_unit_of_measurement WHERE recipe_id = $id");
         $this->connection->query("
             DELETE FROM recipe WHERE id = $id");
     }
-
 
 
 }

@@ -6,6 +6,11 @@ require_once 'manager/categorymanager.inc.php';
 
 $categories = $categoryManager->getCategories();
 $types = $typeManager->getTypes();
+$recipe_list = $recipeManager->getAllRecipes();
+$recipes = new Recipes();
+foreach ($recipe_list as $recipe) {
+    $recipes->add($recipe);
+}
 ?>
 
 <!DOCTYPE HTML>
@@ -30,7 +35,7 @@ $types = $typeManager->getTypes();
     <div class="content">
 
         <h1>Rezepte</h1>
-        <form action="recipe.view.php" method="post">
+        <form class="filter_recipe" action="recipe.view.php" method="post">
             <div>
                 <label for="title">Filtern nach Kategorie:</label><br>
                 <select name="category" id="category">
@@ -48,26 +53,46 @@ $types = $typeManager->getTypes();
                 <button name="filterCategory">filtern</button>
             </div>
         </form>
-        <form action="recipe.view.php" method="post">
+        <form class="filter_recipe" action="recipe.view.php" method="post">
             <div>
                 <label for="type">Filtern nach Typ:</label><br>
                 <select name="type" id="type">
-                <?php
-                foreach ($types as $type) {
-                    $name = $type->getName()
-                    ?>
-                    <option value='<?php $name ?>'><?php echo $name ?></option>";
                     <?php
-                }
-                ?>
+                    foreach ($types as $type) {
+                        $name = $type->getName()
+                        ?>
+                        <option value='<?php $name ?>'><?php echo $name ?></option>";
+                        <?php
+                    }
+                    ?>
                 </select>
             </div>
             <div>
                 <button name="filterType">filtern</button>
             </div>
         </form>
-    </div>
+        <br/>
 
+
+        <?php
+
+        $recipes_per_page = 5;
+        $page_number = ((isset($_GET["pagecount"])) ? $_GET["pagecount"] : 0);
+        $number = 0;
+        for ($count = 0; $count < $recipes->count(); $count += $recipes_per_page) {
+            $number++;
+            echo '<a href="?pagecount=' . $count . '">' .
+                (($count == $page_number) ? "[" . $number . "]" : $number) . ' </a>';
+        }
+
+        for ($count = $page_number; $count < ($page_number + $recipes_per_page); $count++) {
+            if (isset($recipes[$count])) {
+                echo "<p>" . $recipeManager->displayRecipe($recipes[$count]) . "</p>\n";
+            }
+        }
+        ?>
+
+    </div>
     <?php
     include "inc/footer.inc.php";
     ?>
