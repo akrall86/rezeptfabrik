@@ -1,10 +1,13 @@
 <?php
 if (isset($_POST['btregister'])) {
-   require_once __DIR__ . './registerupdateerrormessages.inc.php';
+    require_once __DIR__ . './registerupdateerrormessages.inc.php';
     if (strlen(trim($_POST['password'])) < 6) {
         $errors['password'] = 'Passwort muss mindestens 6 Zeichen haben.';
     }
     if (strlen(trim($_POST['passwordrepeat'])) != strlen(trim($_POST['password']))) {
+        $errors['passwordrepeat'] = 'Passwörter stimmen nicht überein.';
+    }
+    if (strcmp($_POST['password'], $_POST['passwordrepeat']) !== 0) {
         $errors['passwordrepeat'] = 'Passwörter stimmen nicht überein.';
     }
     if (count($errors) == 0) {
