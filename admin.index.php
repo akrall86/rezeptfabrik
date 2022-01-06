@@ -27,7 +27,7 @@ require_once 'inc/requireadmin.inc.php';
     <div class="content">
 
         <div>
-            <h2>User Übersicht</h2>
+            <h2>Benutzer Übersicht</h2>
             <form action="admin.index.php" method="POST">
                 <button name="btgetusers">Alle Benutzer Anzeigen</button>
             </form>
