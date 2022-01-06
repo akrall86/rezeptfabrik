@@ -19,6 +19,9 @@ if (isset($_POST['btupdate']) && $_POST['password']) {
         if (strlen(trim($_POST['newpasswordrepeat'])) != strlen(trim($_POST['newpassword']))) {
             $errors['newpasswordrepeat'] = 'neues Passwort stimmt nicht überein.';
         }
+        if (strcmp($_POST['password'], $_POST['passwordrepeat']) !== 0) {
+            $errors['passwordrepeat'] = 'Passwörter stimmen nicht überein.';
+        }
     }
     if (!password_verify($_POST['password'], $user->password)) {
         $errors['password'] = 'Passwort stimmt nicht überein';
