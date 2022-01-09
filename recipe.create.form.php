@@ -31,7 +31,6 @@ require_once 'inc/recipe.create.php';
                     <input type="text" name="title" id="title"
                            value="<?php if ($_REQUEST != null && $_REQUEST['title'] != null) echo $_REQUEST['title'] ?>">
                 </div>
-
                 <div>
                     <label for="category">Kategorie:</label><br/>
                     <select name="category" id="category">
@@ -77,10 +76,17 @@ require_once 'inc/recipe.create.php';
                         }
                     }
                     ?>
-                    <label for="ingredient">Zutat:</label>
-                    <label class="input_measure" for="measure">Menge:</label><br/>
-                    <input class="input_ingredients" type="text" name="ingredient" id="ingredient">
-                    <input class="input_ingredients" type="text" name="measure" id="measure">
+                </div>
+                <div class="input_ingredients">
+                    <label for="ingredient">Zutat:</label><br/>
+                    <input type="text" name="ingredient" id="ingredient">
+                </div>
+                <div class="input_ingredients">
+                    <label for="measure">Menge:</label><br/>
+                    <input type="text" name="measure" id="measure">
+                </div>
+                <div class="input_ingredients">
+                    <label for="measurementUnit">Maßeinheit:</label><br/>
                     <select class="select_unit_of_measurement" name="measurementUnit" id="measurementUnit">
                         <?php
                         foreach ($measurementUnits as $measurementUnit) {
@@ -91,13 +97,15 @@ require_once 'inc/recipe.create.php';
                         }
                         ?>
                     </select>
+                </div>
+                   <div class="input_ingredients">
                     <button name="add_ingredient">hinzufügen</button>
                 </div>
                 <div>
                     <label for="description">Beschreibung:</label><br/>
                     <textarea class="description" type="text" name="description" id="description">
                        <?php if ($_REQUEST != null && $_REQUEST['description'] != null)
-                           echo ($_REQUEST['description']) ?>
+                           echo($_REQUEST['description']) ?>
                     </textarea>
                 </div>
                 <div>
@@ -108,15 +116,13 @@ require_once 'inc/recipe.create.php';
                 <div>
                     <button name="submit">Speichern</button>
                 </div>
+            </div>
         </form>
-
     </div>
 
-</div>
-
-<?php
-include "inc/footer.inc.php";
-?>
+    <?php
+    include "inc/footer.inc.php";
+    ?>
 
 </body>
 </html>
