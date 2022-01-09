@@ -97,7 +97,7 @@ require_once 'inc/recipe.create.php';
                     <label for="description">Beschreibung:</label><br/>
                     <textarea class="description" type="text" name="description" id="description">
                        <?php if ($_REQUEST != null && $_REQUEST['description'] != null)
-                           echo ltrim($_REQUEST['description']) ?>
+                           echo ($_REQUEST['description']) ?>
                     </textarea>
                 </div>
                 <div>
