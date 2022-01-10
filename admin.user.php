@@ -80,9 +80,12 @@ require_once 'inc/admin.user.inc.php';
                         <?php foreach ($roles as $role): ?>
                         <tr>
                             <td><?php echo $role->name?></td>
-                            <td><input type="checkbox" name="has_role<?php echo $count?>" id="has_role=<?php echo $count?>" <?php $count++; foreach ($userManager->getUserRoles($user->id) as $userrole ) if ($userrole->name === $role->name) echo 'checked' ?>></td>
+                            <td><input type="checkbox" name="has_role<?php echo $count?>" id="has_role<?php echo $count?>" <?php $count++;
+                            foreach ($userManager->getUserRoles($user->id) as $userrole ) if ($userrole->name === $role->name) echo 'checked' ?>></td>
                         </tr>
                         <?php endforeach; ?>
+                        <input type="hidden" name="id" value="<?php echo $user->id?>"
+                        <input type="hidden" name="count" value="<?php echo $count?>">
                     </table>
                     <button name="btupdaterole">Rollen zuweisen</button>
                 </form>
