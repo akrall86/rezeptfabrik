@@ -43,6 +43,7 @@ CREATE TABLE rezeptfabrik.recipe
     type_id        INTEGER     NOT NULL,
     photo_url      TEXT,
     published_date DATETIME    NOT NULL,
+    rating_count   INTEGER     NOT NULL,
     rating         INTEGER     NOT NULL,
     PRIMARY KEY (id),
     UNIQUE (title),
