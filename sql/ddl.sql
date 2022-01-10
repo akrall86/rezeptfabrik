@@ -21,7 +21,9 @@ CREATE TABLE rezeptfabrik.role
 
 INSERT INTO rezeptfabrik.role (name)
 VALUES ('ADMIN'),
-       ('USER');
+       ('USER'),
+       ('Chefkoch'),
+       ('Hobbykoch');
 
 CREATE TABLE rezeptfabrik.user_has_role
 (
