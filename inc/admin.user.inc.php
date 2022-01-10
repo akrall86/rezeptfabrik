@@ -55,11 +55,11 @@ if (isset($_SESSION['loggedin']) && $_SESSION['user_id'] != null && $_SESSION['a
             if (isset($_POST['has_role'.$i])) {
                 foreach ($userManager->getUserRoles($_POST['id']) as $userRole) {
 
+
                 }
             }
         }
     }
-
 
     if (isset($_POST['btdelete']) && $user !== false) {
         if (!password_verify($_REQUEST['password'], $userManager->getUserById($_SESSION['user_id'])->password)) {
