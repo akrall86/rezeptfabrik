@@ -75,7 +75,8 @@ VALUES ('g'),
        ('TL'),
        ('EL'),
        ('Prise'),
-       ('Schuss');
+       ('Schuss'),
+       ('Pk');
 
 CREATE TABLE rezeptfabrik.recipe_has_ingredient_has_unit_of_measurement
 (
