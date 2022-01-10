@@ -168,12 +168,12 @@ header {
 }
 
 /* form */
-form div {
+form {
   margin: 10px;
 
   input {
     display: block;
-    width: 100px;
+    width: 250px;
     margin: 5px;
   }
 
@@ -187,10 +187,12 @@ form div {
   }
 
   .input_measure {
+    display: inline-block;
     width: 100px;
   }
 
   .select_unit_of_measurement {
+    display: inline-block;
     width: 100px;
   }
 
@@ -198,11 +200,20 @@ form div {
     width: 400px;
   }
 
-  .description {
-    width: 655px;
-    min-height: 250px;
+  .description_div {
     margin: 5px;
   }
+
+  .description_label {
+    margin-left: -5px;
+    margin-bottom: 10px;
+  }
+
+  .description {
+    width: 655px;
+    min-height: 300px;
+  }
+
 
 }
 

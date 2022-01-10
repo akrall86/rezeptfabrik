@@ -6,11 +6,7 @@ require_once 'manager/categorymanager.inc.php';
 
 $categories = $categoryManager->getCategories();
 $types = $typeManager->getTypes();
-$recipe_list = $recipeManager->getAllRecipes();
-$recipes = new Recipes();
-foreach ($recipe_list as $recipe) {
-    $recipes->add($recipe);
-}
+
 ?>
 
 <!DOCTYPE HTML>
@@ -37,7 +33,7 @@ foreach ($recipe_list as $recipe) {
         <h1>Rezepte</h1>
         <form class="filter_recipe" action="recipe.view.php" method="post">
             <div>
-                <label for="title">Filtern nach Kategorie:</label><br>
+                <label for="category">Filtern nach Kategorie:</label><br>
                 <select name="category" id="category">
                     <?php
                     foreach ($categories as $category) {
@@ -75,19 +71,61 @@ foreach ($recipe_list as $recipe) {
 
 
         <?php
+        if (isset($_POST['filterCategory'])) {
 
-        $recipes_per_page = 5;
-        $page_number = ((isset($_GET["pagecount"])) ? $_GET["pagecount"] : 0);
-        $number = 0;
-        for ($count = 0; $count < $recipes->count(); $count += $recipes_per_page) {
-            $number++;
-            echo '<a href="?pagecount=' . $count . '">' .
-                (($count == $page_number) ? "[" . $number . "]" : $number) . ' </a>';
-        }
+            $recipesByCategory = $recipeManager->getRecipesByCategory($_POST['category']);
 
-        for ($count = $page_number; $count < ($page_number + $recipes_per_page); $count++) {
-            if (isset($recipes[$count])) {
-                echo "<p>" . $recipeManager->displayRecipe($recipes[$count]) . "</p>\n";
+            $recipes_per_page = 5;
+            $page_number = ((isset($_GET["pagecount"])) ? $_GET["pagecount"] : 0);
+            $number = 0;
+            for ($count = 0; $count < $recipesByCategory->count(); $count += $recipes_per_page) {
+                $number++;
+                echo '<a href="?pagecount=' . $count . '">' .
+                    (($count == $page_number) ? "[" . $number . "]" : $number) . ' </a>';
+            }
+            for ($count = $page_number; $count < ($page_number + $recipes_per_page); $count++) {
+                if (isset($recipesByCategory[$count])) {
+                    echo "<p>" . $recipeManager->displayRecipe($recipesByCategory[$count]) . "</p>\n";
+                }
+            }
+        } elseif (isset($_POST['filterType'])) {
+            $recipeByType_list = $recipeManager->getRecipesByType($_POST['type']);
+            $recipesByType = new Recipes();
+            foreach ($recipeByType_list as $recipe) {
+                $recipesByType->add($recipe);
+            }
+            $recipes_per_page = 5;
+            $page_number = ((isset($_GET["pagecount"])) ? $_GET["pagecount"] : 0);
+            $number = 0;
+            for ($count = 0; $count < $recipesByType->count(); $count += $recipes_per_page) {
+                $number++;
+                echo '<a href="?pagecount=' . $count . '">' .
+                    (($count == $page_number) ? "[" . $number . "]" : $number) . ' </a>';
+            }
+            for ($count = $page_number; $count < ($page_number + $recipes_per_page); $count++) {
+                if (isset($recipesByType[$count])) {
+                    echo "<p>" . $recipeManager->displayRecipe($recipesByType[$count]) . "</p>\n";
+                }
+            }
+        } else {
+            $recipe_list = $recipeManager->getAllRecipes();
+            $recipes = new Recipes();
+            foreach ($recipe_list as $recipe) {
+                $recipes->add($recipe);
+            }
+            $recipes_per_page = 5;
+            $page_number = ((isset($_GET["pagecount"])) ? $_GET["pagecount"] : 0);
+            $number = 0;
+            for ($count = 0; $count < $recipes->count(); $count += $recipes_per_page) {
+                $number++;
+                echo '<a href="?pagecount=' . $count . '">' .
+                    (($count == $page_number) ? "[" . $number . "]" : $number) . ' </a>';
+            }
+
+            for ($count = $page_number; $count < ($page_number + $recipes_per_page); $count++) {
+                if (isset($recipes[$count])) {
+                    echo "<p>" . $recipeManager->displayRecipe($recipes[$count]) . "</p>\n";
+                }
             }
         }
         ?>

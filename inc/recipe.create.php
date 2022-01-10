@@ -13,7 +13,6 @@ require_once 'inc/errormessages.inc.php';
 $categories = $categoryManager->getCategories();
 $types = $typeManager->getTypes();
 $measurementUnits = $measuringUnitManager->getMeasuringUnits();
-$count = 0;
 
 if (!isset ($_SESSION['recipe_ingredients'])) {
     $_SESSION['recipe_ingredients'] = new Recipe_Ingredients();;
@@ -64,10 +63,10 @@ if (isset($_POST['submit'])) {
 
         $filename = $fileUploadManager->uploadImage($user_id, $recipe_id);
         $recipeManager->updatePhotoUrl($filename, $recipe_id);
-    }
-    unset($_SESSION['recipe_ingredients']);
-    header('Location: ./confirmation.php');
 
+        unset($_SESSION['recipe_ingredients']);
+        header('Location: ./confirmation.php');
+    }
 }
 ?>
 

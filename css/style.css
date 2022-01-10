@@ -140,34 +140,42 @@ header {
   list-style-image: url(../img/error.png);
 }
 /* form */
-form div {
+form {
   margin: 10px;
 }
-form div input {
+form input {
   display: block;
-  width: 100px;
+  width: 250px;
   margin: 5px;
 }
-form div select {
+form select {
   width: 200px;
   margin: 5px;
 }
-form div .input_ingredients {
+form .input_ingredients {
   display: inline-block;
 }
-form div .input_measure {
+form .input_measure {
+  display: inline-block;
   width: 100px;
 }
-form div .select_unit_of_measurement {
+form .select_unit_of_measurement {
+  display: inline-block;
   width: 100px;
 }
-form div .file_upload {
+form .file_upload {
   width: 400px;
 }
-form div .description {
-  width: 655px;
-  min-height: 250px;
+form .description_div {
   margin: 5px;
+}
+form .description_label {
+  margin-left: -5px;
+  margin-bottom: 10px;
+}
+form .description {
+  width: 655px;
+  min-height: 300px;
 }
 /* button */
 button,

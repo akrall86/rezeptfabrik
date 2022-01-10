@@ -129,19 +129,20 @@ class RecipeManager {
 
     /**
      * get all recipes from DB
-     * @return array one recipe or array of recipes or false if there is no recipe in the DB
+     * @return Recipe|Recipes|bool one recipe or recipes or false if there is no recipe in the DB
      */
-    function getAllRecipes(): recipe|array|bool {
+    function getAllRecipes(): Recipe|Recipes|bool {
         $result = $this->connection->query('SELECT id FROM recipe');
         $row_count = $result->rowCount();
-        if ($row_count == 1) {
+        if ($row_count < 2) {
             $row = $result->fetch();
             $id = $row['id'];
             return $this->getRecipe($id);
         }
         if ($row_count > 1) {
+            $recipes = new Recipes();
             while ($row = $result->fetch()) {
-                $recipes [] = $this->getRecipe($row['id']);
+                $recipes->add($this->getRecipe($row['id']));
             }
             return $recipes;
         }
@@ -151,74 +152,103 @@ class RecipeManager {
     /**
      * get all recipes from a specific user id from DB
      * @param int $id the id from the user
-     * @return array array of recipes or false if there is no match
+     * @return Recipe|Recipes|bool one recipe or recipes  of the given user id or false if there is no recipe in the DB
      */
-    public function getRecipesByUser($id): Recipes|bool {
+    public function getRecipesByUser($id): Recipe|Recipes|bool {
         $recipes = new Recipes();
         $result = $this->connection->query("
             SELECT id FROM recipe WHERE user_id ='$id'");
+        if ($row_count < 2) {
+            $row = $result->fetch();
+            return $this->getRecipe($row['id']);
+        } else if ($row_count > 1) {
             while ($row = $result->fetch()) {
                 $recipes->add($this->getRecipe($row['id']));
             }
             return $recipes;
+        }
     }
 
-    /**
-     * get all recipes from a specific category from DB
-     * @param string $category the category to search for
-     * @return array one recipe or array of recipes or false if there is no match
-     */
-    function getRecipesByCategory(string $category): Recipe|array|bool {
-        $category_id = $this->categoryManager->getCategoryId($category);
-        $recipes [] = array();
-        $result = $this->connection->query("
+        /**
+         * get all recipes from a specific category from DB
+         * @param string $category the category to search for
+         * @return Recipe|Recipes|bool one recipe or recipes of the given category or false if there is no recipe in the DB
+         */
+        function getRecipesByCategory(string $category): Recipe|Recipes|bool {
+            $category_id = $this->categoryManager->getCategoryId($category);
+            $recipes = new Recipes();
+            $result = $this->connection->query("
             SELECT id FROM recipe WHERE category_id ='$category_id'");
-        $row_count = $result->rowCount();
-        if ($row_count > 0) {
-            $row = $result->fetch();
-            return $this->getRecipe($row['id']);
-        }
-        if ($row_count > 0) {
-            while ($row = $result->fetch()) {
-                $recipes [] = $this->getRecipe($row['id']);
+            $row_count = $result->rowCount();
+            if ($row_count > 0) {
+                $row = $result->fetch();
+                return $this->getRecipe($row['id']);
             }
-            return $recipes;
+            if ($row_count > 1) {
+                while ($row = $result->fetch()) {
+                    $recipes->add($this->getRecipe($row['id']));
+                }
+                return $recipes;
+            }
+            return false;
         }
-        return false;
-    }
 
-    /**
-     * get one random recipes from a specific category from DB
-     * @param string $category the category to search for
-     * @return Recipe|bool one recipe or false if there is no match
-     */
-    function getOneRandomRecipeByCategory(string $category): Recipe|bool {
-        $recipes = $this->getRecipesByCategory($category);
-        if (gettype($recipes) == array()) {
-            $random_number = rand(0, (sizeof($recipes) - 1));
-            $recipe = $recipes[$random_number];
-            return $recipe;
-        } else if ($recipes instanceof Recipe) {
-            return $recipes;
+        /**
+         * get all recipes from a specific type from DB
+         * @param string $type the type to search for
+         * @return Recipe|Recipes|bool one recipe or recipes of the given type or false if there is no recipe in the DB
+         */
+        function getRecipesByType(string $type): Recipe|Recipes|bool {
+            $type_id = $this->typeManager->getTypeId($type);
+            $recipes = new Recipes();
+            $result = $this->connection->query("
+            SELECT id FROM recipe WHERE type_id ='$type_id'");
+            $row_count = $result->rowCount();
+            if ($row_count < 2) {
+                $row = $result->fetch();
+                return $this->getRecipe($row['id']);
+            }
+            if ($row_count > 1) {
+                while ($row = $result->fetch()) {
+                    $recipes->add($this->getRecipe($row['id']));
+                }
+                return $recipes;
+            }
+            return false;
         }
-        return false;
-    }
 
-    /**
-     * displays the recipe with all the details on the page
-     * @param Recipe $recipe the recipe to be displayed
-     */
-    function displayRecipe(Recipe $recipe) {
-        $user = $recipe->getUser();
-        $category = $recipe->getCategory();
-        $type = $recipe->getType();
-        $date = $recipe->getPublishedDate();
-        $recipe_ingredients = $recipe->getRecipeIngredients();
-        echo "
+        /**
+         * get one random recipes from a specific category from DB
+         * @param string $category the category to search for
+         * @return Recipe|bool one recipe or false if there is no match
+         */
+        function getOneRandomRecipeByCategory(string $category): Recipe|bool {
+            $recipes = $this->getRecipesByCategory($category);
+            if (gettype($recipes) == array()) {
+                $random_number = rand(0, (sizeof($recipes) - 1));
+                $recipe = $recipes[$random_number];
+                return $recipe;
+            } else if ($recipes instanceof Recipe) {
+                return $recipes;
+            }
+            return false;
+        }
+
+        /**
+         * displays the recipe with all the details on the page
+         * @param Recipe $recipe the recipe to be displayed
+         */
+        function displayRecipe(Recipe $recipe) {
+            $user = $recipe->getUser();
+            $category = $recipe->getCategory();
+            $type = $recipe->getType();
+            $date = $recipe->getPublishedDate();
+            $recipe_ingredients = $recipe->getRecipeIngredients();
+            echo "
             <div class= 'flex_container_recipe'> 
                 <div class= 'flex_item_recipe_content'>
                     <p>" . $user->getUserName() . " hat dieses Rezept am " .
-            $date->format('d.m.Y') . " um " . $date->format('H:i:s') . " gepostet.
+                $date->format('d.m.Y') . " um " . $date->format('H:i:s') . " gepostet.
                     </p> 
                     <h2>" . $recipe->getTitle() . "</h2> 
                     <p>" . $category->getName() . " | " . $type->getName() . "</p> 
@@ -229,100 +259,100 @@ class RecipeManager {
         <img class='cookerhood' src = ./img/cookerhood.png>
         <img class='cookerhood' src = ./img/cookerhood.png>";
 
-        if ($recipe->getRating() < 0) {
-            echo "(" . $recipe->getRating() . " von 5)";
-        } else {
-            echo "noch keine Bewertungen.";
-        }
-        echo " </p> 
+            if ($recipe->getRating() < 0) {
+                echo "(" . $recipe->getRating() . " von 5)";
+            } else {
+                echo "noch keine Bewertungen.";
+            }
+            echo " </p> 
         Zutaten: <br/>
         <table >";
-        foreach ($recipe_ingredients as $recipe_ingredient) {
-            echo " <tr >
+            foreach ($recipe_ingredients as $recipe_ingredient) {
+                echo " <tr >
                     <td class='unit_of_measurements' > " .
-                $recipe_ingredient->getAmount() . " " . $recipe_ingredient->getUnitOfMeasurementName() . " </td >
+                    $recipe_ingredient->getAmount() . " " . $recipe_ingredient->getUnitOfMeasurementName() . " </td >
                <td class='ingredients' > " . $recipe_ingredient->getIngredientName() . " </td >
                     </td >
                       </tr > ";
-        }
-        echo "</table > ";
-        echo " <p > " . $recipe->getContent() . " </p >
+            }
+            echo "</table > ";
+            echo " <p > " . $recipe->getContent() . " </p >
                 </div >
                 <div class= 'flex_item_recipe_picture' > ";
-        $photoUrl = $recipe->getPhotoUrl();
+            $photoUrl = $recipe->getPhotoUrl();
 
-        if (strlen($photoUrl) != 0) {
-            $url = 'uploads/' . $photoUrl;
-            echo "<img src = $url alt = 'Bild des Rezeptes' width='600'> ";
-        }
-        echo " </div >
+            if (strlen($photoUrl) != 0) {
+                $url = 'uploads/' . $photoUrl;
+                echo "<img src = $url alt = 'Bild des Rezeptes' height='200'> ";
+            }
+            echo " </div >
             </div > ";
-    }
-
-
-    function getRecipeById($id) {
-
-    }
-
-    /**
-     * updates the photo-url in the DB
-     * @param string $photoUrl the new url
-     * @param int $recipe_id the id of the recipe from which the url is to be updated
-     */
-    function updatePhotoUrl(string $photoUrl, int $recipe_id) {
-        $ps = $this->connection->prepare('UPDATE recipe SET photo_url = :photo_url WHERE id = :recipe_id');
-        $ps->bindValue('photo_url', $photoUrl);
-        $ps->bindValue('recipe_id', $recipe_id);
-        $ps->execute();
-    }
-
-    /**
-     * creates a slug from the title
-     * @param string $title the title from which the slug is to be created
-     * @return string the slug
-     */
-    private
-    function createSlug(string $title): string {
-        $string = str_replace(" ", " - ", $title);
-        $slug = str_replace(array("#", "'", ";", ".", "\"", ",", ":"), "", $string);
-        return $slug;
-    }
-
-    /**
-     * checks whether the title already exists
-     * @param string $title
-     * @return bool  true, if title already exists, false otherwise
-     */
-    function titleExists(string $title): bool {
-        $result = $this->connection->query("SELECT id FROM recipe WHERE title='.$title.'");
-        if ($result->fetch()) {
-            return true;
-        } else return false;
-    }
-
-    /**
-     * deletes the given recipe from DB
-     * @param Recipe $recipe the recipe to be deleted
-     */
-    function deleteRecipe(Recipe $recipe) {
-        $id = $recipe->getId();
-        $this->connection->query("
-            DELETE FROM recipe_has_ingredient_has_unit_of_measurement WHERE recipe_id = $id");
-        $this->connection->query("
-            DELETE FROM recipe WHERE id = $id");
-    }
-
-    /**
-     * deletes all recipes from one user from DB
-     * @param int $user_id the id from the user
-     */
-    function deleteRecipesFromUser(int $user_id) {
-        $recipes = $this->getRecipesByUser($user_id);
-        foreach ($recipes as $recipe){
-            $this->deleteRecipe ($recipe);
         }
+
+
+        function getRecipeById($id) {
+
+        }
+
+        /**
+         * updates the photo-url in the DB
+         * @param string $photoUrl the new url
+         * @param int $recipe_id the id of the recipe from which the url is to be updated
+         */
+        function updatePhotoUrl(string $photoUrl, int $recipe_id) {
+            $ps = $this->connection->prepare('UPDATE recipe SET photo_url = :photo_url WHERE id = :recipe_id');
+            $ps->bindValue('photo_url', $photoUrl);
+            $ps->bindValue('recipe_id', $recipe_id);
+            $ps->execute();
+        }
+
+        /**
+         * creates a slug from the title
+         * @param string $title the title from which the slug is to be created
+         * @return string the slug
+         */
+        private
+        function createSlug(string $title): string {
+            $string = str_replace(" ", " - ", $title);
+            $slug = str_replace(array("#", "'", ";", ".", "\"", ",", ":"), "", $string);
+            return $slug;
+        }
+
+        /**
+         * checks whether the title already exists
+         * @param string $title
+         * @return bool  true, if title already exists, false otherwise
+         */
+        function titleExists(string $title): bool {
+            $result = $this->connection->query("SELECT id FROM recipe WHERE title='.$title.'");
+            if ($result->fetch()) {
+                return true;
+            } else return false;
+        }
+
+        /**
+         * deletes the given recipe from DB
+         * @param Recipe $recipe the recipe to be deleted
+         */
+        function deleteRecipe(Recipe $recipe) {
+            $id = $recipe->getId();
+            $this->connection->query("
+            DELETE FROM recipe_has_ingredient_has_unit_of_measurement WHERE recipe_id = $id");
+            $this->connection->query("
+            DELETE FROM recipe WHERE id = $id");
+        }
+
+        /**
+         * deletes all recipes from one user from DB
+         * @param int $user_id the id from the user
+         */
+        function deleteRecipesFromUser(int $user_id) {
+            $recipes = $this->getRecipesByUser($user_id);
+            foreach ($recipes as $recipe) {
+                $this->deleteRecipe($recipe);
+            }
+        }
+
+
     }
-
-
-}
 
