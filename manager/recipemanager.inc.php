@@ -256,7 +256,7 @@ class RecipeManager {
 
         if (strlen($photoUrl) != 0) {
             $url = 'uploads/' . $photoUrl;
-            echo "<img src = $url alt = 'Bild des Rezeptes' > ";
+            echo "<img src = $url alt = 'Bild des Rezeptes' width='600'> ";
         }
         echo " </div >
             </div > ";

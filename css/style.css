@@ -161,10 +161,10 @@ form div .input_measure {
 form div .select_unit_of_measurement {
   width: 100px;
 }
-.file_upload {
+form div .file_upload {
   width: 400px;
 }
-.description {
+form div .description {
   width: 655px;
   min-height: 250px;
   margin: 5px;
