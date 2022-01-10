@@ -27,13 +27,13 @@ if (isset($_SESSION['loggedin']) && $_SESSION['user_id'] != null && $_SESSION['a
                     $newpasswordBool = true;
                     $newpassword = $_POST['newpassword'];
                 }
-                if ($newpasswordBool === false){
+                if ($newpasswordBool === false) {
                     $newpassword = $userManager->getUserById($_POST['id'])->password;
                 }
                 $updateUser = new User($_POST['id'], $_POST['firstname'], $_POST['lastname'], $_POST['user_name'], $_POST['email'], $newpassword);
                 if ($newpasswordBool === true) {
                     $userManager->updateUser($updateUser);
-                } else{
+                } else {
                     $userManager->updateUserWithOutHash($updateUser);
                 }
                 header("Location: ./admin.users.php");
@@ -46,12 +46,25 @@ if (isset($_SESSION['loggedin']) && $_SESSION['user_id'] != null && $_SESSION['a
         $roles = $userManager->getRoles();
     }
 
+    if (isset($_POST['btupdaterole'])) {
+        if (!password_verify($_REQUEST['password'], $userManager->getUserById($_SESSION['user_id'])->password)) {
+            $errors[] = 'Admin passwort richtig eingeben';
+        }
+        $count = $_POST['count'];
+        for ($i = 1; $i < $count; $i++) {
+            if (isset($_POST['has_role'.$i])) {
+                foreach ($userManager->getUserRoles($_POST['id']) as $userRole) {
+
+                }
+            }
+        }
+    }
 
 
-    if  (isset($_POST['btdelete']) && $user !== false) {
-       if (!password_verify($_REQUEST['password'], $userManager->getUserById($_SESSION['user_id'])->password)) {
-           $errors[] = 'Admin passwort richtig eingeben';
-       }
+    if (isset($_POST['btdelete']) && $user !== false) {
+        if (!password_verify($_REQUEST['password'], $userManager->getUserById($_SESSION['user_id'])->password)) {
+            $errors[] = 'Admin passwort richtig eingeben';
+        }
 
         if (count($errors) == 0) {
             $recipeManager->deleteRecipesFromUser($user->id);
