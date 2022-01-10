@@ -53,6 +53,10 @@ if (isset($_SESSION['loggedin']) && $_SESSION['user_id'] != null && $_SESSION['a
            $errors[] = 'Admin passwort richtig eingeben';
        }
 
+
+
+       
+
         if (count($errors) == 0) {
             $userManager->deleteUserById($user->id);
             header("Location: ./admin.users.php");
