@@ -54,7 +54,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['user_id'] != null && $_SESSION['a
        }
 
         if (count($errors) == 0) {
-            
+            $recipeManager->deleteRecipesFromUser($user->id);
             $userManager->deleteUserById($user->id);
             header("Location: ./admin.users.php");
             return;
