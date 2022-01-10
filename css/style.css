@@ -145,21 +145,20 @@ form div {
 }
 form div input {
   display: block;
-  width: 200px;
+  width: 100px;
   margin: 5px;
 }
 form div select {
   width: 200px;
   margin: 5px;
 }
-.input_ingredients {
+form div .input_ingredients {
   display: inline-block;
 }
-.input_measure {
-  display: inline-block;
-  margin-left: 145px;
+form div .input_measure {
+  width: 100px;
 }
-.select_unit_of_measurement {
+form div .select_unit_of_measurement {
   width: 100px;
 }
 .file_upload {

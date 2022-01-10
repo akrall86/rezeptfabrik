@@ -46,7 +46,7 @@ require_once 'inc/maininclude.inc.php';
         } else {
             $recipeManager->displayRecipe($dinner);
         }
-        $dessert = $recipeManager->getOneRandomRecipeByCategory("Nachspeise");
+        $dessert = $recipeManager->getOneRandomRecipeByCategory("Dessert");
         if ($dessert === false) {
             echo "noch kein Dessert vorhanden.";
         } else {
