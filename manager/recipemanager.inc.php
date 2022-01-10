@@ -253,8 +253,10 @@ class RecipeManager {
                 </div >
                 <div class= 'flex_item_recipe_picture' > ";
         $photoUrl = $recipe->getPhotoUrl();
+
         if (strlen($photoUrl) != 0) {
-            echo "<img src = $photoUrl alt = 'Bild des Rezeptes' > ";
+            $url = 'uploads/' . $photoUrl;
+            echo "<img src = $url alt = 'Bild des Rezeptes' > ";
         }
         echo " </div >
             </div > ";
