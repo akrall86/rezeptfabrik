@@ -157,13 +157,10 @@ class RecipeManager {
         $recipes = new Recipes();
         $result = $this->connection->query("
             SELECT id FROM recipe WHERE user_id ='$id'");
-        if ($result->fetch()) {
             while ($row = $result->fetch()) {
                 $recipes->add($this->getRecipe($row['id']));
             }
             return $recipes;
-        }
-        return false;
     }
 
     /**
