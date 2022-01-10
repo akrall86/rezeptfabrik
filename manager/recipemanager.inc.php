@@ -301,8 +301,8 @@ class RecipeManager {
     }
 
     /**
-     * delete the given recipe from DB
-     * @param string $category the id from the recipe
+     * deletes the given recipe from DB
+     * @param Recipe $recipe the recipe to be deleted
      */
     function deleteRecipe(Recipe $recipe) {
         $id = $recipe->getId();
@@ -310,6 +310,17 @@ class RecipeManager {
             DELETE FROM recipe_has_ingredient_has_unit_of_measurement WHERE recipe_id = $id");
         $this->connection->query("
             DELETE FROM recipe WHERE id = $id");
+    }
+
+    /**
+     * deletes all recipes from one user from DB
+     * @param int $user_id the id from the user
+     */
+    function deleteRecipesFromUser(int $user_id) {
+        $recipes = $this->getRecipesByUser($user_id);
+        foreach ($recipes as $recipe){
+            $this->deleteRecipe ($recipe);
+        }
     }
 
 

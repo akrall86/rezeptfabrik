@@ -116,11 +116,9 @@ require_once 'inc/recipe.create.php';
                 <button name="submit">Speichern</button>
             </div>
         </form>
+        <?php
+        include "inc/footer.inc.php";
+        ?>
     </div>
-
-    <?php
-    include "inc/footer.inc.php";
-    ?>
-
 </body>
 </html>

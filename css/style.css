@@ -9,10 +9,9 @@
   margin: 0 auto;
   width: 70%;
   min-height: 1200px;
-  max-height: 4000px;
-  background-image: url(../img/background.jpeg);
+  max-height: 6000px;
+  background-image: url(../img/background.jpg);
   background-size: cover;
-  background: repeat;
   padding-left: 15%;
   padding-right: 15%;
   padding-bottom: 10px;
