@@ -8,7 +8,7 @@ require_once 'model/recipe_ingredient.inc.php';
 require_once 'model/type.inc.php';
 require_once 'model/category.inc.php';
 require_once 'model/recipe_ingredients.inc.php';
-include 'inc/errormessages.inc.php';
+require_once 'inc/errormessages.inc.php';
 
 $categories = $categoryManager->getCategories();
 $types = $typeManager->getTypes();
