@@ -55,8 +55,7 @@ class RecipeManager {
      * @param Recipe_Ingredients $recipe_ingredients
      * @return string|array $id of the recipe or $errors[] if title is already in use
      */
-    function createRecipe(
-        string             $title_name, string $content, int $user_id, Category $category, Type $type,
+    function createRecipe(string $title_name, string $content, int $user_id, Category $category, Type $type,
         Recipe_Ingredients $recipe_ingredients): string {
         $slug = strtolower($this->createSlug($title_name));
         $category_id = $category->getId();
