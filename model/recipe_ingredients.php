@@ -16,4 +16,11 @@ class recipe_ingredients extends ArrayIterator {
         $this->append($recipe_ingredient);
     }
 
+    public function remove(Recipe_Ingredient $recipe_ingredient){
+       $array = $this->getArrayCopy();
+        $key = array_search($recipe_ingredient, $array);
+        $this->offsetUnset($key);
+    }
+
+
 }

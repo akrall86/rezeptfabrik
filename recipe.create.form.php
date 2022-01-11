@@ -19,7 +19,6 @@ require_once 'inc/recipe.create.php';
             plugins: 'lists',
             menubar: ''
         });
-
     </script>
     <link rel="stylesheet" href="css/style.css"/>
 </head>
@@ -65,10 +64,9 @@ require_once 'inc/recipe.create.php';
                         <option value='<?php echo $name ?>'><?php echo $name ?></option>;
                         <?php
                     }
-
                     ?>
                 </select>
-                <br/>
+                <br/><br/>
             </div>
             <div>
                 <?php
@@ -80,11 +78,14 @@ require_once 'inc/recipe.create.php';
                             $r->getUnitOfMeasurementName() . " " .
                             $r->getIngredientName() .
                             " <button name=$name>x</button><br/><br/>";
-
+                    }
+                    foreach ($recipe_ingredients as $r) {
+                        $name = $r->getIngredientName();
                         if (isset($_POST[$name])) {
-                            unset($recipe_ingredients[$r]);
+                            $recipe_ingredients->remove($r);
                             header('Location: ./recipe.create.form.php');
                         }
+
                     }
                 }
                 ?>
@@ -134,13 +135,13 @@ require_once 'inc/recipe.create.php';
             </div>
         </form>
     </div>
-        <?php
-        include "inc/footer.php";
-        ?>
-    </div>
     <?php
-    include "inc/footer.inc.php";
+    include "inc/footer.php";
     ?>
+</div>
+<?php
+include "inc/footer.inc.php";
+?>
 </div>
 </body>
 </html>
