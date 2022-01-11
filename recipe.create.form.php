@@ -134,16 +134,13 @@ require_once 'inc/recipe.create.php';
             </div>
         </form>
     </div>
-<<<<<<< HEAD
         <?php
         include "inc/footer.php";
         ?>
     </div>
-=======
     <?php
     include "inc/footer.inc.php";
     ?>
 </div>
->>>>>>> main
 </body>
 </html>
