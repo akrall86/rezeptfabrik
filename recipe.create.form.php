@@ -10,7 +10,8 @@ require_once 'inc/recipe.create.php';
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <script src="js/jquery-3.6.0.js" defer></script>
     <script src="js/script.js" defer></script>
-    <script src="https://cdn.tiny.cloud/1/yrzh53e1pluir30xdlmiyrryst09opb6vf7vy441zi3nai5h/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/yrzh53e1pluir30xdlmiyrryst09opb6vf7vy441zi3nai5h/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"></script>
     <script type="text/javascript">
         tinymce.init({
             selector: '#description',
@@ -79,11 +80,9 @@ require_once 'inc/recipe.create.php';
                             $r->getUnitOfMeasurementName() . " " .
                             $r->getIngredientName() .
                             " <button name=$name>x</button><br/><br/>";
-                      }
-                    foreach ($recipe_ingredients as $r) {
-                        $name = $r->getIngredientName();
-                    if (isset($_POST[$name])) {
-                            unset($recipe_ingredients[$name]);
+
+                        if (isset($_POST[$name])) {
+                            unset($recipe_ingredients[$r]);
                             header('Location: ./recipe.create.form.php');
                         }
                     }
@@ -103,10 +102,10 @@ require_once 'inc/recipe.create.php';
                 <select class="select_unit_of_measurement" name="measurementUnit" id="measurementUnit">
                     <?php
                     foreach ($measurementUnits as $measurementUnit) {
-                    $name = $measurementUnit->getName()
-                    ?>
-                    <option value='<?php echo $name ?>'><?php echo $name ?></option>
-                    <?php
+                        $name = $measurementUnit->getName()
+                        ?>
+                        <option value='<?php echo $name ?>'><?php echo $name ?></option>
+                        <?php
                     }
                     ?>
                 </select>
@@ -116,12 +115,12 @@ require_once 'inc/recipe.create.php';
             </div>
             <div class="description_label">
                 <br/>
-                <label  for="description">Beschreibung:</label><br/>
+                <label for="description">Beschreibung:</label><br/>
             </div>
             <div class="description_div">
             <textarea class="description" type="text" name="description" id="description">
                        <?php if ($_REQUEST != null && $_REQUEST['description'] != null)
-                       echo ($_REQUEST['description']) ?>
+                           echo($_REQUEST['description']) ?>
                     </textarea>
             </div>
             <div>
@@ -135,9 +134,16 @@ require_once 'inc/recipe.create.php';
             </div>
         </form>
     </div>
+<<<<<<< HEAD
         <?php
         include "inc/footer.php";
         ?>
     </div>
+=======
+    <?php
+    include "inc/footer.inc.php";
+    ?>
+</div>
+>>>>>>> main
 </body>
 </html>
