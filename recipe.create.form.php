@@ -15,7 +15,7 @@ require_once 'inc/recipe.create.php';
     <script type="text/javascript">
         tinymce.init({
             selector: '#description',
-            toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | numlist bullist',
+            toolbar: 'undo redo | bold italic underline | numlist bullist',
             plugins: 'lists',
             menubar: ''
         });
