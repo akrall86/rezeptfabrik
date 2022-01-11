@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../model/user.inc.php';
-require_once __DIR__ . '/../model/role.inc.php';
+require_once __DIR__ . '/../model/user.php';
+require_once __DIR__ . '/../model/role.php';
 
 /**
  * The UserManager class contains methods for editing the table user

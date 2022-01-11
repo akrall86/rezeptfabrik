@@ -1,7 +1,7 @@
 <?php
-require_once 'inc/maininclude.inc.php';
-require_once 'inc/requirelogin.inc.php';
-require_once 'inc/profileinclude.inc.php';
+require_once 'inc/maininclude.php';
+require_once 'inc/requirelogin.php';
+require_once 'inc/profileinclude.php';
 ?>
 <!DOCTYPE HTML>
 <html lang="de">
@@ -18,8 +18,8 @@ require_once 'inc/profileinclude.inc.php';
     <!-- header -->
     <header>
         <?php
-        include "inc/header.inc.php";
-        include "inc/navbar.inc.php";
+        include "inc/header.php";
+        include "inc/navbar.php";
         ?>
     </header>
 
@@ -27,7 +27,7 @@ require_once 'inc/profileinclude.inc.php';
     <div class="content">
         <div>
             <h2>Persönliche Daten</h2>
-            <?php include 'inc/errormessages.inc.php' ?>
+            <?php include 'inc/errormessages.php' ?>
             Vorname: <?php echo $user->firstname ?><br/>
             Nachname: <?php echo $user->lastname ?><br/>
             Benutzername: <?php echo $user->user_name ?><br/>
@@ -66,7 +66,7 @@ require_once 'inc/profileinclude.inc.php';
     </div>
 
     <!-- footer -->
-    <?php include 'inc/footer.inc.php'; ?>
+    <?php include 'inc/footer.php'; ?>
 
 </div>
 </body>

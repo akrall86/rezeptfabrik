@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__ . '/../inc/maininclude.inc.php';
-require_once __DIR__ . '/../model/ingredient.inc.php';
-require_once __DIR__ . '/../model/recipe_ingredient.inc.php';
-require_once __DIR__ . '/../model/unit_of_measurement.inc.php';
+require_once __DIR__ . '/../inc/maininclude.php';
+require_once __DIR__ . '/../model/ingredient.php';
+require_once __DIR__ . '/../model/recipe_ingredient.php';
+require_once __DIR__ . '/../model/unit_of_measurement.php';
 
 /**
  * The RecipeIngredientManager class contains methods for editing the tables ingredient, unit_of_measurement and

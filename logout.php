@@ -1,6 +1,6 @@
 <?php
-require_once 'inc/maininclude.inc.php';
-require_once 'inc/logoutinclude.inc.php';
+require_once 'inc/maininclude.php';
+require_once 'inc/logoutinclude.php';
 ?>
 <!DOCTYPE HTML>
 <html lang="de">
@@ -17,8 +17,8 @@ require_once 'inc/logoutinclude.inc.php';
     <header>
         <!-- header -->
         <?php
-        include 'inc/header.inc.php';
-        include "inc/navbar.inc.php";
+        include 'inc/header.php';
+        include "inc/navbar.php";
         ?>
 
         <!-- content -->
@@ -35,7 +35,7 @@ require_once 'inc/logoutinclude.inc.php';
 
 
     <!-- footer -->
-    <?php include 'inc/footer.inc.php'; ?>
+    <?php include 'inc/footer.php'; ?>
 </div>
 
 </body>

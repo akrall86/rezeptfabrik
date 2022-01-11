@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['btregister'])) {
-    require_once __DIR__ . './registerupdateerrormessages.inc.php';
+    require_once __DIR__ . './registerupdateerrormessages.php';
     if (strlen(trim($_POST['password'])) < 6) {
         $errors['password'] = 'Passwort muss mindestens 6 Zeichen haben.';
     }

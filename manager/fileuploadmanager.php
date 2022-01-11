@@ -1,5 +1,5 @@
 <?php
-require_once 'manager/recipemanager.inc.php';
+require_once 'manager/recipemanager.php';
 
     /**
      * The UploadManager class contains methods for uploading or updating pictures.

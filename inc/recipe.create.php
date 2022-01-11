@@ -1,14 +1,14 @@
 <?php
-require_once 'inc/maininclude.inc.php';
-require_once 'manager/measuringunitmanager.inc.php';
-require_once 'manager/recipeingredientmanager.inc.php';
-require_once 'manager/categorymanager.inc.php';
-require_once 'manager/fileuploadmanager.inc.php';
-require_once 'model/recipe_ingredient.inc.php';
-require_once 'model/type.inc.php';
-require_once 'model/category.inc.php';
-require_once 'model/recipe_ingredients.inc.php';
-require_once 'inc/errormessages.inc.php';
+require_once 'inc/maininclude.php';
+require_once 'manager/measuringunitmanager.php';
+require_once 'manager/recipeingredientmanager.php';
+require_once 'manager/categorymanager.php';
+require_once 'manager/fileuploadmanager.php';
+require_once 'model/recipe_ingredient.php';
+require_once 'model/type.php';
+require_once 'model/category.php';
+require_once 'model/recipe_ingredients.php';
+require_once 'inc/errormessages.php';
 
 $categories = $categoryManager->getCategories();
 $types = $typeManager->getTypes();

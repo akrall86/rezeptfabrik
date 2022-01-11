@@ -27,15 +27,15 @@ require_once 'inc/recipe.create.php';
 <div class="body">
     <header>
         <?php
-        include "inc/header.inc.php";
-        include "inc/navbar.inc.php";
+        include "inc/header.php";
+        include "inc/navbar.php";
         ?>
     </header>
 
     <div class="content">
         <h1>Neues Rezept erstellen</h1>
         <form enctype="multipart/form-data" action="recipe.create.form.php" method="post">
-            <?php include 'inc/errormessages.inc.php' ?>
+            <?php include 'inc/errormessages.php' ?>
             <div>
                 <label for="title">Titel:</label><br/>
                 <input type="text" name="title" id="title"
@@ -134,9 +134,16 @@ require_once 'inc/recipe.create.php';
             </div>
         </form>
     </div>
+<<<<<<< HEAD
+        <?php
+        include "inc/footer.php";
+        ?>
+    </div>
+=======
     <?php
     include "inc/footer.inc.php";
     ?>
 </div>
+>>>>>>> main
 </body>
 </html>

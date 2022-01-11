@@ -1,5 +1,5 @@
 <?php
-require_once 'inc/maininclude.inc.php';
+require_once 'inc/maininclude.php';
 ?>
 <!DOCTYPE HTML>
 <html lang="de">
@@ -17,8 +17,8 @@ require_once 'inc/maininclude.inc.php';
 
 <header>
     <?php
-    include "inc/header.inc.php";
-    include "inc/navbar.inc.php";
+    include "inc/header.php";
+    include "inc/navbar.php";
     ?>
 </header>
 
@@ -40,7 +40,7 @@ require_once 'inc/maininclude.inc.php';
 
 
 <!-- footer -->
-<?php include 'inc/footer.inc.php'; ?>
+<?php include 'inc/footer.php'; ?>
 </div>
 </body>
 </html>

@@ -1,8 +1,8 @@
 <?php
-require_once 'inc/maininclude.inc.php';
-require_once 'inc/requirelogin.inc.php';
-require_once 'inc/requireadmin.inc.php';
-require_once 'inc/admin.user.inc.php';
+require_once 'inc/maininclude.php';
+require_once 'inc/requirelogin.php';
+require_once 'inc/requireadmin.php';
+require_once 'inc/admin.user.php';
 ?>
 <!DOCTYPE HTML>
 <html lang="de">
@@ -19,8 +19,8 @@ require_once 'inc/admin.user.inc.php';
     <!-- header -->
     <header>
         <?php
-        include "inc/header.inc.php";
-        include "inc/navbar.inc.php";
+        include "inc/header.php";
+        include "inc/navbar.php";
         ?>
     </header>
 
@@ -29,7 +29,7 @@ require_once 'inc/admin.user.inc.php';
         <a href="admin.users.php">Zurück</a>
         <div class="admin_user_data">
             <form action="admin.user.php" method="POST">
-                <?php include 'inc/errormessages.inc.php' ?>
+                <?php include 'inc/errormessages.php' ?>
 
                 <div>
                     <label for="id">Id:</label>
@@ -94,7 +94,7 @@ require_once 'inc/admin.user.inc.php';
     </div>
 
     <!-- footer -->
-    <?php include 'inc/footer.inc.php'; ?>
+    <?php include 'inc/footer.php'; ?>
 </div>
 </body>
 </html>

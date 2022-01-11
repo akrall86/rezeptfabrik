@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../model/ingredient.inc.php';
+require_once __DIR__ . '/../model/ingredient.php';
 
 /**
  * The IngredientManager class contains methods for editing the table ingredient.

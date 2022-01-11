@@ -1,6 +1,6 @@
 <?php
-require_once 'inc/maininclude.inc.php';
-require_once 'inc/registerinclude.inc.php';
+require_once 'inc/maininclude.php';
+require_once 'inc/registerinclude.php';
 ?>
 <!DOCTYPE HTML>
 <html lang="de">
@@ -17,15 +17,15 @@ require_once 'inc/registerinclude.inc.php';
 
     <!-- header -->
     <header>
-        <?php include 'inc/header.inc.php';
-        include "inc/navbar.inc.php";
+        <?php include 'inc/header.php';
+        include "inc/navbar.php";
         ?>
     </header>
     <!-- content -->
     <div class="content">
         <h1>Registrierung</h1>
         <form  name="register" action="register.php" method="POST">
-            <?php include 'inc/errormessages.inc.php' ?>
+            <?php include 'inc/errormessages.php' ?>
             <div>
                 <label for="firstname">Vorname:</label>
                 <input type="text" name="firstname" id="firstname" value="<?php if ($_REQUEST != null && $_REQUEST['firstname'] != null) echo $_REQUEST['firstname'] ?>">
@@ -59,7 +59,7 @@ require_once 'inc/registerinclude.inc.php';
 
 
     <!-- footer -->
-    <?php include 'inc/footer.inc.php'; ?>
+    <?php include 'inc/footer.php'; ?>
 </div>
 
 </body>

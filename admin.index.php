@@ -1,8 +1,8 @@
 <?php
-require_once 'inc/maininclude.inc.php';
-require_once 'inc/logininclude.inc.php';
-require_once 'inc/admin.index.inc.php';
-require_once 'inc/requireadmin.inc.php';
+require_once 'inc/maininclude.php';
+require_once 'inc/logininclude.php';
+require_once 'inc/admin.index.php';
+require_once 'inc/requireadmin.php';
 ?>
 
 <!DOCTYPE HTML>
@@ -19,8 +19,8 @@ require_once 'inc/requireadmin.inc.php';
 <div class="body">
     <header>
         <?php
-        include "inc/header.inc.php";
-        include "inc/navbar.inc.php";
+        include "inc/header.php";
+        include "inc/navbar.php";
         ?>
     </header>
 
@@ -38,7 +38,7 @@ require_once 'inc/requireadmin.inc.php';
     </div>
 
     <?php
-    include "inc/footer.inc.php";
+    include "inc/footer.php";
     ?>
 </div>
 

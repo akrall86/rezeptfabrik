@@ -1,7 +1,7 @@
 <?php
-require_once 'inc/maininclude.inc.php';
-require_once 'inc/logininclude.inc.php';
-require_once 'inc/requireadmin.inc.php';
+require_once 'inc/maininclude.php';
+require_once 'inc/logininclude.php';
+require_once 'inc/requireadmin.php';
 $users = $userManager->getUsers();
 ?>
 
@@ -19,8 +19,8 @@ $users = $userManager->getUsers();
 <div class="body">
     <header>
         <?php
-        include "inc/header.inc.php";
-        include "inc/navbar.inc.php";
+        include "inc/header.php";
+        include "inc/navbar.php";
         ?>
     </header>
 
@@ -52,7 +52,7 @@ $users = $userManager->getUsers();
                 ?>
             </table>
         <?php
-        include "inc/footer.inc.php";
+        include "inc/footer.php";
         ?>
     </div>
 </div>

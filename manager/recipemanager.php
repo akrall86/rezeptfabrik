@@ -1,12 +1,12 @@
 <?php
-require_once __DIR__ . '/../inc/maininclude.inc.php';
-require_once __DIR__ . '/../model/category.inc.php';
-require_once __DIR__ . '/../model/ingredient.inc.php';
-require_once __DIR__ . '/../model/recipe.inc.php';
-require_once __DIR__ . '/../model/recipe_ingredient.inc.php';
-require_once __DIR__ . '/../model/unit_of_measurement.inc.php';
-require_once __DIR__ . '/../model/recipe_ingredients.inc.php';
-require_once __DIR__ . '/../model/recipes.inc.php';
+require_once __DIR__ . '/../inc/maininclude.php';
+require_once __DIR__ . '/../model/category.php';
+require_once __DIR__ . '/../model/ingredient.php';
+require_once __DIR__ . '/../model/recipe.php';
+require_once __DIR__ . '/../model/recipe_ingredient.php';
+require_once __DIR__ . '/../model/unit_of_measurement.php';
+require_once __DIR__ . '/../model/recipe_ingredients.php';
+require_once __DIR__ . '/../model/recipes.php';
 
 /**
  * The RecipeManager class contains methods for managing recipes and editing recipes in db

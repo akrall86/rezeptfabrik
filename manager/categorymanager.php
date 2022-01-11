@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../model/category.inc.php';
+require_once __DIR__ . '/../model/category.php';
 
 /**
  * The CategoryManager class contains methods for editing the table category.

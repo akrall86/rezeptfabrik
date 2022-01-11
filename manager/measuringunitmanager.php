@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../model/unit_of_measurement.inc.php';
-require_once __DIR__ . '/../inc/maininclude.inc.php';
+require_once __DIR__ . '/../model/unit_of_measurement.php';
+require_once __DIR__ . '/../inc/maininclude.php';
 
 /**
  * The MeasuringUnitManager class contains methods for editing the table unit_of_measurement.
