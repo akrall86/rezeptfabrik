@@ -1,10 +1,10 @@
 <?php
-require_once 'inc/maininclude.inc.php';
-require_once 'manager/measuringunitmanager.inc.php';
-require_once 'manager/recipeingredientmanager.inc.php';
-require_once 'manager/categorymanager.inc.php';
-require_once 'manager/typemanager.inc.php';
-require_once 'manager/recipemanager.inc.php';
+require_once 'inc/maininclude.php';
+require_once 'manager/measuringunitmanager.php';
+require_once 'manager/recipeingredientmanager.php';
+require_once 'manager/categorymanager.php';
+require_once 'manager/typemanager.php';
+require_once 'manager/recipemanager.php';
 
 $id = (int) $_GET["id"];
 
@@ -29,15 +29,15 @@ $recipe = $recipeManager->getRecipe($id);
 <div class="body">
     <header>
         <?php
-        include "inc/header.inc.php";
-        include "inc/navbar.inc.php";
+        include "inc/header.php";
+        include "inc/navbar.php";
         ?>
     </header>
 
     <div class="content">
         <h1>Rezept bearbeiten</h1>
         <form enctype="multipart/form-data" action="./profile.php" method="post">
-            <?php include 'inc/errormessages.inc.php'; ?>
+            <?php include 'inc/errormessages.php'; ?>
             <div>
                 <div>
                     <label for="title">Titel:</label><br/>
@@ -121,7 +121,7 @@ $recipe = $recipeManager->getRecipe($id);
 
 </div>
 <?php
-include "inc/footer.inc.php";
+include "inc/footer.php";
 ?>
 
 </body>

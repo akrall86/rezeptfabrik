@@ -1,6 +1,6 @@
 <?php
-require_once 'inc/maininclude.inc.php';
-require_once 'inc/logininclude.inc.php';
+require_once 'inc/maininclude.php';
+require_once 'inc/logininclude.php';
 ?>
 <!DOCTYPE HTML>
 <html lang="de">
@@ -17,8 +17,8 @@ require_once 'inc/logininclude.inc.php';
 
         <!-- header -->
     <header>
-        <?php include 'inc/header.inc.php';
-        include "inc/navbar.inc.php";
+        <?php include 'inc/header.php';
+        include "inc/navbar.php";
         ?>
     </header>
 
@@ -28,7 +28,7 @@ require_once 'inc/logininclude.inc.php';
 
         <h1>Login</h1>
         <form action="login.php" method="POST">
-            <?php include 'inc/errormessages.inc.php' ?>
+            <?php include 'inc/errormessages.php' ?>
             <div>
                 <label for="email">E-Mail:</label>
                 <input name="email" id="email">
@@ -44,7 +44,7 @@ require_once 'inc/logininclude.inc.php';
     </div>
 
     <!-- footer -->
-    <?php include 'inc/footer.inc.php'; ?>
+    <?php include 'inc/footer.php'; ?>
 </div>
 
 </body>

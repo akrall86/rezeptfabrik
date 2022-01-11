@@ -1,8 +1,8 @@
 <?php
-require_once 'inc/maininclude.inc.php';
-require_once 'manager/measuringunitmanager.inc.php';
-require_once 'manager/recipeingredientmanager.inc.php';
-require_once 'manager/categorymanager.inc.php';
+require_once 'inc/maininclude.php';
+require_once 'manager/measuringunitmanager.php';
+require_once 'manager/recipeingredientmanager.php';
+require_once 'manager/categorymanager.php';
 
 $categories = $categoryManager->getCategories();
 $types = $typeManager->getTypes();
@@ -23,8 +23,8 @@ $types = $typeManager->getTypes();
 <div class="body">
     <header>
         <?php
-        include "inc/header.inc.php";
-        include "inc/navbar.inc.php";
+        include "inc/header.php";
+        include "inc/navbar.php";
         ?>
     </header>
 
@@ -132,7 +132,7 @@ $types = $typeManager->getTypes();
 
     </div>
     <?php
-    include "inc/footer.inc.php";
+    include "inc/footer.php";
     ?>
 </div>
 

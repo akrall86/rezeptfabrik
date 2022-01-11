@@ -1,7 +1,7 @@
 <?php
-require_once 'inc/maininclude.inc.php';
-require_once 'inc/requirelogin.inc.php';
-require_once 'inc/profileupdateinclude.inc.php';
+require_once 'inc/maininclude.php';
+require_once 'inc/requirelogin.php';
+require_once 'inc/profileupdateinclude.php';
 ?>
 <!DOCTYPE HTML>
 <html lang="de">
@@ -18,8 +18,8 @@ require_once 'inc/profileupdateinclude.inc.php';
     <!-- header -->
     <header>
         <?php
-        include "inc/header.inc.php";
-        include "inc/navbar.inc.php";
+        include "inc/header.php";
+        include "inc/navbar.php";
         ?>
     </header>
 
@@ -27,7 +27,7 @@ require_once 'inc/profileupdateinclude.inc.php';
     <div class="content">
         <form action="profile.update.php" method="POST">
 
-            <?php include 'inc/errormessages.inc.php' ?>
+            <?php include 'inc/errormessages.php' ?>
             <input type="hidden" name="id" value="<?php echo $user->id ?>">
             <div>
                 <label for="firstname">Vorname:</label>
@@ -65,7 +65,7 @@ require_once 'inc/profileupdateinclude.inc.php';
     </div>
 
     <!-- footer -->
-    <?php include 'inc/footer.inc.php'; ?>
+    <?php include 'inc/footer.php'; ?>
 </div>
 </body>
 </html>

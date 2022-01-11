@@ -11,7 +11,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['user_id'] != null) {
 
 if (isset($_POST['btupdate']) && $_POST['password']) {
 
-    require_once __DIR__ . './registerupdateerrormessages.inc.php';
+    require_once __DIR__ . './registerupdateerrormessages.php';
     if (strlen(trim($_POST['newpassword'])) != 0) {
         if (strlen(trim($_POST['newpassword'])) < 6) {
             $errors['newpassword'] = 'neues Passwort muss mindestens 6 Zeichen haben.';

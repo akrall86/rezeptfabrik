@@ -1,6 +1,6 @@
 <?php
-require_once 'inc/maininclude.inc.php';
-require_once 'inc/requirelogin.inc.php';
+require_once 'inc/maininclude.php';
+require_once 'inc/requirelogin.php';
 ?>
 
 <!DOCTYPE HTML>
@@ -17,8 +17,8 @@ require_once 'inc/requirelogin.inc.php';
 <div class="body">
     <header>
         <?php
-        include "inc/header.inc.php";
-        include "inc/navbar.inc.php";
+        include "inc/header.php";
+        include "inc/navbar.php";
         ?>
     </header>
     <div class="content">
@@ -26,7 +26,7 @@ require_once 'inc/requirelogin.inc.php';
         <p class="confirmation">Die Daten wurden erfolgreich gespeichert!</p>
 
     </div>
-    <?php include 'inc/footer.inc.php'; ?>
+    <?php include 'inc/footer.php'; ?>
 </div>
 </body>
 </html>

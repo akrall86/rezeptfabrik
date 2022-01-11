@@ -6,7 +6,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['user_id'] != null && $_SESSION['a
     }
     if (isset($_POST['btupdate']) && $_POST['password']) {
 
-        require_once __DIR__ . './registerupdateerrormessages.inc.php';
+        require_once __DIR__ . './registerupdateerrormessages.php';
         $newpasswordBool = false;
         $newpassword = "";
 

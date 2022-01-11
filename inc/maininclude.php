@@ -1,28 +1,28 @@
 <?php
-require_once __DIR__ . '/../model/recipe_ingredients.inc.php';
-require_once __DIR__ . '/../model/recipe_ingredient.inc.php';
+require_once __DIR__ . '/../model/recipe_ingredients.php';
+require_once __DIR__ . '/../model/recipe_ingredient.php';
 
 // Session start
 session_start();
 
 // DB-Connection include
-require_once __DIR__ . '/../db/connection.inc.php';
+require_once __DIR__ . '/../db/connection.php';
 // User Manager include
-require_once __DIR__ . '/../manager/usermanager.inc.php';
+require_once __DIR__ . '/../manager/usermanager.php';
 // Ingredient Manager include
-require_once __DIR__ . '/../manager/ingredientmanager.inc.php';
+require_once __DIR__ . '/../manager/ingredientmanager.php';
 // Recipe Manager include
-require_once __DIR__ . '/../manager/recipemanager.inc.php';
+require_once __DIR__ . '/../manager/recipemanager.php';
 // MeasuringUnit Manager include
-require_once __DIR__ . '/../manager/measuringunitmanager.inc.php';
+require_once __DIR__ . '/../manager/measuringunitmanager.php';
 // Category Manager include
-require_once __DIR__ . '/../manager/categorymanager.inc.php';
+require_once __DIR__ . '/../manager/categorymanager.php';
 // Type Manager include
-require_once __DIR__ . '/../manager/typemanager.inc.php';
+require_once __DIR__ . '/../manager/typemanager.php';
 // RecipeIngredient Manager include
-require_once __DIR__ . '/../manager/recipeingredientmanager.inc.php';
+require_once __DIR__ . '/../manager/recipeingredientmanager.php';
 // FileUpload Manager include
-require_once __DIR__ . '/../manager/fileuploadmanager.inc.php';
+require_once __DIR__ . '/../manager/fileuploadmanager.php';
 
 // Object from Class UserManager
 $userManager = new UserManager($connection);
