@@ -55,7 +55,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['user_id'] != null && $_SESSION['a
             $count = $_POST['count'];
             $userManager->deleteUser_has_roleById($_POST['id']);
             for ($i = 0; $i < $count; $i++) {
-                if ($_POST["has_role".$i] == "checked") {
+                if ($_POST['has_role'.$i] == "checked") {
                     $userManager->setRoleToUserByIdAndName($_POST['id'], $_POST['has_role' . $i]);
                 }
             }
