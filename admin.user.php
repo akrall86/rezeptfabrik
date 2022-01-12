@@ -85,12 +85,13 @@ require_once 'inc/admin.userinclude.php';
                                 <td><input type="checkbox" name="has_role<?php echo $count ?>"
                                            id="has_role<?php echo $count ?>"
                                            value="<?php echo $role->name ?>"
-                                        <?php $count++;
+                                        <?php
                                         foreach ($userManager->getUserRoles($user->id) as $userrole) {
                                             if ($userrole->name === $role->name) {
                                                 echo 'checked';
                                             }
-                                        } ?>
+                                        }
+                                        $count++; ?>
                                     >
                                 </td>
                             </tr>

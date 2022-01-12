@@ -55,13 +55,12 @@ if (isset($_SESSION['loggedin']) && $_SESSION['user_id'] != null && $_SESSION['a
             $count = $_POST['count'];
             $userManager->deleteUser_has_roleById($_POST['id']);
             for ($i = 0; $i < $count; $i++) {
-                if (isset($_POST['has_role'.$i])){
-                    $userManager->setRoleToUserByIdAndName($_POST['id'], $_POST['has_role'.$i]);
+                if ($_POST['has_role'.$i] == "checked") {
+                    $userManager->setRoleToUserByIdAndName($_POST['id'], $_POST['has_role' . $i]);
                 }
-
             }
-            header("Location: ./admin.users.php");
-            return;
+            //header("Location: ./admin.users.php");
+            //return;
         }
     }
 
