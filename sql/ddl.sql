@@ -85,7 +85,7 @@ CREATE TABLE rezeptfabrik.recipe_has_ingredient_has_unit_of_measurement
     recipe_id              INTEGER NOT NULL,
     ingredient_id          INTEGER NOT NULL,
     unit_of_measurement_id INTEGER NOT NULL,
-    amount                 INTEGER NOT NULL,
+    amount                 FLOAT   NOT NULL,
     CONSTRAINT fk_riuom_rid FOREIGN KEY (recipe_id) REFERENCES recipe (id) ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT fk_riuom_iid FOREIGN KEY (ingredient_id) REFERENCES ingredient (id) ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT fk_riuom_uomid FOREIGN KEY (unit_of_measurement_id) REFERENCES unit_of_measurement (id) ON DELETE RESTRICT ON UPDATE CASCADE
