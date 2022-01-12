@@ -50,14 +50,17 @@ if (isset($_SESSION['loggedin']) && $_SESSION['user_id'] != null && $_SESSION['a
         if (!password_verify($_REQUEST['password'], $userManager->getUserById($_SESSION['user_id'])->password)) {
             $errors[] = 'Admin passwort richtig eingeben';
         }
-        $count = $_POST['count'];
-        for ($i = 1; $i < $count; $i++) {
-            if (isset($_POST['has_role'.$i])) {
-                foreach ($userManager->getUserRoles($_POST['id']) as $userRole) {
 
-
+        if (count($errors) == 0) {
+            $count = $_POST['count'];
+            $userManager->deleteUser_has_roleById($_POST['id']);
+            for ($i = 0; $i < $count; $i++) {
+                if ($_POST["has_role".$i] == "checked") {
+                    $userManager->setRoleToUserByIdAndName($_POST['id'], $_POST['has_role' . $i]);
                 }
             }
+            //header("Location: ./admin.users.php");
+            //return;
         }
     }
 

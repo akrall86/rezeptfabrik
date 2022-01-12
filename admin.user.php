@@ -2,7 +2,7 @@
 require_once 'inc/maininclude.php';
 require_once 'inc/requirelogin.php';
 require_once 'inc/requireadmin.php';
-require_once 'inc/admin.user.php';
+require_once 'inc/admin.userinclude.php';
 ?>
 <!DOCTYPE HTML>
 <html lang="de">
@@ -64,12 +64,14 @@ require_once 'inc/admin.user.php';
                 <div>
                     <button name="btupdate">Daten aktualisieren</button>
                     <button name="btgetroles">Benutzer Rollen anzeigen</button>
-                    <button name="btdelete" <?php if ($_SESSION['user_id'] == $_REQUEST['id']) echo 'disabled'; ?>>Benutzer löschen</button>
+                    <button name="btdelete" <?php if ($_SESSION['user_id'] == $_REQUEST['id']) echo 'disabled'; ?>>
+                        Benutzer löschen
+                    </button>
                 </div>
             </form>
         </div>
         <div class="admin_user_roles">
-            <?php $count = 1;
+            <?php $count = 0;
             if (isset($_POST['btgetroles'])): ?>
                 <form action="admin.user.php" method="POST">
                     <table border="solid">
@@ -78,15 +80,29 @@ require_once 'inc/admin.user.php';
                             <th><label for="has_role">Zugewiesen</label></th>
                         </tr>
                         <?php foreach ($roles as $role): ?>
-                        <tr>
-                            <td><?php echo $role->name?></td>
-                            <td><input type="checkbox" name="has_role<?php echo $count?>" id="has_role<?php echo $count?>" <?php $count++;
-                            foreach ($userManager->getUserRoles($user->id) as $userrole ) if ($userrole->name === $role->name) echo 'checked' ?>></td>
-                        </tr>
+                            <tr>
+                                <td><?php echo $role->name ?></td>
+                                <td><input type="checkbox" name="has_role<?php echo $count ?>"
+                                           id="has_role<?php echo $count ?>"
+                                           value="<?php echo $role->name ?>"
+                                        <?php
+                                        foreach ($userManager->getUserRoles($user->id) as $userrole) {
+                                            if ($userrole->name === $role->name) {
+                                                echo 'checked';
+                                            }
+                                        }
+                                        $count++; ?>
+                                    >
+                                </td>
+                            </tr>
                         <?php endforeach; ?>
-                        <input type="hidden" name="id" value="<?php echo $user->id?>"
-                        <input type="hidden" name="count" value="<?php echo $count?>">
+                        <input type="hidden" name="id" value="<?php echo $user->id ?>">
+                        <input type="hidden" name="count" value="<?php echo $count ?>">
                     </table>
+                    <div>
+                        <label for="password">Mit Admin Passwort bestätigen</label>
+                        <input type="password" name="password" id="password">
+                    </div>
                     <button name="btupdaterole">Rollen zuweisen</button>
                 </form>
             <?php endif; ?>
