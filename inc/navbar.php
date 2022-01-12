@@ -9,7 +9,7 @@
             <li><a href="./recipe.create.form.php">Rezept erstellen</a></li>
         <?php endif; ?>
         <?php if ($userManager->isAdmin()): ?>
-            <li><a href="./admin.index.php">Administrator Bereich</a></li>
+            <li><a href="admin.index.php">Administrator Bereich</a></li>
 
         <?php endif; ?>
     </ul>

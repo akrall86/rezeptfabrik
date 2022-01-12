@@ -1,7 +1,7 @@
 <?php
 require_once 'inc/maininclude.php';
 require_once 'inc/logininclude.php';
-require_once 'inc/admin.index.php';
+require_once 'inc/admin.indexinclude.php';
 require_once 'inc/requireadmin.php';
 ?>
 

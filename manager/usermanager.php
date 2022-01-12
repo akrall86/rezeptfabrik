@@ -260,6 +260,16 @@ class UserManager
     }
 
     /**
+     * @param int $id
+     * @param $name
+     */
+    function setRoleToUserByIdAndName(int $id, $name)
+    {
+       $this->conn->query("INSERT INTO user_has_role (user_id, role_name) VALUES ($id, $name)");
+
+    }
+
+    /**
      * @param $user
      * @return void
      */
