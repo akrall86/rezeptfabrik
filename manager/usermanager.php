@@ -265,8 +265,10 @@ class UserManager
      */
     function setRoleToUserByIdAndName(int $id, $name)
     {
-       $this->conn->query("INSERT INTO user_has_role (user_id, role_name) VALUES ($id, $name)");
-
+        $ps = $this->conn->prepare('INSERT INTO user_has_role (user_id, role_name) VALUES (:user_id, :role_name)');
+        $ps->bindValue('user_id', $id);
+        $ps->bindValue('role_name', $name);
+        $ps->execute();
     }
 
     /**
