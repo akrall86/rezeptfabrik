@@ -4,9 +4,6 @@ if (isset($_POST['btregister'])) {
     if (strlen(trim($_POST['password'])) < 6) {
         $errors['password'] = 'Passwort muss mindestens 6 Zeichen haben.';
     }
-    if (strlen(trim($_POST['passwordrepeat'])) != strlen(trim($_POST['password']))) {
-        $errors['passwordrepeat'] = 'Passwörter stimmen nicht überein.';
-    }
     if (strcmp($_POST['password'], $_POST['passwordrepeat']) !== 0) {
         $errors['passwordrepeat'] = 'Passwörter stimmen nicht überein.';
     }
