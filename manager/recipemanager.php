@@ -108,12 +108,8 @@ class RecipeManager {
             INNER JOIN ingredient i ON rhihuom.ingredient_id = i.id
             INNER JOIN unit_of_measurement uom ON rhihuom.unit_of_measurement_id = uom.id
             WHERE r.id='$id'");
-        $recipe_ingredients = new Recipe_Ingredients();
+        $recipe_ingredients = [];
         if ($row = $result->fetch()) {
-            while ($subset = $result->fetch()) {
-                $recipe_ingredients->add(
-                    new Recipe_Ingredient($subset['ingredient_name'], $subset['uom_name'], $subset['amount']));
-            }
             $user = $this->userManager->getUserById($row['user_id']);
             $category = $this->categoryManager->getCategoryById($row['category_id']);
             $type = $this->typeManager->getTypeById($row['type_id']);
@@ -121,6 +117,11 @@ class RecipeManager {
             $recipe = new Recipe(
                 $row['recipe_id'], $row['title'], $row['content'], $row['slug'], $user, $category, $type,
                 $row['photo_url'], $published_date, $row['rating'], $recipe_ingredients);
+            do {
+                $recipe_ingredients [] =
+                    new Recipe_Ingredient($row['ingredient_name'], $row['uom_name'], $row['amount']);
+            } while ($row = $result->fetch());
+            $recipe->setRecipeIngredients($recipe_ingredients);
             return $recipe;
         }
         return false;

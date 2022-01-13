@@ -11,7 +11,7 @@ class Recipe {
     public string $photo_url;
     public DateTime $published_date;
     public int $rating;
-    public Recipe_Ingredients $recipe_ingredients;
+    public array $recipe_ingredients;
 
     /**
      * @param int $id
@@ -28,7 +28,7 @@ class Recipe {
      */
     public function __construct(int $id, string $title, string $content, string $slug, User $user, Category $category,
                                 Type $type, string $photo_url, DateTime $published_date, int $rating,
-                                Recipe_Ingredients  $recipe_ingredients) {
+                                array  $recipe_ingredients) {
         $this->id = $id;
         $this->title = $title;
         $this->content = $content;
@@ -121,7 +121,7 @@ class Recipe {
     /**
      * @param string $category
      */
-    public function setCategory(string $category): void {
+    public function setCategory(Category $category): void {
         $this->category = $category;
     }
 
@@ -135,7 +135,7 @@ class Recipe {
     /**
      * @param string $type
      */
-    public function setType(string $type): void {
+    public function setType(Type $type): void {
         $this->type = $type;
     }
 
@@ -184,14 +184,14 @@ class Recipe {
     /**
      * @return array
      */
-    public function getRecipeIngredients(): Recipe_Ingredients {
+    public function getRecipeIngredients(): array {
         return $this->recipe_ingredients;
     }
 
     /**
      * @param array $recipe_ingredients
      */
-    public function setRecipeIngredients(Recipe_Ingredients $recipe_ingredients): void {
+    public function setRecipeIngredients(array $recipe_ingredients): void {
         $this->recipe_ingredients = $recipe_ingredients;
     }
 
