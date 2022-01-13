@@ -45,10 +45,12 @@ require_once 'inc/recipe.create.php';
                 <label for="category">Kategorie:</label><br/>
                 <select name="category" id="category">
                     <?php
+                    $selectedValue = $_POST['category'];
                     foreach ($categories as $category) {
                         $name = $category->getName();
+                        $attribute = ($name == $selectedValue) ? ' selected' : '';
                         ?>
-                        <option value='<?php echo $name ?>'><?php echo $name ?></option>;
+                        <option value='<?php echo $name ?>' <?= $attribute ?>><?php echo $name ?></option>;
                         <?php
                     }
                     ?>
@@ -58,10 +60,12 @@ require_once 'inc/recipe.create.php';
                 <label for="type">Typ:</label><br/>
                 <select name="type" id="type">
                     <?php
+                    $selectedValue = $_POST['type'];
                     foreach ($types as $type) {
-                        $name = $type->getName()
+                        $name = $type->getName();
+                        $attribute = ($name == $selectedValue) ? ' selected' : '';
                         ?>
-                        <option value='<?php echo $name ?>'><?php echo $name ?></option>;
+                        <option value='<?php echo $name ?>' <?php echo $attribute ?>><?php echo $name ?></option>;
                         <?php
                     }
                     ?>
@@ -78,14 +82,9 @@ require_once 'inc/recipe.create.php';
                             $r->getUnitOfMeasurementName() . " " .
                             $r->getIngredientName() .
                             " <button name=$name>x</button><br/><br/>";
-                    }
-                    foreach ($recipe_ingredients as $r) {
-                        $name = $r->getIngredientName();
-                        if (isset($_POST[$name])) {
-                            $recipe_ingredients->remove($r);
-                            header('Location: ./recipe.create.form.php');
-                        }
-
+                            if (isset($_POST[$name])) {
+                                $recipe_ingredients->remove($r);
+                            }
                     }
                 }
                 ?>
@@ -139,9 +138,6 @@ require_once 'inc/recipe.create.php';
     include "inc/footer.php";
     ?>
 </div>
-<?php
-include "inc/footer.inc.php";
-?>
-</div>
+
 </body>
 </html>

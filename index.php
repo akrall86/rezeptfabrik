@@ -26,42 +26,37 @@ require_once 'inc/maininclude.php';
         <h1>Rezepte des Tages</h1>
         <?php
         $breakfast = $recipeManager->getOneRandomRecipeByCategory("Frühstück");
-        if ($breakfast === false) {
-            echo "noch kein Frühstücksrezept vorhanden.";
-        } else {
-            $recipeManager->displayRecipe($breakfast);
+        if ($breakfast != false) {
+            $recipeManager->displayShortVersionOfRecipe($breakfast);
+            echo "<br/><br/>";
         }
-        ?>
-        <br/>
-        <?php
+
         $starter = $recipeManager->getOneRandomRecipeByCategory("Vorspeise");
-        if ($starter === false) {
-            echo "noch keine Vorspeise vorhanden.";
-        } else {
-            $recipeManager->displayRecipe($starter);
+        if ($starter != false) {
+            $recipeManager->displayShortVersionOfRecipe($starter);
+            echo "<br/><br/>";
         }
+
         $dinner = $recipeManager->getOneRandomRecipeByCategory("Hauptspeise");
-        if ($dinner === false) {
-            echo "noch keine Hauptspeise vorhanden.";
-        } else {
-            $recipeManager->displayRecipe($dinner);
+        if ($dinner != false) {
+            $recipeManager->displayShortVersionOfRecipe($dinner);
+            echo "<br/><br/>";
         }
+
         $dessert = $recipeManager->getOneRandomRecipeByCategory("Dessert");
-        if ($dessert === false) {
-            echo "noch kein Dessert vorhanden.";
-        } else {
-            $recipeManager->displayRecipe($dessert);
+        if ($dessert != false) {
+            $recipeManager->displayShortVersionOfRecipe($dessert);
+            echo "<br/><br/>";
         }
-        ?>
-        <br/>
-        <?php
+
         $drink = $recipeManager->getOneRandomRecipeByCategory("Getränk");
-        if ($drink === false) {
-            echo "noch kein Getränk vorhanden.";
-        } else {
-            $recipeManager->displayRecipe($drink);
+        if ($drink != false) {
+            $recipeManager->displayShortVersionOfRecipe($drink);
+            echo "<br/><br/>";
         }
         ?>
+
+
     </div>
 
     <?php

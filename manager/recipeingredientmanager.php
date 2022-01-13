@@ -21,9 +21,12 @@ class RecipeIngredientManager {
     /**
      * insert recipe id, ingredient id, unitOfMeasurement id and amount into table
      * recipe_has_ingredient_has_unit_of_measurement
-     * @param string $name the name of the ingredient
+     * @param int $recipe_id the id of the recipe
+     * @param int $ingredient_id the id of the ingredient
+     * @param int $unitOfMeasurement_id the id of the unit of measurement
+     * @param int $amount the amount of the ingredient
      */
-    function createRecipe_Ingredient(int $recipe_id, int $ingredient_id, int $unitOfMeasurement_id, $amount){
+    function createRecipe_Ingredient(int $recipe_id, int $ingredient_id, int $unitOfMeasurement_id, int $amount) {
         $ps = $this->conn->prepare('
         INSERT INTO recipe_has_ingredient_has_unit_of_measurement  
             (recipe_id, ingredient_id, unit_of_measurement_id, amount) VALUES (
@@ -35,45 +38,34 @@ class RecipeIngredientManager {
         $ps->execute();
     }
 
-
     /**
-     * get one ingredient from table ingredient
-     * @return array of ingredients
+     * get all ingredients with unit of measurement and amount of the given recipe
+     * @param Recipe $recipe the recipe from which the ingredients are to be fetched
+     * @return Recipe_Ingredients
      */
-    function getIngredient(string $name): string|false {
-        $result = $this->conn->query("SELECT * FROM ingredient WHERE name='$name'");
-        if ($result->fetch()) {
-            return new string($row['id'], $row['name']);
-        } else return false;
-    }
-
-
-    function getAllIngredientsFromRecipe(Recipe $recipe): array {
-        $recipe_Ingredients [] = array();
+    function getAllIngredientsFromRecipe(Recipe $recipe): Recipe_Ingredients {
+        $recipe_Ingredients = new Recipe_Ingredients();
         $recipeId = $recipe->getId();
         $result = $this->conn->query('
-        SELECT * FROM recipe_has_ingredient_has_unit_of_measurement rhihuom
+        SELECT i.name as ingredient_name, uom.name as uof_name, rhihuom.amount
+               FROM recipe_has_ingredient_has_unit_of_measurement rhihuom
         INNER JOIN ingredient i ON rhihuom.ingredient_id = i.id
         INNER JOIN unit_of_measurement uom ON rhihuom.unit_of_measurement_id = uom.id
         WHERE rhihuom.recipe_id  =' . $recipeId);
         while ($row = $result->fetch()) {
-            $ingredient = new string($row['id'], $row['name']);
-            $unit_Of_Measurement = new string($row['name']);
-            $amount = $row['amount'];
-            $recipe_Ingredient = new Recipe_Ingredient($ingredient, $amount, $unit_Of_Measurement);
-            $recipe_Ingredients [] = $recipe_Ingredient;
+            $recipe_Ingredient = new Recipe_Ingredient($row['ingredient_name'], $row['uof_name'], $row['amount']);
+            $recipe_Ingredients->add($recipe_Ingredient);
         }
         return $recipe_Ingredients;
     }
 
     /**
-     * deletes one ingredient from db
-     * @param int $id the id of the ingredient to be deleted
+     * deletes all ingredients of the recipe from db
+     * @param int $id the id of the recipe from which the ingredients schould be deleted
      */
-    function deleteIngredient(int $id) {
-        $ps = $this->conn->query('DELETE FROM ingredient WHERE id = (:id)');
-        $ps->bindValue('id', $id);
-        $ps->execute();
+    function deleteRecipe_Ingredients(int $recipe_id) {
+        $this->conn->query("
+            DELETE FROM recipe_has_ingredient_has_unit_of_measurement WHERE recipe_id = $recipe_id");
     }
 
 }

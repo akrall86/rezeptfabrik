@@ -6,12 +6,8 @@ require_once 'manager/categorymanager.php';
 require_once 'manager/typemanager.php';
 require_once 'manager/recipemanager.php';
 
-$id = (int) $_GET["id"];
-
-$measurementUnits = $measuringUnitManager->getMeasuringUnits();
-$categories = $categoryManager->getCategories();
-$types = $typeManager->getTypes();
-$recipe = $recipeManager->getRecipe($id);
+$recipe_id = $_POST['recipe_id'];
+require_once 'inc/recipe.update.php';
 ?>
 
 <!DOCTYPE HTML>
@@ -45,7 +41,7 @@ $recipe = $recipeManager->getRecipe($id);
 
     <div class="content">
         <h1>Rezept bearbeiten</h1>
-        <form enctype="multipart/form-data" action="recipe.create.form.php" method="post">
+        <form enctype="multipart/form-data" action="recipe.update.form.php" method="post">
             <?php include 'inc/errormessages.php' ?>
             <div>
                 <label for="title">Titel:</label><br/>
@@ -56,10 +52,12 @@ $recipe = $recipeManager->getRecipe($id);
                 <label for="category">Kategorie:</label><br/>
                 <select name="category" id="category">
                     <?php
+                    $selection = $recipe->getCategory()->getName();
                     foreach ($categories as $category) {
                         $name = $category->getName();
+                        $attribute = ($name == $selection) ? ' selected' : '';
                         ?>
-                        <option value='<?php echo $name ?>'><?php echo $name ?></option>;
+                        <option value='<?php echo $name ?>' <?php echo $attribute ?>><?php echo $name ?></option>;
                         <?php
                     }
                     ?>
@@ -69,10 +67,12 @@ $recipe = $recipeManager->getRecipe($id);
                 <label for="type">Typ:</label><br/>
                 <select name="type" id="type">
                     <?php
+                    $selectedValue = $recipe->getType()->getName();
                     foreach ($types as $type) {
-                        $name = $type->getName()
+                        $name = $type->getName();
+                        $attribute = ($name == $selectedValue) ? ' selected' : '';
                         ?>
-                        <option value='<?php echo $name ?>'><?php echo $name ?></option>;
+                        <option value='<?php echo $name ?>' <?php echo $attribute ?>><?php echo $name ?></option>;
                         <?php
                     }
                     ?>
@@ -92,7 +92,8 @@ $recipe = $recipeManager->getRecipe($id);
 
                         if (isset($_POST[$name])) {
                             unset($recipe_ingredients[$r]);
-                            header('Location: ./recipe.create.form.php');
+
+
                         }
                     }
                 }
@@ -130,26 +131,40 @@ $recipe = $recipeManager->getRecipe($id);
             <textarea class="description" type="text" name="description" id="description">
                        <?php echo $recipe->getContent() ?>
                     </textarea>
-            </div>
-            <div>
                 <br/>
-                <label for="picture">Bild:</label><br>
-                <input class="file_upload" type="file" name="picture" id="picture" accept="image/jpeg, image/png">
             </div>
-            <br/>
+                <input type="hidden" id="recipe_id" name="recipe_id" value=<?php echo $recipe_id ?>>
             <div>
-                <button name="submit">Speichern</button>
+                <button name="submit">Änderungen speichern</button>
             </div>
+            <div>
+                <br/><br/>
+                <label for="picture">Neues Bild:</label><br>
+                <input class="file_upload" type="file" name="picture" id="picture" accept="image/jpeg, image/png">
+                <br/>
+            </div>
+                <input type="hidden" id="recipe_id" name="recipe_id" value=<?php echo $recipe_id ?>>
+            <div>
+                <button name="image">Neues Bild speichern</button>
+            </div>
+
+            <br/>
+            <p>Rezept unwiderruflich löschen:</p>
+                <input type="hidden" id="recipe_id" name="recipe_id" value=<?php echo $recipe_id ?>>
+            <div>
+                <button name="image">Rezept löschen</button>
+            </div>
+
+            <br/>
+
         </form>
     </div>
     <?php
     include "inc/footer.php";
     ?>
 </div>
-<?php
-include "inc/footer.inc.php";
-?>
-</div>
+
+
 </body>
 </html>
 

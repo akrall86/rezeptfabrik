@@ -108,6 +108,19 @@ header {
 }
 .flex_item_recipe_content {
   width: 650px;
+  min-height: 200px;
+}
+.flex_item_recipe_content a {
+  color: black;
+  font-weight: bold;
+  padding: 16px;
+  text-decoration: none;
+}
+.flex_item_recipe_content a:hover {
+  color: black;
+  text-decoration: none;
+  transform: scale(1.2);
+  font-size: 22px;
 }
 .flex_item_recipe_content .cookerhood {
   width: 30px;

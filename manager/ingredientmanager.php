@@ -55,18 +55,6 @@ class IngredientManager {
         return $ingredients;
     }
 
-
-    function getAllIngredientsFromRecipe(Recipe $recipe): array {
-        $recipeId = $recipe->getId();
-        $result = $this->conn->query('
-        SELECT ingredient.name, unit_of_measurement.name FROM ingredient 
-            JOIN unit_of_measurement ON ingredient.id = (
-                SELECT ingredient_id FROM recipe_has_ingredient_has_unit_of_measurement as rhihuom WHERE recipe_id = $recipeId)
-            JOIN unit_of_measurement ON unit_of_measurement.id= rhihuom.unit_of_measurement_id');
-
-        $ingredients = $result = array('1' => array('blabla', 'g'), '2' => array('blabla', 'ml'));
-    }
-
     /**
      * deletes one ingredient from db
      * @param int $id the id of the ingredient to be deleted
