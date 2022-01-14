@@ -78,11 +78,13 @@ if (isset($_POST['submit'])) {
 if (isset($_POST['image'])) {
     $filename = $fileUploadManager->uploadImage($user_id, $recipe_id);
     $recipeManager->updatePhotoUrl($filename, $recipe_id);
+    header('Location: ./confirmation.php');
 }
 
 // Button delete
 if (isset($_POST['delete'])) {
     $recipeManager->deleteRecipe($recipe);
+    header('Location: ./confirmation.php');
 }
 
 
