@@ -253,6 +253,12 @@ class RecipeManager {
         }
         echo "</table > ";
         echo " <p > " . $recipe->getContent() . " </p >
+             <p><br/>";
+        if ($this->userManager->isLoggedIn()) {
+            echo "<p>Bewertung abgeben:</p>";
+            $this->rating();
+        }
+        echo "</p>
                 </div >
                 <div class= 'flex_item_recipe_picture' > ";
         $photoUrl = $recipe->getPhotoUrl();
@@ -281,12 +287,13 @@ class RecipeManager {
                     <p>von " . $user->getUserName() . " </p> 
                     <p>" . $category->getName() . " | " . $type->getName() . "</p> 
                     <p>";
-        echo $this->rating(4) . "</p>";
+
 
         if ($recipe->getRating() < 0) {
-            echo "(" . $recipe->getRating() . " von 5)";
+            echo $this->displayRating(4) . "(" . $recipe->getRating() . " von 5)";
         } else {
-            echo "noch keine Bewertungen.";
+            echo str_repeat("<img class='cookerhood' src = ./img/cookerhood.png>", 5);
+            echo "noch keine Bewertungen. </p>";
         }
         echo "</div>
         <div class='flex_item_recipe_picture'> ";
@@ -389,13 +396,28 @@ class RecipeManager {
         }
     }
 
-
-    function rating($count) {
-        $max_count = 5;
+    /**
+     * @param $count
+     * @return string
+     */
+    function displayRating(int $count) {
+        $max_count = 4;
         return str_repeat("<img class='cookerhood' src = ./img/cookerhood.png>", $count) .
             str_repeat("<img class='cookerhood' src = ./img/cookerhood_full.png>", ($max_count - $count));
     }
 
+    function rating() {
+        echo "<div class='cookerhood_rating'>
+            <form action=''>";
+        for ($i = 5; $i >= 1; $i--) {
+            echo "<input class='cookerhood_rating cookerhood-$i' id='cookerhood-$i' type='radio' name='star'/>
+                  <label class='cookerhood_rating cookerhood-$i' for='cookerhood-$i'></label>";
+        }
+        echo "
+    </form>
+    </div>
+</p>";
+
+    }
 
 }
-

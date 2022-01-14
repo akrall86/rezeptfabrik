@@ -79,5 +79,12 @@ if (isset($_POST['image'])) {
     $filename = $fileUploadManager->uploadImage($user_id, $recipe_id);
     $recipeManager->updatePhotoUrl($filename, $recipe_id);
 }
+
+// Button delete
+if (isset($_POST['delete'])) {
+    $recipeManager->deleteRecipe($recipe);
+}
+
+
 ?>
 

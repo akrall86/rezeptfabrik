@@ -24,9 +24,9 @@ class RecipeIngredientManager {
      * @param int $recipe_id the id of the recipe
      * @param int $ingredient_id the id of the ingredient
      * @param int $unitOfMeasurement_id the id of the unit of measurement
-     * @param int $amount the amount of the ingredient
+     * @param float $amount the amount of the ingredient
      */
-    function createRecipe_Ingredient(int $recipe_id, int $ingredient_id, int $unitOfMeasurement_id, int $amount) {
+    function createRecipe_Ingredient(int $recipe_id, int $ingredient_id, int $unitOfMeasurement_id, float $amount) {
         $ps = $this->conn->prepare('
         INSERT INTO recipe_has_ingredient_has_unit_of_measurement  
             (recipe_id, ingredient_id, unit_of_measurement_id, amount) VALUES (

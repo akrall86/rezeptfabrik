@@ -32,9 +32,14 @@ $recipe = $recipeManager->getRecipe($recipe_id);
     </header>
 
     <div class="content">
-       <?php  $recipeManager->displayRecipe($recipe); ?>
-        <br/>
-        <a href="index.php">zurück</a>
+        <div>
+            <?php $recipeManager->displayRecipe($recipe); ?>
+        </div>
+        <div>
+            <a href="index.php">zurück</a>
+        </div>
+        <br/><br/>
+
     </div>
     <?php
     include "inc/footer.php";

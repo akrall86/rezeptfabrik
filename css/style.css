@@ -113,14 +113,13 @@ header {
 .flex_item_recipe_content a {
   color: black;
   font-weight: bold;
-  padding: 16px;
+  font-size: 1.5em;
   text-decoration: none;
 }
 .flex_item_recipe_content a:hover {
   color: black;
-  text-decoration: none;
-  transform: scale(1.2);
-  font-size: 22px;
+  font-size: 1.5em;
+  text-decoration: underline;
 }
 .flex_item_recipe_content .cookerhood {
   width: 30px;
@@ -138,6 +137,7 @@ header {
 .flex_item_recipe_content tr:nth-child(odd) {
   background-color: rgba(255, 255, 255, 0.3);
 }
+/* filter recipe */
 .filter_recipe {
   display: inline-block;
   margin-bottom: 50px;
@@ -220,5 +220,31 @@ footer {
 .confirmation {
   font-weight: bold;
   text-align: center;
+}
+/* rating */
+div.cookerhood_rating {
+  width: 270px;
+  display: inline-block;
+}
+input.cookerhood_rating {
+  display: none;
+}
+label.cookerhood_rating {
+  float: right;
+  padding: 10px;
+  font-size: 36px;
+  color: #444;
+}
+input.cookerhood_rating:checked ~ label.cookerhood_rating:before {
+  content: url(../img/little_cookerhood_full.png);
+}
+input.cookerhood-5:checked ~ label.cookerhood_rating:before {
+  content: url(../img/little_cookerhood_full.png);
+}
+label.cookerhood_rating:hover {
+  content: url(../img/little_cookerhood_full.png);
+}
+label.cookerhood_rating:before {
+  content: url(../img/little_cookerhood.png);
 }
 /*# sourceMappingURL=style.css.map */

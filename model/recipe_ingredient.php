@@ -3,14 +3,14 @@
 class Recipe_Ingredient{
    public string $ingredient_name;
    public string $unit_Of_Measurement_name;
-   public int $amount;
+   public float $amount;
 
     /**
      * @param string $ingredient_name
      * @param string $unit_Of_Measurement_name
-     * @param int $amount
+     * @param float $amount
      */
-    public function __construct(string $ingredient_name, string $unit_Of_Measurement_name, int $amount) {
+    public function __construct(string $ingredient_name, string $unit_Of_Measurement_name, float $amount) {
         $this->ingredient_name = $ingredient_name;
         $this->unit_Of_Measurement_name = $unit_Of_Measurement_name;
         $this->amount = $amount;
@@ -47,14 +47,14 @@ class Recipe_Ingredient{
     /**
      * @return int
      */
-    public function getAmount(): int {
+    public function getAmount(): float {
         return $this->amount;
     }
 
     /**
      * @param int $amount
      */
-    public function setAmount(int $amount): void {
+    public function setAmount(float $amount): void {
         $this->amount = $amount;
     }
 

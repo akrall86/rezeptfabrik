@@ -84,7 +84,7 @@ $types = $typeManager->getTypes();
             }
             for ($count = $page_number; $count < ($page_number + $recipes_per_page); $count++) {
                 if (isset($recipesByCategory[$count])) {
-                    echo "<p>" . $recipeManager->displayRecipe($recipesByCategory[$count]) . "</p>\n";
+                    echo "<p>" . $recipeManager->displayShortVersionOfRecipe($recipesByCategory[$count]) . "</p>\n";
                 }
             }
         } elseif (isset($_POST['filterType'])) {
@@ -100,7 +100,7 @@ $types = $typeManager->getTypes();
             }
             for ($count = $page_number; $count < ($page_number + $recipes_per_page); $count++) {
                 if (isset($recipes[$count])) {
-                    echo "<p>" . $recipeManager->displayRecipe($recipes[$count]) . "</p>\n";
+                    echo "<p>" . $recipeManager->displayShortVersionOfRecipe($recipes[$count]) . "</p>\n";
                 }
             }
         } else {
@@ -116,7 +116,7 @@ $types = $typeManager->getTypes();
 
             for ($count = $page_number; $count < ($page_number + $recipes_per_page); $count++) {
                 if (isset($recipes[$count])) {
-                    echo "<p>" . $recipeManager->displayRecipe($recipes[$count]) . "</p>\n";
+                    echo "<p>" . $recipeManager->displayShortVersionOfRecipe($recipes[$count]) . "</p>\n";
                 }
             }
         }

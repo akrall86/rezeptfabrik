@@ -152,7 +152,7 @@ require_once 'inc/recipe.update.php';
             <p>Rezept unwiderruflich löschen:</p>
                 <input type="hidden" id="recipe_id" name="recipe_id" value=<?php echo $recipe_id ?>>
             <div>
-                <button name="image">Rezept löschen</button>
+                <button name="delete">Rezept löschen</button>
             </div>
 
             <br/>
