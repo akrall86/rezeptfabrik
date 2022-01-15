@@ -37,6 +37,7 @@ require_once 'inc/logininclude.php';
                 <label for="password">Passwort:</label>
                 <input type="password" name="password" id="password">
             </div>
+            <br/>
             <div>
                 <button name="btlogin">Login</button>
             </div>

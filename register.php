@@ -24,23 +24,27 @@ require_once 'inc/registerinclude.php';
     <!-- content -->
     <div class="content">
         <h1>Registrierung</h1>
-        <form  name="register" action="register.php" method="POST">
+        <form name="register" action="register.php" method="POST">
             <?php include 'inc/errormessages.php' ?>
             <div>
                 <label for="firstname">Vorname:</label>
-                <input type="text" name="firstname" id="firstname" value="<?php if ($_REQUEST != null && $_REQUEST['firstname'] != null) echo $_REQUEST['firstname'] ?>">
+                <input type="text" name="firstname" id="firstname"
+                       value="<?php if ($_REQUEST != null && $_REQUEST['firstname'] != null) echo $_REQUEST['firstname'] ?>">
             </div>
             <div>
                 <label for="lastname">Nachname:</label>
-                <input type="text" name="lastname" id="lastname" value="<?php if ($_REQUEST != null && $_REQUEST['lastname'] != null) echo $_REQUEST['lastname'] ?>">
+                <input type="text" name="lastname" id="lastname"
+                       value="<?php if ($_REQUEST != null && $_REQUEST['lastname'] != null) echo $_REQUEST['lastname'] ?>">
             </div>
             <div>
                 <label for="user_name">Benutzername:</label>
-                <input type="text" name="user_name" id="user_name"value="<?php if ($_REQUEST != null && $_REQUEST['user_name'] != null) echo $_REQUEST['user_name'] ?>">
+                <input type="text" name="user_name" id="user_name"
+                       value="<?php if ($_REQUEST != null && $_REQUEST['user_name'] != null) echo $_REQUEST['user_name'] ?>">
             </div>
             <div>
                 <label for="email">E-Mail:</label>
-                <input type="email" name="email" id="email" value="<?php if ($_REQUEST != null && $_REQUEST['email'] != null) echo $_REQUEST['email'] ?>">
+                <input type="email" name="email" id="email"
+                       value="<?php if ($_REQUEST != null && $_REQUEST['email'] != null) echo $_REQUEST['email'] ?>">
             </div>
             <div>
                 <label for="password">Passwort:</label>
@@ -50,7 +54,7 @@ require_once 'inc/registerinclude.php';
                 <label for="passwordrepeat">Passwort wiederholen:</label>
                 <input type="password" name="passwordrepeat" id="passwordrepeat">
             </div>
-
+            <br/>
             <div>
                 <button name="btregister">Registrieren</button>
             </div>

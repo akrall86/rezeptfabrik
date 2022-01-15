@@ -136,8 +136,6 @@ class RecipeManager {
         $recipes = [];
         $result = $this->connection->query('SELECT id FROM recipe');
         while ($row = $result->fetch()) {
-            $id = $row['id'];
-            echo $id . " ";
             $recipes[] = $this->getRecipe($row['id']);
         }
         return $recipes;
@@ -287,8 +285,6 @@ class RecipeManager {
                     <p>von " . $user->getUserName() . " </p> 
                     <p>" . $category->getName() . " | " . $type->getName() . "</p> 
                     <p>";
-
-
         if ($recipe->getRating() < 0) {
             echo $this->displayRating(4) . "(" . $recipe->getRating() . " von 5)";
         } else {
@@ -409,7 +405,7 @@ class RecipeManager {
     function rating() {
         echo "<div class='cookerhood_rating'>
             <form action=''>";
-        for ($i = 5; $i >= 1; $i--) {
+        for ($i = 1; $i <= 5; $i++) {
             echo "<input class='cookerhood_rating cookerhood-$i' id='cookerhood-$i' type='radio' name='star'/>
                   <label class='cookerhood_rating cookerhood-$i' for='cookerhood-$i'></label>";
         }
