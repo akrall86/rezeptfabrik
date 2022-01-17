@@ -23,6 +23,8 @@ require_once __DIR__ . '/../manager/typemanager.php';
 require_once __DIR__ . '/../manager/recipeingredientmanager.php';
 // FileUpload Manager include
 require_once __DIR__ . '/../manager/fileuploadmanager.php';
+// Rating Manager include
+require_once __DIR__ . '/../manager/ratingmanager.php';
 
 // Object from Class UserManager
 $userManager = new UserManager($connection);
@@ -36,11 +38,12 @@ $recipeIngredientManager = new RecipeIngredientManager($connection);
 $categoryManager = new CategoryManager($connection);
 // Object from Class TypeManager
 $typeManager = new TypeManager($connection);
+// Object from Class RatingManager
+$ratingManager = new RatingManager($connection);
 // Object from Class MeasuringUnitManager
 $recipeManager = new RecipeManager($connection, $ingredientManager, $measuringUnitManager,
-    $recipeIngredientManager, $userManager, $categoryManager, $typeManager);
+    $recipeIngredientManager, $userManager, $categoryManager, $typeManager, $ratingManager);
 // Object from Class FileUploadManager
 $fileUploadManager = new FileUploadManager();
-
 // array to store errors
 $errors = [];

@@ -34,7 +34,39 @@ require_once 'inc/requireadmin.php';
         </div>
         <div>
             <h2>Rezepte Übersicht</h2>
+            <form action="admin.index.php" method="POST">
+                <button name="submit">Alle Rezepte anzeigen</button>
+            </form>
         </div>
+        <?php
+        if (isset($_POST['submit'])) {
+        $recipes = $recipeManager->getAllRecipes();
+        if (count($recipes) == 0) {
+            echo '<p> Noch keine Rezepte vorhanden. </p>';
+        } else {
+            echo " <table>
+                    <tr>
+                        <th class='admin_table'>Titel</th>
+                        <th class='admin_table'>Kategorie</th>
+                        <th class='admin_table'>Typ</th>
+                        <th class='admin_table'>erstellt von</th>
+                        <th class='admin_table'>erstellt am</th>
+                    </tr>";
+        }
+        foreach ($recipes as $recipe) {
+            $recipe_id = $recipe->getId();
+            echo "  <tr>
+                        <td>".$recipe->getTitle()."</td>
+                        <td>".$recipe->getCategory()->getName()."</td>
+                        <td>".$recipe->getType()->getName()."</td>
+                        <td>".$recipe->getUser()->getUserName()."</td>
+                        <td>".$recipe->getPublishedDate()->format('d.m.Y H:i:s') ."</td>
+                        <td><a href='admin.recipe.php?id=$recipe_id'>Bearbeiten</a> </td>
+                   </tr>";
+        }
+        echo "</table>";
+        }
+        ?>
     </div>
 
     <?php

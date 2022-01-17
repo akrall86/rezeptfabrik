@@ -8,7 +8,7 @@ $categories = $categoryManager->getCategories();
 $types = $typeManager->getTypes();
 
 $recipe_id = filter_var($_GET["id"]);
-$recipe = $recipeManager->getRecipe($recipe_id);
+$recipe = $recipeManager->getRecipe((int)$recipe_id);
 
 ?>
 

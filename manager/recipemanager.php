@@ -19,6 +19,7 @@ class RecipeManager {
     private UserManager $userManager;
     private CategoryManager $categoryManager;
     private TypeManager $typeManager;
+    private RatingManager $ratingManager;
 
     /**
      * @param PDO $conn the connection to the db
@@ -28,6 +29,7 @@ class RecipeManager {
      * @param UserManager $userManager
      * @param CategoryManager $categoryManager
      * @param TypeManager $typeManager
+     * @param RatingManager $ratingManager
      */
     public function __construct(PDO                     $connection,
                                 IngredientManager       $ingredientManager,
@@ -35,7 +37,8 @@ class RecipeManager {
                                 RecipeIngredientManager $recipeIngredientManager,
                                 UserManager             $userManager,
                                 CategoryManager         $categoryManager,
-                                TypeManager             $typeManager) {
+                                TypeManager             $typeManager,
+                                RatingManager           $ratingManager) {
         $this->connection = $connection;
         $this->ingredientManager = $ingredientManager;
         $this->measuringUnitManager = $measuringUnitManager;
@@ -43,6 +46,7 @@ class RecipeManager {
         $this->userManager = $userManager;
         $this->categoryManager = $categoryManager;
         $this->typeManager = $typeManager;
+        $this->ratingManager = $ratingManager;
     }
 
     /**
@@ -127,7 +131,6 @@ class RecipeManager {
         return false;
     }
 
-
     /**
      * get all recipes from DB
      * @return Recipe|Recipes|bool one recipe or recipes or false if there is no recipe in the DB
@@ -208,6 +211,7 @@ class RecipeManager {
      * @param Recipe $recipe the recipe to be displayed
      */
     function displayRecipe(Recipe $recipe) {
+        $recipe_id = $recipe->getId();
         $user = $recipe->getUser();
         $category = $recipe->getCategory();
         $type = $recipe->getType();
@@ -219,25 +223,19 @@ class RecipeManager {
                     <p>" . $user->getUserName() . " hat dieses Rezept am " .
             $date->format('d.m.Y') . " um " . $date->format('H:i:s') . " gepostet.
                     </p> 
-                    <a href='../recipe.view.php?id='><h2>" . $recipe->getTitle() . "</h2></a>
+                    <h2>" . $recipe->getTitle() . "</h2>
                     <p>" . $category->getName() . " | " . $type->getName() . "</p> 
-                    <p>
-        <img class='cookerhood' src = './img/cookerhood.png'>
-        <img class='cookerhood' src = ./img/cookerhood.png>
-        <img class='cookerhood' src = ./img/cookerhood.png>
-        <img class='cookerhood' src = ./img/cookerhood.png>
-        <img class='cookerhood' src = ./img/cookerhood.png>";
-
-        if ($recipe->getRating() < 0) {
-            echo "(" . $recipe->getRating() . " von 5)";
+                    <p>";
+        $rating = $this->ratingManager->getRating($recipe_id);
+        $old_rating_count = $this->ratingManager->getRatingCount($recipe_id);
+        if ($rating > 0) {
+            $rating_average = $rating / $rating_count;
+            echo $this->ratingManager->displayRating($rating_average) . " ( ". $old_rating_count . " Bewertungen)";
         } else {
-            echo "noch keine Bewertungen.";
+            echo str_repeat("<img class='cookerhood' src = ./img/cookerhood.png>", 5);
+            echo "noch keine Bewertungen. </p>";
         }
         echo "</p>";
-        if ($this->userManager->isLoggedIn()) {
-            echo "<p>Rezept bewerten: </a></li></p>";
-        }
-
         echo " </p> 
         Zutaten: <br/>
         <table >";
@@ -253,8 +251,8 @@ class RecipeManager {
         echo " <p > " . $recipe->getContent() . " </p >
              <p><br/>";
         if ($this->userManager->isLoggedIn()) {
-            echo "<p>Bewertung abgeben:</p>";
-            $this->rating();
+            echo "<p>Rezept bewerten:</p>";
+            $this->ratingManager->rating($recipe_id);
         }
         echo "</p>
                 </div >
@@ -274,6 +272,7 @@ class RecipeManager {
      * @param Recipe $recipe the recipe to be displayed
      */
     function displayShortVersionOfRecipe(Recipe $recipe) {
+        $slug = $recipe->getSlug();
         $recipe_id = $recipe->getId();
         $user = $recipe->getUser();
         $category = $recipe->getCategory();
@@ -281,12 +280,15 @@ class RecipeManager {
         echo "
             <div class= 'flex_container_recipe'> 
                 <div class= 'flex_item_recipe_content'>                    
-                    <a id='link' href='./recipe.view.php?id=" . $recipe_id . "'>" . $recipe->getTitle() . "</a>
+                    <a id='link' href='./recipe.view.php?id=" . $recipe_id . "?" . $slug . "'>" . $recipe->getTitle() . "</a>
                     <p>von " . $user->getUserName() . " </p> 
                     <p>" . $category->getName() . " | " . $type->getName() . "</p> 
                     <p>";
-        if ($recipe->getRating() < 0) {
-            echo $this->displayRating(4) . "(" . $recipe->getRating() . " von 5)";
+        $rating = $this->ratingManager->getRating($recipe_id);
+        $rating_count = $this->ratingManager->getRatingCount($recipe_id);
+        if ($rating > 0) {
+            $rating_average = $rating / $rating_count;
+            echo $this->ratingManager->displayRating($rating_average) . " (von 5)";
         } else {
             echo str_repeat("<img class='cookerhood' src = ./img/cookerhood.png>", 5);
             echo "noch keine Bewertungen. </p>";
@@ -322,7 +324,7 @@ class RecipeManager {
      */
     private
     function createSlug(string $title): string {
-        $string = str_replace(" ", " - ", $title);
+        $string = str_replace(" ", "-", $title);
         $slug = str_replace(array("#", "'", ";", ".", "\"", ",", ":"), "", $string);
         return $slug;
     }
@@ -392,28 +394,5 @@ class RecipeManager {
         }
     }
 
-    /**
-     * @param $count
-     * @return string
-     */
-    function displayRating(int $count) {
-        $max_count = 4;
-        return str_repeat("<img class='cookerhood' src = ./img/cookerhood.png>", $count) .
-            str_repeat("<img class='cookerhood' src = ./img/cookerhood_full.png>", ($max_count - $count));
-    }
-
-    function rating() {
-        echo "<div class='cookerhood_rating'>
-            <form action=''>";
-        for ($i = 1; $i <= 5; $i++) {
-            echo "<input class='cookerhood_rating cookerhood-$i' id='cookerhood-$i' type='radio' name='star'/>
-                  <label class='cookerhood_rating cookerhood-$i' for='cookerhood-$i'></label>";
-        }
-        echo "
-    </form>
-    </div>
-</p>";
-
-    }
 
 }

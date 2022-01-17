@@ -82,19 +82,19 @@ header {
 }
 /*content*/
 .content {
-  width: 70%;
+  width: 80%;
   min-height: 850px;
   max-height: 3500px;
   margin-top: 100px;
-  padding-left: 15%;
-  padding-right: 15%;
+  padding-left: 10%;
+  padding-right: 10%;
   padding-bottom: 10px;
 }
 /* display recipe */
 .flex_container_recipe {
+  display: flex;
   margin-top: 20px;
   margin-bottom: 10px;
-  display: flex;
   width: 900px;
   flex-wrap: wrap;
 }
@@ -104,7 +104,7 @@ header {
   background-size: 100%;
   margin-top: 30px;
   margin-left: 50px;
-  height: 200px;
+  width: 200px;
 }
 .flex_item_recipe_content {
   width: 650px;
