@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
     if ($recipeManager->titleExists($_POST['title'])) {
         $errors['title_exists'] = 'Titel existiert schon.';
     }
-    if ($_SESSION['recipe_ingredients']->count() == 0) {
+    if (count($_SESSION['recipe_ingredients']) == 0) {
         $errors['recipe_ingredients'] = 'Zutat hinzufügen.';
     }
     if (strlen(trim($_POST['description'])) == 0) {
@@ -64,7 +64,8 @@ if (isset($_POST['submit'])) {
         $category = new Category($category_id, $_POST['category']);
         $type_id = $typeManager->getTypeId($_POST['type']);
         $type = new Type($type_id, $_POST['type']);
-        $new_recipe = new Recipe($recipe_id, $_POST['title'], $_POST['description'], $recipe->getSlug(), $user,
+        $slug = $recipeManager->createSlug($_POST['title']);
+        $new_recipe = new Recipe($recipe_id, $_POST['title'], $_POST['description'], $slug, $user,
             $category, $type, $recipe->getPhotoUrl(),
         $recipe->getPublishedDate(), $recipe->getRating(), $recipe_ingredients);
         $recipeManager->updateRecipe($new_recipe);

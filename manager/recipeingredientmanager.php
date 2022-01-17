@@ -43,8 +43,8 @@ class RecipeIngredientManager {
      * @param Recipe $recipe the recipe from which the ingredients are to be fetched
      * @return Recipe_Ingredients
      */
-    function getAllIngredientsFromRecipe(Recipe $recipe): Recipe_Ingredients {
-        $recipe_Ingredients = new Recipe_Ingredients();
+    function getAllIngredientsFromRecipe(Recipe $recipe): array {
+        $recipe_Ingredients =[];
         $recipeId = $recipe->getId();
         $result = $this->conn->query('
         SELECT i.name as ingredient_name, uom.name as uof_name, rhihuom.amount
@@ -54,7 +54,7 @@ class RecipeIngredientManager {
         WHERE rhihuom.recipe_id  =' . $recipeId);
         while ($row = $result->fetch()) {
             $recipe_Ingredient = new Recipe_Ingredient($row['ingredient_name'], $row['uof_name'], $row['amount']);
-            $recipe_Ingredients->add($recipe_Ingredient);
+            $recipe_Ingredients [] = $recipe_Ingredient;
         }
         return $recipe_Ingredients;
     }

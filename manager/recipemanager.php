@@ -9,7 +9,8 @@ require_once __DIR__ . '/../model/recipe_ingredients.php';
 require_once __DIR__ . '/../model/recipes.php';
 
 /**
- * The RecipeManager class contains methods for managing recipes and editing recipes in db
+ * The RecipeManager class contains methods for managing recipes, display recipes
+ * and editing recipes in db
  */
 class RecipeManager {
     private PDO $connection;
@@ -230,7 +231,7 @@ class RecipeManager {
         $rating_count = $this->ratingManager->getRatingCount($recipe_id);
         if ($rating > 0) {
             $rating_average = $rating / $rating_count;
-            echo $this->ratingManager->displayRating($rating_average) . " (". $rating_count . " Bewertungen)";
+            echo $this->ratingManager->displayRating($rating_average) . " (" . $rating_count . " Bewertungen)";
         } else {
             echo str_repeat("<img class='cookerhood' src = ./img/cookerhood.png>", 5);
             echo "noch keine Bewertungen. </p>";
@@ -288,7 +289,7 @@ class RecipeManager {
         $rating_count = $this->ratingManager->getRatingCount($recipe_id);
         if ($rating > 0) {
             $rating_average = $rating / $rating_count;
-            echo $this->ratingManager->displayRating($rating_average) . " (". $rating_count . " Bewertungen)";
+            echo $this->ratingManager->displayRating($rating_average) . " (" . $rating_count . " Bewertungen)";
         } else {
             echo str_repeat("<img class='cookerhood' src = ./img/cookerhood.png>", 5);
             echo "noch keine Bewertungen. </p>";
@@ -322,7 +323,6 @@ class RecipeManager {
      * @param string $title the title from which the slug is to be created
      * @return string the slug
      */
-    private
     function createSlug(string $title): string {
         $string = str_replace(" ", "-", $title);
         $slug = str_replace(array("#", "'", ";", ".", "\"", ",", ":"), "", $string);
