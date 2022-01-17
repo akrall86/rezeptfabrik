@@ -13,6 +13,7 @@ require_once 'inc/errormessages.php';
 $categories = $categoryManager->getCategories();
 $types = $typeManager->getTypes();
 $measurementUnits = $measuringUnitManager->getMeasuringUnits();
+$count=0;
 
 if (!isset ($_SESSION['recipe_ingredients'])) {
     $_SESSION['recipe_ingredients'] = [];

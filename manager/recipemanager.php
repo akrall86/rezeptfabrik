@@ -288,7 +288,7 @@ class RecipeManager {
         $rating_count = $this->ratingManager->getRatingCount($recipe_id);
         if ($rating > 0) {
             $rating_average = $rating / $rating_count;
-            echo $this->ratingManager->displayRating($rating_average) . " (von 5)";
+            echo $this->ratingManager->displayRating($rating_average) . " (". $rating_count . " Bewertungen)";
         } else {
             echo str_repeat("<img class='cookerhood' src = ./img/cookerhood.png>", 5);
             echo "noch keine Bewertungen. </p>";

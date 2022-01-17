@@ -82,9 +82,11 @@ require_once 'inc/recipe.create.php';
                             $r->getUnitOfMeasurementName() . " " .
                             $r->getIngredientName() .
                             " <button name=$name>x</button><br/><br/>";
-                            if (isset($_POST[$name])) {
-                                $recipe_ingredients->remove($r);
-                            }
+                        if (isset($_POST[$name])) {
+                            unset($recipe_ingredients[$count]);
+                        }
+                        $count++;
+                        $_SESSION['recipe_ingredients'] = $recipe_ingredients;
                     }
                 }
                 ?>
