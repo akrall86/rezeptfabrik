@@ -24,7 +24,7 @@ if (isset($_POST['btupdate']) && $_POST['password']) {
         }
     }
     if (!password_verify($_POST['password'], $user->password)) {
-        $errors['password'] = 'Passwort stimmt nicht überein';
+        $errors['password'] = 'Passwort ist nicht korrekt';
     }
 
     if (count($errors) == 0) {
