@@ -1,0 +1,59 @@
+<?php
+require_once 'inc/maininclude.php';
+?>
+
+<!DOCTYPE HTML>
+<html lang="de">
+<head>
+    <meta charset="utf-8"/>
+    <title>rezeptfabrik</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="js/jquery-3.6.0.js" defer></script>
+    <script src="js/script.js" defer></script>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+<div class="body">
+    <header>
+        <?php
+        include "inc/header.php";
+        include "inc/navbar.php";
+        ?>
+    </header>
+
+    <div class="content">
+        <a href="admin.index.php">Zurück</a>
+
+        <?php
+        $recipes = $recipeManager->getAllRecipes();
+        if (count($recipes) == 0) {
+            echo '<p> Noch keine Rezepte vorhanden. </p>';
+        } else {
+            echo " <table class='admin_table'>
+                    <tr>
+                        <th>Titel</th>
+                        <th>Kategorie</th>
+                        <th>Typ</th>
+                        <th>erstellt von</th>
+                        <th>erstellt am</th>
+                    </tr>";
+        }
+        foreach ($recipes as $recipe) {
+            $recipe_id = $recipe->getId();
+            echo "  <tr>
+                        <td>" . $recipe->getTitle() . "</td>
+                        <td>" . $recipe->getCategory()->getName() . "</td>
+                        <td>" . $recipe->getType()->getName() . "</td>
+                        <td>" . $recipe->getUser()->getUserName() . "</td>
+                        <td>" . $recipe->getPublishedDate()->format('d.m.Y H:i:s') . "</td>
+                        <td><a href='recipe.delete.php?id=$recipe_id'>Löschen</a> </td>
+                   </tr>";
+        }
+        echo "</table>";
+
+        include "inc/footer.php";
+        ?>
+    </div>
+</div>
+</body>
+</html>
