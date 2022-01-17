@@ -78,7 +78,7 @@ class RatingManager {
         if (isset($_POST['rate'])) {
             for ($i = 1; $i <= 5; $i++) {
                 if (isset($_POST['cookerhood-' . $i])) {
-                    $rating = $i;
+                    $rating = 6 - $i;
                 }
             }
             $this->updateRating($recipe_id, $rating);
