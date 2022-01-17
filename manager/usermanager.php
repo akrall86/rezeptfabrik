@@ -32,17 +32,6 @@ class UserManager
      */
     function createUser(string $firstname, string $lastname, string $user_name, string $email, string $password): string
     {
-
-
-        // check email of it exist
-        if ($this->getUserByEmail($email) == true) {
-            return $errors['email'] = 'E-mail schon vorhanden!';
-        }
-        // check user_name of it exist
-        if ($this->getUserByUser_Name($user_name) == true) {
-            return $errors['user_name'] = 'Benutzername schon vorhanden!';
-
-        }
         // password hash
         $password = password_hash($password, PASSWORD_BCRYPT);
 
@@ -77,11 +66,9 @@ class UserManager
         if ($user == false) {
             return false;
         }
-
         if (!password_verify($password, $user->password)) {
             return false;
         }
-
         // add Userdata to Session
 
         $_SESSION['loggedin'] = true;
