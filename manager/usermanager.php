@@ -241,7 +241,8 @@ class UserManager
                 $user_role = $role->name;
             }
         }
-        $ps = $this->conn->prepare('INSERT INTO user_has_role (user_id, role_name)  VALUES (:user_id, :role_name)');
+        $ps = $this->conn->prepare('INSERT INTO user_has_role (user_id, role_name)
+                                    VALUES (:user_id, :role_name)');
         $ps->bindValue('user_id', $id);
         $ps->bindValue('role_name', $user_role);
         $ps->execute();
