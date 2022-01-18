@@ -132,7 +132,8 @@ class UserManager
 
         $users = [];
         while ($row = $result->fetch()) {
-            $users[] = new User($row['id'], $row['firstname'], $row['lastname'], $row['user_name'], $row['email'], $row['password']);
+            $users[] = new User($row['id'], $row['firstname'], $row['lastname'],
+                $row['user_name'], $row['email'], $row['password']);
         }
         return $users;
     }
