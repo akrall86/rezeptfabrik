@@ -259,6 +259,7 @@ class RecipeManager {
             echo " </div>
             <div class='rating_favorite'>
                 <p>Rezept merken:</p>
+                </br>
                 <button class='favorite_button'>&#10084;</button>
             </div>";
 //            <form>

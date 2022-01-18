@@ -238,14 +238,6 @@ button, .button {
   font-size: 14px;
   padding: 5px 10px;
   text-decoration: none;
-
-  .favorite_button {
-    background-color: transparent;
-    font-size: 20px;
-    color: black;
-    text-decoration: none;
-    border: none;
-  }
 }
 
 button:hover, .button:hover {
@@ -253,14 +245,22 @@ button:hover, .button:hover {
   color: black;
   border: 1px solid black;
   transform: scale(1.2);
+}
 
-  .favorite_button {
-    background-color: transparent;
-    font-size: 20px;
-    color: black;
-    text-decoration: none;
-    border: none;
-  }
+.favorite_button {
+  background-color: transparent;
+  font-size: 51px;
+  color: red;
+  text-decoration: none;
+  border: none;
+}
+
+.favorite_button:hover {
+  background-color: transparent;
+  transform: scale(1.4);
+  color: red;
+  text-decoration: none;
+  border: none;
 }
 
 /* rating and favorite */
@@ -268,6 +268,7 @@ button:hover, .button:hover {
   width: 200px;
   display: inline-block;
   text-align: center;
+  padding-right: 50px;
 }
 
 /* footer */
