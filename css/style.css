@@ -200,12 +200,34 @@ button,
   padding: 5px 10px;
   text-decoration: none;
 }
+button .favorite_button,
+.button .favorite_button {
+  background-color: transparent;
+  font-size: 20px;
+  color: black;
+  text-decoration: none;
+  border: none;
+}
 button:hover,
 .button:hover {
   background-color: white;
   color: black;
   border: 1px solid black;
   transform: scale(1.2);
+}
+button:hover .favorite_button,
+.button:hover .favorite_button {
+  background-color: transparent;
+  font-size: 20px;
+  color: black;
+  text-decoration: none;
+  border: none;
+}
+/* rating and favorite */
+.rating_favorite {
+  width: 200px;
+  display: inline-block;
+  text-align: center;
 }
 /* footer */
 footer {

@@ -252,8 +252,22 @@ class RecipeManager {
         echo " <p > " . $recipe->getContent() . " </p >
              <p><br/>";
         if ($this->userManager->isLoggedIn()) {
-            echo "<p>Rezept bewerten:</p>";
-            $this->ratingManager->rating($recipe_id);
+            echo "
+            <div class='rating_favorite'>
+                <p>Rezept bewerten:</p>";
+                $this->ratingManager->rating($recipe_id);
+            echo " </div>
+            <div class='rating_favorite'>
+                <p>Rezept merken:</p>
+                <button class='favorite_button'>&#10084;</button>
+            </div>";
+//            <form>
+//
+//            <input class='favorite' id='favorite' type='radio' name='favorite'/>
+//            <label class='favorite' for='favorite'></label>
+//
+//            </form>";
+//            $this->favoriteRecipe($user->getId(), $recipe_id);
         }
         echo "</p>
                 </div >
@@ -369,6 +383,14 @@ class RecipeManager {
             $amount = $r->getAmount();
             $this->recipeIngredientManager->createRecipe_Ingredient($recipe_id, $ingredient_id, $unitOfMeasurement_id, $amount);
         }
+    }
+
+
+    function favoriteRecipe(int $user_id, int $recipe_id) {
+        $ps = $this->connection->prepare('INSERT INTO user_has_favorites (user_id, recipe_id) VALUES (:user_id, :recipe_id)');
+        $ps->bindValue('user_id', $user_id);
+        $ps->bindValue('recipe_id', $recipe_id);
+        $ps->execute();
     }
 
     /**

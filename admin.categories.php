@@ -25,8 +25,9 @@ $users = $userManager->getUsers();
     </header>
 
     <div class="content">
+        <h1>Typen</h1>
         <a href="admin.index.php">Zurück</a>
-
+        <br/><br/>
         <?php
 
         $categories = $categoryManager->getCategories();
@@ -44,14 +45,25 @@ $users = $userManager->getUsers();
             echo "  <tr>
                         <td>" . $category->getId() . "</td>
                         <td>" . $category->getName() . "</td>
-                        <td><a href='recipe.delete.php?id=$category_id'>Bearbeiten</a> </td>
                    </tr>";
         }
-        echo "</table>";
+        echo "</table>
+ <form action='admin.categories.php' method='POST'>
+                <?php include 'inc/errormessages.php' ?>
+        <div>
+            <label for='name'>Neue Kategorie hinzufügen:</label>
+            <input type='text' name='name' id='name'>
+            <button name='add'>hinzufügen</button>
+        </div>";
 
+        if (isset($_POST['add'])) {
+            $categoryManager->createCategory($_POST['name']);
+            header("Location: ./admin.categories.php");
+        }
+        echo "</div>";
         include "inc/footer.php";
         ?>
+
     </div>
-</div>
 </body>
 </html>

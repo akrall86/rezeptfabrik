@@ -40,12 +40,6 @@ require_once 'inc/admin.recipemanagement.php';
             </form>
         </div>
         <div>
-            <h2>Zutaten</h2>
-            <form action="admin.index.php" method="POST">
-                <button name="getingredients">Alle Zutaten anzeigen</button>
-            </form>
-        </div>
-        <div>
             <h2>Maßeinheiten</h2>
             <form action="admin.index.php" method="POST">
                 <button name="getunitofmeasurement">Alle Maßeinheiten anzeigen</button>
@@ -60,7 +54,7 @@ require_once 'inc/admin.recipemanagement.php';
         <div>
             <h2>Kategorien</h2>
             <form action="admin.index.php" method="POST">
-                <button name="getcategories">Alle Kategorie anzeigen</button>
+                <button name="getcategories">Alle Kategorien anzeigen</button>
             </form>
         </div>
         <?php

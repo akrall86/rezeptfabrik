@@ -52,6 +52,19 @@ class MeasuringUnitManager {
     }
 
     /**
+     * get the id of one specific measurement unit
+     * @param string $name
+     * @return int|bool the id or false if there is no match
+     */
+    function updateMeasuringUnitId(int $id, string $name) {
+        $ps = $this->conn->prepare('UPDATE unit_of_measurement 
+        SET name = :name WHERE id = :id');
+        $ps->bindValue('name', $name);
+        $ps->bindValue('id', $id);
+        $ps->execute();
+    }
+
+    /**
      * deletes one measurement unit from db
      * @param string $name the name of the measurement unit to be deleted
      */

@@ -26,6 +26,7 @@ $users = $userManager->getUsers();
 
     <div class="content">
         <a href="admin.index.php">Zurück</a>
+        <br/><br/>
             <table>
                 <?php if (count($users) == 0) {
                     echo '<p> Es wurden keine Benutzer gefunden! </p>';
@@ -51,10 +52,11 @@ $users = $userManager->getUsers();
                 }
                 ?>
             </table>
+    </div>
         <?php
         include "inc/footer.php";
         ?>
-    </div>
+
 </div>
 </body>
 </html>

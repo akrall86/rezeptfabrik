@@ -22,8 +22,9 @@ require_once 'inc/maininclude.php';
     </header>
 
     <div class="content">
+        <h1>Rezepte-Liste</h1>
         <a href="admin.index.php">Zurück</a>
-
+        <br/><br/>
         <?php
         $recipes = $recipeManager->getAllRecipes();
         if (count($recipes) == 0) {
@@ -49,11 +50,12 @@ require_once 'inc/maininclude.php';
                         <td><a href='recipe.delete.php?id=$recipe_id'>Löschen</a> </td>
                    </tr>";
         }
-        echo "</table>";
-
+        echo "</table>
+    </div>";
         include "inc/footer.php";
         ?>
+
+
     </div>
-</div>
 </body>
 </html>

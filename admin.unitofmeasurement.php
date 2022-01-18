@@ -23,33 +23,50 @@ require_once 'inc/maininclude.php';
     </header>
 
     <div class="content">
-        <a href="admin.index.php">Zurück</a>
+        <h1>Maßeinheiten</h1>
 
-<?php
-    $unitofmeasurements = $measuringUnitManager->getMeasuringUnits();
-    if (count($unitofmeasurements) == 0) {
-        echo '<p> Noch keine Maßeinheiten vorhanden. </p>';
-    } else {
-        echo " <table class='admin_table'>
+        <a href="admin.index.php">Zurück</a>
+        <br/><br/>
+        <?php
+        $unitofmeasurements = $measuringUnitManager->getMeasuringUnits();
+        if (count($unitofmeasurements) == 0) {
+            echo '<p> Noch keine Maßeinheiten vorhanden. </p>';
+        } else {
+            echo " <table class='admin_table'>
                     <tr>
                         <th>ID</th>
-                        <th>Name</th>
+                        <th>Name</th>                
                     </tr>";
-    }
-    foreach ($unitofmeasurements as $unitofmeasurement) {
-        $unitofmeasurement_id = $unitofmeasurement->getId();
-        echo "  <tr>
-                       <td>" . $unitofmeasurement->getId() . "</td>
-                        <td>" . $unitofmeasurement->getName() . "</td>
-                        <td><a href='recipe.delete.php?id=$unitofmeasurement_id'>Bearbeiten</a> </td>
+        }
+        foreach ($unitofmeasurements as $unitofmeasurement) {
+            $id = $unitofmeasurement->getId();
+            $name = $unitofmeasurement->getName();
+            echo "  <tr>
+                       <td>" . $id . "</td>
+                        <td>" . $name . "</td>                      
+                        </td>
                    </tr>";
-    }
-    echo "</table>";
-?>
-        <?php
-        include "inc/footer.php";
+        }
+        echo "</table>
+
+          <form action='admin.unitofmeasurement.php' method='POST'>
+        <div>
+            <label for='name'>Neue Maßeinheit hinzufügen:</label>
+            <input type='text' name='name' id='name'>                    
+            <button name='add'>hinzufügen</button>
+        </div>
+           </form>";
+        if (isset($_POST['add'])) {
+            $measuringUnitManager->createMeasuringUnit($_POST['name']);
+            header("Location: ./admin.unitofmeasurement.php");
+        }
+
         ?>
     </div>
+    <?php
+    include "inc/footer.php";
+    ?>
+
 </div>
 </body>
 </html>
