@@ -15,7 +15,7 @@ if (isset($_POST['btregister'])) {
     }
     if (count($errors) == 0) {
         $userId = $userManager->createUser($_POST['firstname'], $_POST['lastname'], $_POST['user_name'], $_POST['email'], $_POST['password']);
-        header("Location: ./login.php?registered=true&userid=$userId");
+        header("Location: ./login.php?registered=true");
         return;
     }
 }
