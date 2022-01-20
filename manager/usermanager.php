@@ -229,7 +229,7 @@ class UserManager
     /**
      * get all Roles take the USER role and set the Role with user id and User role
      * @param int $id
-     * @return false|void
+     * @return void
      */
     function setUserRoleToUserById(int $id)
     {
