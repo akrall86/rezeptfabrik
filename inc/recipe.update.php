@@ -15,7 +15,7 @@ require_once 'inc/errormessages.php';
 require_once 'inc/recipe.update.php';
 
 
-$user_id = (int) $_SESSION['user_id'];
+$user_id = (int)$_SESSION['user_id'];
 $user = $userManager->getUserById($user_id);
 $recipe = $recipeManager->getRecipe($recipe_id);
 $recipe_ingredients = $recipeIngredientManager->getAllIngredientsFromRecipe($recipe);
@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
         $slug = $recipeManager->createSlug($_POST['title']);
         $new_recipe = new Recipe($recipe_id, $_POST['title'], $_POST['description'], $slug, $user,
             $category, $type, $recipe->getPhotoUrl(),
-        $recipe->getPublishedDate(), $recipe->getRating(), $recipe_ingredients);
+            $recipe->getPublishedDate(), $recipe->getRating(), $recipe_ingredients);
         $recipeManager->updateRecipe($new_recipe);
 
         unset($_SESSION['recipe_ingredients']);
