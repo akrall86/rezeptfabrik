@@ -1,4 +1,4 @@
 // jQuery Ready Function
-$(function(){
+$(function () {
     // Code hier ausführen sobald DOM bereit ist
 });

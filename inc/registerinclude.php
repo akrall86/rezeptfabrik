@@ -7,9 +7,9 @@ if (isset($_POST['btregister'])) {
     if ($userManager->getUserByUser_Name($_POST['user_name'])) {
         $errors['user_name'] = 'Benutzername schon vorhanden!';
     }
-        if (strlen(trim($_POST['password'])) < 6) {
-            $errors['password'] = 'Passwort muss mindestens 6 Zeichen haben.';
-        }
+    if (strlen(trim($_POST['password'])) < 6) {
+        $errors['password'] = 'Passwort muss mindestens 6 Zeichen haben.';
+    }
     if (strcmp($_POST['password'], $_POST['passwordrepeat']) !== 0) {
         $errors['passwordrepeat'] = 'Passwörter stimmen nicht überein.';
     }

@@ -15,14 +15,14 @@ require_once 'inc/logininclude.php';
 <body>
 <div class="body">
 
-        <!-- header -->
+    <!-- header -->
     <header>
         <?php include 'inc/header.php';
         include "inc/navbar.php";
         ?>
     </header>
 
-        <!-- content -->
+    <!-- content -->
 
     <div class="content">
 

@@ -55,6 +55,43 @@ class UserManager
     }
 
     /**
+     * get all Roles take the USER role and set the Role with user id and User role
+     * @param int $id
+     * @return void
+     */
+    function setUserRoleToUserById(int $id)
+    {
+        $roles = $this->getRoles();
+        $user_role = "";
+
+        foreach ($roles as $role) {
+            if (($role->name) === 'USER') {
+                $user_role = $role->name;
+            }
+        }
+        $ps = $this->conn->prepare('INSERT INTO user_has_role (user_id, role_name)
+                                    VALUES (:user_id, :role_name)');
+        $ps->bindValue('user_id', $id);
+        $ps->bindValue('role_name', $user_role);
+        $ps->execute();
+    }
+
+    /**
+     * Get all Roles from DB and save it in an Array and returns the Array
+     * @return array
+     */
+    function getRoles(): array
+    {
+        $result = $this->conn->query('SELECT * FROM role');
+
+        $roles = [];
+        while ($row = $result->fetch()) {
+            $roles[] = new Role($row['name']);
+        }
+        return $roles;
+    }
+
+    /**
      * checks e-mail and password and add user data to Session if they are correct
      * @param string $email
      * @param string $password
@@ -86,15 +123,38 @@ class UserManager
     }
 
     /**
-     * control methods for $_SESSION['loggedin']
-     * @return bool
+     * Search in DB with email
+     * if email was found returns new User object with data from DB
+     * if email not found returns false
+     * @param $email
+     * @return User|bool if true return user, If not return false
      */
-    function isLoggedIn(): bool
+    function getUserByEmail($email): User|bool
     {
-        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true && isset($_SESSION['user_id'])) {
-            return true;
+        $ps = $this->conn->prepare('SELECT * FROM user WHERE email = :email');
+        $ps->bindValue('email', $email);
+        $ps->execute();
+
+        if ($row = $ps->fetch()) {
+            return new User($row['id'], $row['firstname'], $row['lastname'], $row['user_name'], $row['email'], $row['password']);
         }
         return false;
+    }
+
+    /**
+     * @param $user_id
+     * @return array
+     */
+    function getUserRoles($user_id): array
+    {
+        $ps = $this->conn->prepare('SELECT * FROM user_has_role WHERE user_id = :user_id');
+        $ps->bindValue('user_id', $user_id);
+        $ps->execute();
+        $roles = [];
+        while ($row = $ps->fetch()) {
+            $roles[] = new Role($row['role_name']);
+        }
+        return $roles;
     }
 
     /**
@@ -104,6 +164,18 @@ class UserManager
     function isAdmin(): bool
     {
         if ($this->isLoggedIn() && isset($_SESSION['admin']) && $_SESSION['admin'] === true) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * control methods for $_SESSION['loggedin']
+     * @return bool
+     */
+    function isLoggedIn(): bool
+    {
+        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true && isset($_SESSION['user_id'])) {
             return true;
         }
         return false;
@@ -136,25 +208,6 @@ class UserManager
                 $row['user_name'], $row['email'], $row['password']);
         }
         return $users;
-    }
-
-    /**
-     * Search in DB with email
-     * if email was found returns new User object with data from DB
-     * if email not found returns false
-     * @param $email
-     * @return User|bool if true return user, If not return false
-     */
-    function getUserByEmail($email): User|bool
-    {
-        $ps = $this->conn->prepare('SELECT * FROM user WHERE email = :email');
-        $ps->bindValue('email', $email);
-        $ps->execute();
-
-        if ($row = $ps->fetch()) {
-            return new User($row['id'], $row['firstname'], $row['lastname'], $row['user_name'], $row['email'], $row['password']);
-        }
-        return false;
     }
 
     /**
@@ -196,59 +249,6 @@ class UserManager
     }
 
     /**
-     * Get all Roles from DB and save it in an Array and returns the Array
-     * @return array
-     */
-    function getRoles(): array
-    {
-        $result = $this->conn->query('SELECT * FROM role');
-
-        $roles = [];
-        while ($row = $result->fetch()) {
-            $roles[] = new Role($row['name']);
-        }
-        return $roles;
-    }
-
-    /**
-     * @param $user_id
-     * @return array
-     */
-    function getUserRoles($user_id): array
-    {
-        $ps = $this->conn->prepare('SELECT * FROM user_has_role WHERE user_id = :user_id');
-        $ps->bindValue('user_id', $user_id);
-        $ps->execute();
-        $roles = [];
-        while ($row = $ps->fetch()) {
-            $roles[] = new Role($row['role_name']);
-        }
-        return $roles;
-    }
-
-    /**
-     * get all Roles take the USER role and set the Role with user id and User role
-     * @param int $id
-     * @return void
-     */
-    function setUserRoleToUserById(int $id)
-    {
-        $roles = $this->getRoles();
-        $user_role = "";
-
-        foreach ($roles as $role) {
-            if (($role->name) === 'USER') {
-                $user_role = $role->name;
-            }
-        }
-        $ps = $this->conn->prepare('INSERT INTO user_has_role (user_id, role_name)
-                                    VALUES (:user_id, :role_name)');
-        $ps->bindValue('user_id', $id);
-        $ps->bindValue('role_name', $user_role);
-        $ps->execute();
-    }
-
-    /**
      * @param int $id
      * @param $name
      */
@@ -258,6 +258,17 @@ class UserManager
         $ps->bindValue('user_id', $id);
         $ps->bindValue('role_name', $name);
         $ps->execute();
+    }
+
+    /**
+     * @param User $user
+     * @return void
+     */
+    function updateUser(User $user)
+    {
+        $passwordhash = password_hash($user->password, PASSWORD_BCRYPT);
+        $user->setPassword($passwordhash);
+        $this->updateStatement($user);
     }
 
     /**
@@ -276,17 +287,6 @@ class UserManager
         $ps->bindValue('password', $user->password);
         $ps->bindValue('id', $user->id);
         $ps->execute();
-    }
-
-    /**
-     * @param User $user
-     * @return void
-     */
-    function updateUser(User $user)
-    {
-        $passwordhash = password_hash($user->password, PASSWORD_BCRYPT);
-        $user->setPassword($passwordhash);
-        $this->updateStatement($user);
     }
 
     /**
