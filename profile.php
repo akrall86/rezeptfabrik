@@ -62,6 +62,17 @@ require_once 'inc/profileinclude.php';
         </div>
         <div>
             <h2>Meine Favoriten</h2>
+            <?php
+            $my_recipes = $recipeManager->getFavoriteRecipes($_SESSION['user_id']);
+            foreach ($my_recipes as $recipe) {
+                $recipe_id = $recipe->getId();
+                $category = $recipe->getCategory();
+                $type = $recipe->getType();
+                $date = $recipe->getPublishedDate();
+                $slug = $recipe->getSlug();
+                $recipeManager->displayShortVersionOfRecipe($recipe);
+            }
+            ?>
         </div>
     </div>
 

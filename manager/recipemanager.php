@@ -66,7 +66,6 @@ class RecipeManager {
         $category_id = $category->getId();
         $type_id = $type->getId();
         $date = new DateTime('now');
-
         $ps = $this->connection->prepare('
         INSERT INTO recipe
         (title, content, slug, user_id, category_id, type_id, photo_url, published_date, rating)
@@ -82,9 +81,7 @@ class RecipeManager {
         $ps->bindValue('published_date', date('Y-m-d H:i:s', $date->getTimestamp()));
         $ps->bindValue('rating', 0);
         $ps->execute();
-
         $recipe_id = ($this->connection->lastInsertId());
-
         foreach ($recipe_ingredients as $r) {
             $ingredient_name = $r->getIngredientName();
             $ingredient_id = ($this->ingredientManager->createIngredient($ingredient_name));
@@ -103,9 +100,10 @@ class RecipeManager {
      */
     function getRecipe(int $id): Recipe|bool {
         $result = $this->connection->query("
-            SELECT r.id AS recipe_id, r.title, r.content, r.slug, r.user_id, r.photo_url, r.published_date, r.rating,
-                   t.id AS type_id,	t.name AS type_name, c.id AS category_id, c.name AS category_name, 
-                   rhihuom.amount AS amount, i.id AS ingredient_id, i.name AS ingredient_name, uom.id AS uom_id, uom.name AS uom_name 	
+            SELECT r.id AS recipe_id, r.title, r.content, r.slug, r.user_id, r.photo_url, r.published_date, 
+                   r.rating, t.id AS type_id, t.name AS type_name, c.id AS category_id, c.name AS category_name, 
+                   rhihuom.amount AS amount, i.id AS ingredient_id, i.name AS ingredient_name, uom.id AS uom_id, 
+                   uom.name AS uom_name 	
             FROM recipe r 
             INNER JOIN type t ON r.type_id = t.id 
             INNER JOIN category c ON r.category_id = c.id
@@ -255,20 +253,11 @@ class RecipeManager {
             echo "
             <div class='rating_favorite'>
                 <p>Rezept bewerten:</p>";
-                $this->ratingManager->rating($recipe_id);
+            $this->ratingManager->rating($recipe_id);
             echo " </div>
             <div class='rating_favorite'>
-                <p>Rezept merken:</p>
-                </br>
-                <button class='favorite_button'>&#10084;</button>
+               
             </div>";
-//            <form>
-//
-//            <input class='favorite' id='favorite' type='radio' name='favorite'/>
-//            <label class='favorite' for='favorite'></label>
-//
-//            </form>";
-//            $this->favoriteRecipe($user->getId(), $recipe_id);
         }
         echo "</p>
                 </div >
@@ -388,10 +377,30 @@ class RecipeManager {
 
 
     function favoriteRecipe(int $user_id, int $recipe_id) {
+       echo" <form>
+                <p>Rezept merken:</p>
+                </br>
+                <button class='favorite_button'>&#10084;</button>
+             </form>
+                ";
+       if (isset($_POST['add_ingredient'])) {
         $ps = $this->connection->prepare('INSERT INTO user_has_favorites (user_id, recipe_id) VALUES (:user_id, :recipe_id)');
         $ps->bindValue('user_id', $user_id);
         $ps->bindValue('recipe_id', $recipe_id);
         $ps->execute();
+    }
+
+    /**
+     * @param $user_id
+     * @return array
+     */
+    function getFavoriteRecipes($user_id): array {
+        $result = $this->connection->query("SELECT * FROM user_has_favorites WHERE user_id = '" .$user_id."'");
+        $favorites = [];
+        while ($row = $result->fetch()) {
+            $favorites[] = $row['recipe_id'];
+        }
+        return $favorites;
     }
 
     /**

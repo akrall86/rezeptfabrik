@@ -43,8 +43,8 @@ $users = $userManager->getUsers();
         foreach ($categories as $category) {
             $category_id = $category->getId();
             echo "  <tr>
-                        <td>" . $category->getId() . "</td>
-                        <td>" . $category->getName() . "</td>
+                        <td> " . $category->getId() . " </td>
+                        <td> " . $category->getName() . " </td>
                    </tr>";
         }
         echo "</table>

@@ -42,12 +42,12 @@ require_once 'inc/maininclude.php';
         foreach ($recipes as $recipe) {
             $recipe_id = $recipe->getId();
             echo "  <tr>
-                        <td>" . $recipe->getTitle() . "</td>
-                        <td>" . $recipe->getCategory()->getName() . "</td>
-                        <td>" . $recipe->getType()->getName() . "</td>
-                        <td>" . $recipe->getUser()->getUserName() . "</td>
-                        <td>" . $recipe->getPublishedDate()->format('d.m.Y H:i:s') . "</td>
-                        <td><a href='recipe.delete.php?id=$recipe_id'>Löschen</a> </td>
+                        <td class='admin_table'> " . $recipe->getTitle() . " </td>
+                        <td class='admin_table'> " . $recipe->getCategory()->getName() . " </td>
+                        <td class='admin_table'> " . $recipe->getType()->getName() . " </td>
+                        <td class='admin_table'> " . $recipe->getUser()->getUserName() . " </td>
+                        <td class='admin_table'> " . $recipe->getPublishedDate()->format('d.m.Y H:i:s') . " </td>
+                        <td class='admin_table'><a href='recipe.delete.php?id=$recipe_id'>Löschen</a> </td>
                    </tr>";
         }
         echo "</table>
