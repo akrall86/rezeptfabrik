@@ -133,7 +133,7 @@ require_once 'inc/recipe.update.php';
                     </textarea>
                 <br/>
             </div>
-                <input type="hidden" id="recipe_id" name="recipe_id" value=<?php echo $recipe_id ?>>
+            <input type="hidden" id="recipe_id" name="recipe_id" value=<?php echo $recipe_id ?>>
             <div>
                 <button name="submit">Änderungen speichern</button>
             </div>
@@ -143,14 +143,14 @@ require_once 'inc/recipe.update.php';
                 <input class="file_upload" type="file" name="picture" id="picture" accept="image/jpeg, image/png">
                 <br/>
             </div>
-                <input type="hidden" id="recipe_id" name="recipe_id" value=<?php echo $recipe_id ?>>
+            <input type="hidden" id="recipe_id" name="recipe_id" value=<?php echo $recipe_id ?>>
             <div>
                 <button name="image">Neues Bild speichern</button>
             </div>
 
             <br/>
             <p>Rezept unwiderruflich löschen:</p>
-                <input type="hidden" id="recipe_id" name="recipe_id" value=<?php echo $recipe_id ?>>
+            <input type="hidden" id="recipe_id" name="recipe_id" value=<?php echo $recipe_id ?>>
             <div>
                 <button name="delete">Rezept löschen</button>
             </div>

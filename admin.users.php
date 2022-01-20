@@ -27,11 +27,11 @@ $users = $userManager->getUsers();
     <div class="content">
         <a href="admin.index.php">Zurück</a>
         <br/><br/>
-            <table>
-                <?php if (count($users) == 0) {
-                    echo '<p> Es wurden keine Benutzer gefunden! </p>';
-                } else {
-                    echo ' 
+        <table>
+            <?php if (count($users) == 0) {
+                echo '<p> Es wurden keine Benutzer gefunden! </p>';
+            } else {
+                echo ' 
                     <tr>
                         <th>Vorname</th>
                         <th>Nachname</th>
@@ -39,23 +39,23 @@ $users = $userManager->getUsers();
                         <th>E-Mail</th>
                         <th>Bearbeiten</th>
                    </tr>';
-                }
+            }
 
-                foreach ($users as $user) {
-                    echo "<tr>
+            foreach ($users as $user) {
+                echo "<tr>
                                 <td>$user->firstname</td>
                                 <td>$user->lastname</td>
                                 <td>$user->user_name</td>
                                 <td>$user->email</td>
                                 <td><a href='admin.user.php?id=$user->id'>Bearbeiten</a> </td>
                            </tr>";
-                }
-                ?>
-            </table>
+            }
+            ?>
+        </table>
     </div>
-        <?php
-        include "inc/footer.php";
-        ?>
+    <?php
+    include "inc/footer.php";
+    ?>
 
 </div>
 </body>

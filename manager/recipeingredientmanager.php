@@ -8,13 +8,15 @@ require_once __DIR__ . '/../model/unit_of_measurement.php';
  * The RecipeIngredientManager class contains methods for editing the tables ingredient, unit_of_measurement and
  * recipe_has_ingredient_has_unit_of_measurement
  */
-class RecipeIngredientManager {
+class RecipeIngredientManager
+{
     private PDO $conn;
 
     /**
      * @param PDO $conn the connection to the db
      */
-    public function __construct(PDO $conn) {
+    public function __construct(PDO $conn)
+    {
         $this->conn = $conn;
     }
 
@@ -26,7 +28,8 @@ class RecipeIngredientManager {
      * @param int $unitOfMeasurement_id the id of the unit of measurement
      * @param float $amount the amount of the ingredient
      */
-    function createRecipe_Ingredient(int $recipe_id, int $ingredient_id, int $unitOfMeasurement_id, float $amount) {
+    function createRecipe_Ingredient(int $recipe_id, int $ingredient_id, int $unitOfMeasurement_id, float $amount)
+    {
         $ps = $this->conn->prepare('
         INSERT INTO recipe_has_ingredient_has_unit_of_measurement  
             (recipe_id, ingredient_id, unit_of_measurement_id, amount) VALUES (
@@ -43,8 +46,9 @@ class RecipeIngredientManager {
      * @param Recipe $recipe the recipe from which the ingredients are to be fetched
      * @return Recipe_Ingredients
      */
-    function getAllIngredientsFromRecipe(Recipe $recipe): array {
-        $recipe_Ingredients =[];
+    function getAllIngredientsFromRecipe(Recipe $recipe): array
+    {
+        $recipe_Ingredients = [];
         $recipeId = $recipe->getId();
         $result = $this->conn->query('
         SELECT i.name as ingredient_name, uom.name as uof_name, rhihuom.amount
@@ -63,7 +67,8 @@ class RecipeIngredientManager {
      * deletes all ingredients of the recipe from db
      * @param int $id the id of the recipe from which the ingredients schould be deleted
      */
-    function deleteRecipe_Ingredients(int $recipe_id) {
+    function deleteRecipe_Ingredients(int $recipe_id)
+    {
         $this->conn->query("
             DELETE FROM recipe_has_ingredient_has_unit_of_measurement WHERE recipe_id = $recipe_id");
     }

@@ -3,20 +3,25 @@
 /**
  * This class represents a type-safe container for objects of the recipe class
  */
-class recipes extends ArrayIterator {
-    public function __construct(Recipes ...$recipes) {
+class recipes extends ArrayIterator
+{
+    public function __construct(Recipes ...$recipes)
+    {
         parent::__construct($recipes);
     }
 
-    public function current(): Recipe {
+    public function current(): Recipe
+    {
         return parent::current();
     }
 
-    public function add(Recipe $recipe) {
+    public function add(Recipe $recipe)
+    {
         $this->append($recipe);
     }
 
-    public function count(): int {
+    public function count(): int
+    {
         $array = $this->getArrayCopy();
         return count($array);
     }

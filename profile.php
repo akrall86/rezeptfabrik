@@ -54,8 +54,8 @@ require_once 'inc/profileinclude.php';
                     <button name=<?php echo $recipe_id . 'submit' ?>>Rezept bearbeiten</button>
                 </form>
                 <?php
-                if (isset($_POST[$recipe_id.'submit'])) {
-                    header('Location: recipe.update.form.php?'. $slug);
+                if (isset($_POST[$recipe_id . 'submit'])) {
+                    header('Location: recipe.update.form.php?' . $slug);
                 }
             }
             ?>
