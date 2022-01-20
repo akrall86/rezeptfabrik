@@ -12,7 +12,8 @@ require_once __DIR__ . '/../model/recipes.php';
  * The RecipeManager class contains methods for managing recipes, display recipes
  * and editing recipes in db
  */
-class RecipeManager {
+class RecipeManager
+{
     private PDO $connection;
     private IngredientManager $ingredientManager;
     private MeasuringUnitManager $measuringUnitManager;
@@ -39,7 +40,8 @@ class RecipeManager {
                                 UserManager             $userManager,
                                 CategoryManager         $categoryManager,
                                 TypeManager             $typeManager,
-                                RatingManager           $ratingManager) {
+                                RatingManager           $ratingManager)
+    {
         $this->connection = $connection;
         $this->ingredientManager = $ingredientManager;
         $this->measuringUnitManager = $measuringUnitManager;
@@ -61,7 +63,8 @@ class RecipeManager {
      * @return string $id of the created recipe
      */
     function createRecipe(string $title_name, string $content, int $user_id, Category $category, Type $type,
-                          array  $recipe_ingredients): string {
+                          array  $recipe_ingredients): string
+    {
         $slug = strtolower($this->createSlug($title_name));
         $category_id = $category->getId();
         $type_id = $type->getId();
@@ -98,7 +101,8 @@ class RecipeManager {
      * @param int $id of the recipe to be fetched
      * @return Recipe|bool recipe or false if there is no match
      */
-    function getRecipe(int $id): Recipe|bool {
+    function getRecipe(int $id): Recipe|bool
+    {
         $result = $this->connection->query("
             SELECT r.id AS recipe_id, r.title, r.content, r.slug, r.user_id, r.photo_url, r.published_date, 
                    r.rating, t.id AS type_id, t.name AS type_name, c.id AS category_id, c.name AS category_name, 
@@ -134,7 +138,8 @@ class RecipeManager {
      * get all recipes from DB
      * @return Recipe|Recipes|bool one recipe or recipes or false if there is no recipe in the DB
      */
-    function getAllRecipes(): array {
+    function getAllRecipes(): array
+    {
         $recipes = [];
         $result = $this->connection->query('SELECT id FROM recipe');
         while ($row = $result->fetch()) {
@@ -148,7 +153,8 @@ class RecipeManager {
      * @param int $id the id from the user
      * @return Recipe|Recipes|bool one recipe or recipes  of the given user id or false if there is no recipe in the DB
      */
-    public function getRecipesByUser($id): array {
+    public function getRecipesByUser($id): array
+    {
         $result = $this->connection->query("
             SELECT id FROM recipe WHERE user_id ='$id'");
         $recipes = [];
@@ -163,7 +169,8 @@ class RecipeManager {
      * @param string $category the category to search for
      * @return Recipe|Recipes|bool one recipe or recipes of the given category or false if there is no recipe in the DB
      */
-    function getRecipesByCategory(string $category): array {
+    function getRecipesByCategory(string $category): array
+    {
         $category_id = $this->categoryManager->getCategoryId($category);
         $result = $this->connection->query("
             SELECT id FROM recipe WHERE category_id ='$category_id'");
@@ -179,7 +186,8 @@ class RecipeManager {
      * @param string $type the type to search for
      * @return Recipe|Recipes|bool one recipe or recipes of the given type or false if there is no recipe in the DB
      */
-    function getRecipesByType(string $type): array {
+    function getRecipesByType(string $type): array
+    {
         $type_id = $this->typeManager->getTypeId($type);
         $result = $this->connection->query("
             SELECT id FROM recipe WHERE type_id ='$type_id'");
@@ -195,7 +203,8 @@ class RecipeManager {
      * @param string $category the category to search for
      * @return Recipe|bool one recipe or false if there is no match
      */
-    function getOneRandomRecipeByCategory(string $category): Recipe|bool {
+    function getOneRandomRecipeByCategory(string $category): Recipe|bool
+    {
         $recipes = $this->getRecipesByCategory($category);
         if (count($recipes) > 0) {
             $random_number = rand(0, (sizeof($recipes) - 1));
@@ -209,7 +218,8 @@ class RecipeManager {
      * displays the recipe with all the details on the page
      * @param Recipe $recipe the recipe to be displayed
      */
-    function displayRecipe(Recipe $recipe) {
+    function displayRecipe(Recipe $recipe)
+    {
         $recipe_id = $recipe->getId();
         $user = $recipe->getUser();
         $category = $recipe->getCategory();
@@ -256,7 +266,7 @@ class RecipeManager {
             $this->ratingManager->rating($recipe_id);
             echo " </div>
             <div class='rating_favorite'>
-               
+               $this->favoriteRecipe($user_id, $recipe_id)
             </div>";
         }
         echo "</p>
@@ -276,7 +286,8 @@ class RecipeManager {
      * displays a short version of the recipe on the page
      * @param Recipe $recipe the recipe to be displayed
      */
-    function displayShortVersionOfRecipe(Recipe $recipe) {
+    function displayShortVersionOfRecipe(Recipe $recipe)
+    {
         $slug = $recipe->getSlug();
         $recipe_id = $recipe->getId();
         $user = $recipe->getUser();
@@ -315,7 +326,8 @@ class RecipeManager {
      * @param string $photoUrl the new url
      * @param int $recipe_id the id of the recipe from which the url is to be updated
      */
-    function updatePhotoUrl(string $photoUrl, int $recipe_id) {
+    function updatePhotoUrl(string $photoUrl, int $recipe_id)
+    {
         $ps = $this->connection->prepare('UPDATE recipe SET photo_url = :photo_url WHERE id = :recipe_id');
         $ps->bindValue('photo_url', $photoUrl);
         $ps->bindValue('recipe_id', $recipe_id);
@@ -327,7 +339,8 @@ class RecipeManager {
      * @param string $title the title from which the slug is to be created
      * @return string the slug
      */
-    function createSlug(string $title): string {
+    function createSlug(string $title): string
+    {
         $string = str_replace(" ", "-", $title);
         $slug = str_replace(array("#", "'", ";", ".", "\"", ",", ":"), "", $string);
         return $slug;
@@ -338,14 +351,16 @@ class RecipeManager {
      * @param string $title
      * @return bool  true, if title already exists, false otherwise
      */
-    function titleExists(string $title): bool {
+    function titleExists(string $title): bool
+    {
         $result = $this->connection->query("SELECT id FROM recipe WHERE title='.$title.'");
         if ($result->fetch()) {
             return true;
         } else return false;
     }
 
-    function updateRecipe(Recipe $recipe) {
+    function updateRecipe(Recipe $recipe)
+    {
         $ps = $this->connection->prepare('UPDATE recipe
         SET title = :title, content = :content, slug = :slug, user_id = :user_id, category_id = :category_id, type_id = :type_id,
             photo_url = :photo_url, published_date = :published_date, rating = :rating
@@ -376,26 +391,29 @@ class RecipeManager {
     }
 
 
-    function favoriteRecipe(int $user_id, int $recipe_id) {
-       echo" <form>
+    function favoriteRecipe(int $user_id, int $recipe_id)
+    {
+        echo " <form>
                 <p>Rezept merken:</p>
                 </br>
                 <button class='favorite_button'>&#10084;</button>
              </form>
                 ";
-       if (isset($_POST['add_ingredient'])) {
-        $ps = $this->connection->prepare('INSERT INTO user_has_favorites (user_id, recipe_id) VALUES (:user_id, :recipe_id)');
-        $ps->bindValue('user_id', $user_id);
-        $ps->bindValue('recipe_id', $recipe_id);
-        $ps->execute();
+        if (isset($_POST['add_ingredient'])) {
+            $ps = $this->connection->prepare('INSERT INTO user_has_favorites (user_id, recipe_id) VALUES (:user_id, :recipe_id)');
+            $ps->bindValue('user_id', $user_id);
+            $ps->bindValue('recipe_id', $recipe_id);
+            $ps->execute();
+        }
     }
 
     /**
      * @param $user_id
      * @return array
      */
-    function getFavoriteRecipes($user_id): array {
-        $result = $this->connection->query("SELECT * FROM user_has_favorites WHERE user_id = '" .$user_id."'");
+    function getFavoriteRecipes($user_id): array
+    {
+        $result = $this->connection->query("SELECT * FROM user_has_favorites WHERE user_id = '" . $user_id . "'");
         $favorites = [];
         while ($row = $result->fetch()) {
             $favorites[] = $row['recipe_id'];
@@ -407,7 +425,8 @@ class RecipeManager {
      * deletes the given recipe from DB
      * @param Recipe $recipe the recipe to be deleted
      */
-    function deleteRecipe(Recipe $recipe) {
+    function deleteRecipe(Recipe $recipe)
+    {
         $id = $recipe->getId();
         $this->connection->query("
             DELETE FROM recipe_has_ingredient_has_unit_of_measurement WHERE recipe_id = $id");
@@ -419,7 +438,8 @@ class RecipeManager {
      * deletes all recipes from one user from DB
      * @param int $user_id the id from the user
      */
-    function deleteRecipesFromUser(int $user_id) {
+    function deleteRecipesFromUser(int $user_id)
+    {
         $recipes = $this->getRecipesByUser($user_id);
         foreach ($recipes as $recipe) {
             $this->deleteRecipe($recipe);
