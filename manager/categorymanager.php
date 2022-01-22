@@ -29,9 +29,10 @@ class CategoryManager
 
     /**
      * get one category from DB
+     * @param int $id the id to search for
      * @return Category
      */
-    function getCategoryById($id): Category
+    function getCategoryById(int $id): Category
     {
         $result = $this->conn->query("SELECT * FROM category WHERE id='$id'");
         if ($row = $result->fetch()) {
@@ -56,9 +57,10 @@ class CategoryManager
 
     /**
      * get id from given category name
+     * @param string $name the name to search for
      * @return int|bool the id or false if there is no match
      */
-    function getCategoryId($name): int|bool
+    function getCategoryId(string $name): int|bool
     {
         $result = $this->conn->query("SELECT id FROM category WHERE name = '$name'");
         if ($row = $result->fetch()) {
@@ -69,6 +71,7 @@ class CategoryManager
 
     /**
      * deletes one category from db
+     * @param int $id the id of the category
      * @param string $name the name of the category to be deleted
      */
     function deleteCategory(int $id)
@@ -77,6 +80,5 @@ class CategoryManager
         $ps->bindValue('id', $id);
         $ps->execute();
     }
-
 
 }
