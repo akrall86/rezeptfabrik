@@ -27,7 +27,7 @@ $users = $userManager->getUsers();
     <div class="content">
         <a href="admin.index.php">Zurück</a>
         <br/><br/>
-        <table>
+        <table  class='admin_table'>
             <?php if (count($users) == 0) {
                 echo '<p> Es wurden keine Benutzer gefunden! </p>';
             } else {
