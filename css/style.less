@@ -265,7 +265,7 @@ button:hover, .button:hover {
 
 /* rating and favorite */
 .rating_favorite {
-  width: 200px;
+  width: 220px;
   display: inline-block;
   text-align: center;
   padding-right: 50px;
@@ -311,7 +311,15 @@ input.cookerhood-5:checked ~ label.cookerhood_rating:before {
   content: url(../img/little_cookerhood_full.png);
 }
 
+input.cookerhood-1:checked ~ label.cookerhood_rating:before {
+  content: url(../img/little_cookerhood_full.png);
+}
+
 label.cookerhood_rating:hover {
+  content: url(../img/little_cookerhood_full.png);
+}
+
+label.cookerhood_rating:hover ~ label.cookerhood_rating:before{
   content: url(../img/little_cookerhood_full.png);
 }
 
