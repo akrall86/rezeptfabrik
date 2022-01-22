@@ -190,6 +190,11 @@ form .description {
   width: 655px;
   min-height: 300px;
 }
+/* admin table */
+.admin_table {
+  text-align: left;
+  border-spacing: 10px;
+}
 /* button */
 button,
 .button {
@@ -271,9 +276,5 @@ label.cookerhood_rating:hover ~ label.cookerhood_rating:before {
 }
 label.cookerhood_rating:before {
   content: url(../img/little_cookerhood.png);
-}
-.admin_table {
-  text-align: left;
-  border-spacing: 10px;
 }
 /*# sourceMappingURL=style.css.map */
