@@ -22,15 +22,16 @@ class RatingManager
      */
     function displayRating(float $count): string
     {
+        $length = strlen((string)$count);
         $max_count = 5;
-        if (!preg_match($count, "^[\d]$")){
+        if ($length == 1 ) {
+            return str_repeat("<img class='cookerhood' src = ./img/cookerhood_full.png>", $count) .
+                str_repeat("<img class='cookerhood' src = ./img/cookerhood.png>", ($max_count - $count));
+        } else {
             $count = floor($count);
             return str_repeat("<img class='cookerhood' src = ./img/cookerhood_full.png>", $count) .
                 "<img class='cookerhood' src = ./img/cookerhood_half.png>" .
                 str_repeat("<img class='cookerhood' src = ./img/cookerhood.png>", ($max_count - $count - 1));
-        } else {
-            return str_repeat("<img class='cookerhood' src = ./img/cookerhood_full.png>", $count) .
-                str_repeat("<img class='cookerhood' src = ./img/cookerhood.png>", ($max_count - $count));
         }
     }
 
