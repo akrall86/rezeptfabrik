@@ -5,8 +5,6 @@ require_once __DIR__ . '/../model/ingredient.php';
 require_once __DIR__ . '/../model/recipe.php';
 require_once __DIR__ . '/../model/recipe_ingredient.php';
 require_once __DIR__ . '/../model/unit_of_measurement.php';
-require_once __DIR__ . '/../model/recipe_ingredients.php';
-require_once __DIR__ . '/../model/recipes.php';
 
 /**
  * The RecipeManager class contains methods for managing recipes, display recipes
@@ -222,6 +220,7 @@ class RecipeManager
     {
         $recipe_id = $recipe->getId();
         $user = $recipe->getUser();
+        $user_id = $user->getId();
         $category = $recipe->getCategory();
         $type = $recipe->getType();
         $date = $recipe->getPublishedDate();
@@ -238,7 +237,7 @@ class RecipeManager
         $rating = $this->ratingManager->getRating($recipe_id);
         $rating_count = $this->ratingManager->getRatingCount($recipe_id);
         if ($rating > 0) {
-            $rating_average = $rating / $rating_count;
+            $rating_average = (round(($rating / $rating_count) * 2))/2 ;
             echo $this->ratingManager->displayRating($rating_average) . " (" . $rating_count . " Bewertungen)";
         } else {
             echo str_repeat("<img class='cookerhood' src = ./img/cookerhood.png>", 5);
@@ -261,13 +260,18 @@ class RecipeManager
              <p><br/>";
         if ($this->userManager->isLoggedIn()) {
             echo "
-            <div class='rating_favorite'>
-                <p>Rezept bewerten:</p>";
+            <div class='rating_favorite'>";
             $this->ratingManager->rating($recipe_id);
-            echo " </div>
-            <div class='rating_favorite'>
-               $this->favoriteRecipe($user_id, $recipe_id)
-            </div>";
+            echo " </div>";
+            if ($this->isFavorite($user_id, $recipe_id)) {
+                echo "<div class='rating_favorite'>";
+                $this->unfavoriteRecipe($user_id, $recipe_id);
+                echo " </div>";
+            } else {
+                echo "<div class='rating_favorite'>";
+                $this->favoriteRecipe($user_id, $recipe_id);
+                echo " </div>";
+            }
         }
         echo "</p>
                 </div >
@@ -348,7 +352,7 @@ class RecipeManager
 
     /**
      * checks whether the title already exists
-     * @param string $title
+     * @param string $title the title to be checked
      * @return bool  true, if title already exists, false otherwise
      */
     function titleExists(string $title): bool
@@ -359,6 +363,10 @@ class RecipeManager
         } else return false;
     }
 
+    /**
+     * updates the recipe in the DB
+     * @param Recipe $recipe th recipe to be updated
+     */
     function updateRecipe(Recipe $recipe)
     {
         $ps = $this->connection->prepare('UPDATE recipe
@@ -390,16 +398,20 @@ class RecipeManager
         }
     }
 
-
+    /**
+     * insert favorite recipe of user into DB
+     * @param int $user_id the id from the user
+     * @param int $recipe_id the id of the recipe that is to be saved as a favorite
+     */
     function favoriteRecipe(int $user_id, int $recipe_id)
     {
-        echo " <form>
+        echo " <form action='' method='post'>
                 <p>Rezept merken:</p>
                 </br>
-                <button class='favorite_button'>&#10084;</button>
+                <button class='favorite_button' name='favorite'>&#10084;</button>
              </form>
                 ";
-        if (isset($_POST['add_ingredient'])) {
+        if (isset($_POST['favorite'])) {
             $ps = $this->connection->prepare('INSERT INTO user_has_favorites (user_id, recipe_id) VALUES (:user_id, :recipe_id)');
             $ps->bindValue('user_id', $user_id);
             $ps->bindValue('recipe_id', $recipe_id);
@@ -408,17 +420,64 @@ class RecipeManager
     }
 
     /**
-     * @param $user_id
+     * delete favorite recipe of user from DB
+     * @param int $user_id the id from the user
+     * @param int $recipe_id the id of the recipe that is to be deleted
+     */
+    function unfavoriteRecipe(int $user_id, int $recipe_id)
+    {
+        echo " <form action='' method='post'>
+                <p>Rezept entfavorisieren:</p>
+                </br>
+                <button class='favorite_button' name='unfavorite'>&#128148;</button>
+             </form>
+                ";
+        if (isset($_POST['unfavorite'])) {
+            $ps = $this->connection->prepare('DELETE FROM user_has_favorites WHERE user_id = :user_id 
+                                 AND recipe_id= :recipe_id');
+            $ps->bindValue('user_id', $user_id);
+            $ps->bindValue('recipe_id', $recipe_id);
+            $ps->execute();
+        }
+    }
+
+    /**
+     * get favorite recipes of one user
+     * @param int $user_id the id of the user
      * @return array
      */
-    function getFavoriteRecipes($user_id): array
+    function getFavoriteRecipes(int $user_id): array
+    {
+        $result = $this->connection->query("SELECT * FROM user_has_favorites WHERE user_id = '" . $user_id . "'");
+        $recipe_ids = [];
+        while ($row = $result->fetch()) {
+            $recipe_ids[] = $row['recipe_id'];
+        }
+        $favorites = [];
+        foreach ($recipe_ids as $id) {
+            $favorites[] = $this->getRecipe($id);
+        }
+        return $favorites;
+    }
+
+    /**
+     * checks wether the recipe is a favorite recipe of the user
+     * @param int $user_id the id of the user
+     * @param int $recipe_id the id from the favorite recipe
+     * @return true if it is a favorite recipe or false otherwise
+     */
+    function isFavorite(int $user_id, int $recipe_id): bool
     {
         $result = $this->connection->query("SELECT * FROM user_has_favorites WHERE user_id = '" . $user_id . "'");
         $favorites = [];
         while ($row = $result->fetch()) {
             $favorites[] = $row['recipe_id'];
         }
-        return $favorites;
+        if (in_array($recipe_id, $favorites)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
