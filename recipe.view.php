@@ -9,7 +9,6 @@ $types = $typeManager->getTypes();
 
 $recipe_id = filter_var($_GET["id"]);
 $recipe = $recipeManager->getRecipe((int)$recipe_id);
-
 ?>
 
 <!DOCTYPE HTML>

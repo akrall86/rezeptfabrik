@@ -17,7 +17,7 @@ class CategoryManager
     }
 
     /**
-     * insert category into DB
+     * inserts category into DB
      * @param string $name the name of the category
      */
     function createCategory(string $name)
@@ -28,7 +28,7 @@ class CategoryManager
     }
 
     /**
-     * get one category from DB
+     * gets one category from DB
      * @param int $id the id to search for
      * @return Category
      */
@@ -42,7 +42,7 @@ class CategoryManager
     }
 
     /**
-     * get all categories from DB
+     * gets all categories from DB
      * @return array of categories
      */
     function getCategories(): array
@@ -56,7 +56,7 @@ class CategoryManager
     }
 
     /**
-     * get id from given category name
+     * gets id from given category name
      * @param string $name the name to search for
      * @return int|bool the id or false if there is no match
      */
@@ -70,7 +70,7 @@ class CategoryManager
     }
 
     /**
-     * deletes one category from db
+     * deletes one category from DB
      * @param int $id the id of the category
      * @param string $name the name of the category to be deleted
      */

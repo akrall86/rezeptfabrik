@@ -43,15 +43,12 @@ require_once 'inc/profileinclude.php';
             $my_recipes = $recipeManager->getRecipesByUser($_SESSION['user_id']);
             foreach ($my_recipes as $recipe) {
                 $recipe_id = $recipe->getId();
-                $category = $recipe->getCategory();
-                $type = $recipe->getType();
-                $date = $recipe->getPublishedDate();
                 $slug = $recipe->getSlug();
                 $recipeManager->displayShortVersionOfRecipe($recipe);
                 ?>
-                <form action="recipe.update.form.php?<?php echo $slug ?>" method="POST">
+                <form action="recipe.update.form.php?<?php echo $slug ?>&load" method="POST">
                     <input type="hidden" id="recipe_id" name="recipe_id" value="<?php echo $recipe_id ?>">
-                    <button name=<?php echo $recipe_id . 'submit' ?>>Rezept bearbeiten</button>
+                    <button class="edit_recipe" name=<?php echo $recipe_id . 'submit' ?>>Rezept bearbeiten</button>
                 </form>
                 <?php
                 if (isset($_POST[$recipe_id . 'submit'])) {
@@ -66,10 +63,6 @@ require_once 'inc/profileinclude.php';
             $my_recipes = $recipeManager->getFavoriteRecipes($_SESSION['user_id']);
             foreach ($my_recipes as $recipe) {
                 $recipe_id = $recipe->getId();
-                $category = $recipe->getCategory();
-                $type = $recipe->getType();
-                $date = $recipe->getPublishedDate();
-                $slug = $recipe->getSlug();
                 $recipeManager->displayShortVersionOfRecipe($recipe);
             }
             ?>

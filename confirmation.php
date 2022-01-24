@@ -22,11 +22,13 @@ require_once 'inc/requirelogin.php';
         ?>
     </header>
     <div class="content">
-
         <p class="confirmation">Die Daten wurden erfolgreich gespeichert!</p>
-
     </div>
-    <?php include 'inc/footer.php'; ?>
+
+    <?php
+    include 'inc/footer.php';
+    ?>
 </div>
+
 </body>
 </html>

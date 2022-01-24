@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . '/../model/recipe_ingredients.php';
 require_once __DIR__ . '/../model/recipe_ingredient.php';
 
 // Session start

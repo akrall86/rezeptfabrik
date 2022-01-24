@@ -66,5 +66,4 @@ class Recipe_Ingredient
         $this->amount = $amount;
     }
 
-
 }

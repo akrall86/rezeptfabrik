@@ -1,6 +1,5 @@
 <?php
 require_once 'inc/maininclude.php';
-
 ?>
 
 <!DOCTYPE HTML>
@@ -24,7 +23,6 @@ require_once 'inc/maininclude.php';
 
     <div class="content">
         <h1>Maßeinheiten</h1>
-
         <a href="admin.index.php">Zurück</a>
         <br/><br/>
         <?php
@@ -48,7 +46,6 @@ require_once 'inc/maininclude.php';
                    </tr>";
         }
         echo "</table>
-
           <form action='admin.unitofmeasurement.php' method='POST'>
         <div>
             <label for='name'>Neue Maßeinheit hinzufügen:</label>
@@ -60,7 +57,6 @@ require_once 'inc/maininclude.php';
             $measuringUnitManager->createMeasuringUnit($_POST['name']);
             header("Location: ./admin.unitofmeasurement.php");
         }
-
         ?>
     </div>
     <?php

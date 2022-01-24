@@ -55,7 +55,6 @@ require_once 'inc/maininclude.php';
         include "inc/footer.php";
         ?>
 
-
     </div>
 </body>
 </html>

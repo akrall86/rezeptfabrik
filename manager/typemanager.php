@@ -17,7 +17,7 @@ class TypeManager
     }
 
     /**
-     * insert type into DB
+     * inserts type into DB
      * @param string $name the name of the type
      */
     function createType(string $name)
@@ -28,7 +28,8 @@ class TypeManager
     }
 
     /**
-     * get one type from DB
+     * gets one type from DB
+     * @param int $id the id of the type
      * @return Type
      */
     function getTypeById($id): Type
@@ -41,8 +42,8 @@ class TypeManager
     }
 
     /**
-     * get all types from db
-     * @return array of types
+     * gets all types from db
+     * @return array array of types
      */
     function getTypes(): array
     {
@@ -55,7 +56,8 @@ class TypeManager
     }
 
     /**
-     * get id from given type name
+     * gets the id of the type
+     * @param string $name the name of the type
      * @return int|bool the id or false if there is no match
      */
     function getTypeId(string $name): int|bool

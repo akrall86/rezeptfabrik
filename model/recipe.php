@@ -219,5 +219,4 @@ class Recipe
         $this->recipe_ingredients = $recipe_ingredients;
     }
 
-
 }

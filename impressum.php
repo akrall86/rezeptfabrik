@@ -28,10 +28,10 @@ require_once 'inc/maininclude.php';
         <p><b>Webseitenbetreiber:</b> rezeptfabrik<br> <b>Firmenbuchnummer:</b> 0900 <br> <b>Firmenbuchgericht: </b>
             Handelsgericht Wien</p>
         <p><b>Anschrift:</b> Musterstrasse 0815, 0815 Muster Lauch</p>
-        <p><b>UID-Nr:</b> <br> <b>Gewerbeaufsicht behörde:</b> <br> <b>Mitgliedschaften: </b></p>
-        <p><b>Kontaktdaten:</b> <br> Telefon: <br> Email: <br> Fax:</p>
+        <p><b>UID-Nr:</b> 132698496 <br> <b>Gewerbeaufsichtsbehörde:</b> Musterbehörde 123<br> <b>Mitgliedschaften: </b> lorem ipsum</p>
+        <p><b>Kontaktdaten:</b> <br> Telefon: 03842 / 12345 <br> Email: rezeptfabrik@services.at <br> Fax: 03842 / 12345 - 1</p>
 
-        <p><b>Anwendbare Rechtsvorschrift:</b> www.ris.bka.gv.at <br> <b>Berufsbezeichnung:</b></p>
+        <p><b>Anwendbare Rechtsvorschrift:</b> www.ris.bka.gv.at <br> <b>Berufsbezeichnung:</b> Applikationsentwickler</p>
         <p><b>Online Streitbeilegung:</b> Verbraucher, welche in Österreich oder in einem sonstigen Vertragsstaat der
             ODR-VO
             niedergelassen sind, haben die Möglichkeit Probleme bezüglich dem entgeltlichen Kauf von Waren oder

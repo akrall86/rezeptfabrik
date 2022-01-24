@@ -47,5 +47,4 @@ class Unit_Of_Measurement
         $this->name = $name;
     }
 
-
 }

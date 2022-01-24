@@ -10,7 +10,7 @@ class MeasuringUnitManager
     private PDO $conn;
 
     /**
-     * @param PDO $connection the connection to the db
+     * @param PDO $connection the connection to the DB
      */
     public function __construct(PDO $connection)
     {
@@ -18,8 +18,8 @@ class MeasuringUnitManager
     }
 
     /**
-     * insert measurement unit into DB
-     * @param string $name the name of measurement unit
+     * inserts measurement unit into DB
+     * @param string $name the name of the measurement unit
      */
     function createMeasuringUnit(string $name)
     {
@@ -29,8 +29,8 @@ class MeasuringUnitManager
     }
 
     /**
-     * get all measurement units from db
-     * @return array of measurement units
+     * gets all measurement units from DB
+     * @return array array of measurement units
      */
     function getMeasuringUnits(): array
     {
@@ -43,8 +43,8 @@ class MeasuringUnitManager
     }
 
     /**
-     * get the id of one specific measurement unit
-     * @param string $name
+     * gets the id of one specific measurement unit
+     * @param string $name the name of the measurement unit
      * @return int|bool the id or false if there is no match
      */
     function getMeasuringUnitId(string $name): int|bool
@@ -57,9 +57,9 @@ class MeasuringUnitManager
     }
 
     /**
-     * get the id of one specific measurement unit
-     * @param string $name
-     * @return int|bool the id or false if there is no match
+     * updates the measurement unit
+     * @param string $id the id of the measurement unit to be updated
+     * @param string $name the new name of the measurement unit
      */
     function updateMeasuringUnitId(int $id, string $name)
     {
@@ -71,7 +71,7 @@ class MeasuringUnitManager
     }
 
     /**
-     * deletes one measurement unit from db
+     * deletes one measurement unit from DB
      * @param string $name the name of the measurement unit to be deleted
      */
     function deleteMeasuringUnit(string $name)

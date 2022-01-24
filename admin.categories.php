@@ -29,7 +29,6 @@ $users = $userManager->getUsers();
         <a href="admin.index.php">Zurück</a>
         <br/><br/>
         <?php
-
         $categories = $categoryManager->getCategories();
         if (count($categories) == 0) {
             echo '<p> Noch keine Kategorien vorhanden. </p>';
@@ -48,14 +47,13 @@ $users = $userManager->getUsers();
                    </tr>";
         }
         echo "</table>
- <form action='admin.categories.php' method='POST'>
+        <form action='admin.categories.php' method='POST'>
                 <?php include 'inc/errormessages.php' ?>
         <div>
             <label for='name'>Neue Kategorie hinzufügen:</label>
             <input type='text' name='name' id='name'>
             <button name='add'>hinzufügen</button>
         </div>";
-
         if (isset($_POST['add'])) {
             $categoryManager->createCategory($_POST['name']);
             header("Location: ./admin.categories.php");

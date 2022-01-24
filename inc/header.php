@@ -1,5 +1,5 @@
 <div class="logo">
-    <img src=img/logo.png width='200px' height='200px' alt=' '>
+    <img src=img/logo.png width='200px' height='200px' alt=''>
 </div>
 <div class="title">rezeptfabrik</div>
 <div class="authentication">

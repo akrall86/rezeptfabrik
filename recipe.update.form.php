@@ -83,17 +83,18 @@ require_once 'inc/recipe.update.php';
                 <?php
                 if (isset ($_SESSION['recipe_ingredients'])) {
                     $recipe_ingredients = $_SESSION['recipe_ingredients'];
+                    $count = 0;
                     foreach ($recipe_ingredients as $r) {
                         $name = $r->getIngredientName();
-                        echo $r->getAmount() . " " .
-                            $r->getUnitOfMeasurementName() . " " .
-                            $r->getIngredientName() .
-                            " <button name=$name>x</button><br/><br/>";
-
                         if (isset($_POST[$name])) {
-                            unset($recipe_ingredients[$r]);
-
-
+                            array_splice($recipe_ingredients, $count, 1);
+                            $_SESSION['recipe_ingredients'] = $recipe_ingredients;
+                        } else {
+                            echo $r->getAmount() . " " .
+                                $r->getUnitOfMeasurementName() . " " .
+                                $r->getIngredientName() .
+                                " <button name=$name>x</button><br/><br/>";
+                            $count++;
                         }
                     }
                 }

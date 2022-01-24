@@ -6,12 +6,16 @@ require_once 'manager/categorymanager.php';
 require_once 'manager/typemanager.php';
 require_once 'manager/recipemanager.php';
 
-$recipe_id = $_GET['id'];
-$recipe = $recipeManager->getRecipe($recipe_id);
-
-if (isset($_POST['delete'])) {
-    $recipeManager->deleteRecipe($recipe);
-    header('Location: ./admin.index.php');
+if (isset($_GET['id'])) {
+    $recipe_id = $_GET['id'];
+    $recipe = $recipeManager->getRecipe($recipe_id);
+    $title = $recipe->getTitle();
+}
+if (!isset($_SESSION['location'])) {
+    $location ='Location: ./admin.recipes.php ';
+} else {
+    $location = 'Location: ' . $_SESSION['location'];
+    unset($_SESSION['location']);
 }
 ?>
 
@@ -37,9 +41,9 @@ if (isset($_POST['delete'])) {
     <div class="content">
         <h1>Rezept löschen</h1>
         <br/>
-        <h2> <?php echo $recipe->getTitle(); ?> </h2>
+        <h2> <?php echo $title; ?> </h2>
         <br/>
-        <form>
+        <form action="" method="post">
             <p>Willst du dieses Rezept wirklich löschen?</p>
             <div>
                 <button name="delete">Rezept löschen</button>
@@ -47,10 +51,13 @@ if (isset($_POST['delete'])) {
         </form>
     </div>
     <?php
+    if (isset($_POST['delete'])) {
+        $recipeManager->deleteRecipe($recipe);
+        header($location);
+    }
     include "inc/footer.php";
     ?>
 </div>
-
 
 </body>
 </html>

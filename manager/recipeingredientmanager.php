@@ -21,7 +21,7 @@ class RecipeIngredientManager
     }
 
     /**
-     * insert recipe id, ingredient id, unitOfMeasurement id and amount into table
+     * inserts recipe id, ingredient id, unitOfMeasurement id and amount into table
      * recipe_has_ingredient_has_unit_of_measurement
      * @param int $recipe_id the id of the recipe
      * @param int $ingredient_id the id of the ingredient
@@ -42,9 +42,9 @@ class RecipeIngredientManager
     }
 
     /**
-     * get all ingredients with unit of measurement and amount of the given recipe
+     * gets all ingredients with unit of measurement and amount of the given recipe
      * @param Recipe $recipe the recipe from which the ingredients are to be fetched
-     * @return Recipe_Ingredients
+     * @return array array of recipes
      */
     function getAllIngredientsFromRecipe(Recipe $recipe): array
     {
@@ -72,5 +72,6 @@ class RecipeIngredientManager
         $this->conn->query("
             DELETE FROM recipe_has_ingredient_has_unit_of_measurement WHERE recipe_id = $recipe_id");
     }
+
 
 }

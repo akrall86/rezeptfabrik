@@ -28,5 +28,4 @@ class Role
         $this->name = $name;
     }
 
-
 }

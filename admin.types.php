@@ -35,14 +35,14 @@ $users = $userManager->getUsers();
                       <tr>
                         <th>ID</th>
                         <th>Name</th>
-                    </tr>";
+                      </tr>";
         }
         foreach ($types as $type) {
             $type_id = $type->getId();
             echo "  <tr>
                         <td>" . $type->getId() . "</td>
                         <td>" . $type->getName() . "</td>
-                   </tr>";
+                    </tr>";
         }
         echo "</table>
         <form action='admin.types.php' method='POST'>

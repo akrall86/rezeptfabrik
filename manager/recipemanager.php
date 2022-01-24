@@ -7,8 +7,7 @@ require_once __DIR__ . '/../model/recipe_ingredient.php';
 require_once __DIR__ . '/../model/unit_of_measurement.php';
 
 /**
- * The RecipeManager class contains methods for managing recipes, display recipes
- * and editing recipes in db
+ * The RecipeManager class contains methods for managing recipes, display recipes and editing recipes in db
  */
 class RecipeManager
 {
@@ -51,7 +50,7 @@ class RecipeManager
     }
 
     /**
-     * insert recipe, ingredients and unit_of_measurement into DB
+     * inserts recipe, ingredients and unit_of_measurement into DB
      * @param string $title_name
      * @param string $content
      * @param int $user_id
@@ -95,7 +94,7 @@ class RecipeManager
     }
 
     /**
-     * get one recipe from DB
+     * gets one recipe from DB
      * @param int $id of the recipe to be fetched
      * @return Recipe|bool recipe or false if there is no match
      */
@@ -133,8 +132,8 @@ class RecipeManager
     }
 
     /**
-     * get all recipes from DB
-     * @return Recipe|Recipes|bool one recipe or recipes or false if there is no recipe in the DB
+     * gets all recipes from DB
+     * @return array array of recipes
      */
     function getAllRecipes(): array
     {
@@ -147,9 +146,9 @@ class RecipeManager
     }
 
     /**
-     * get all recipes from a specific user id from DB
-     * @param int $id the id from the user
-     * @return Recipe|Recipes|bool one recipe or recipes  of the given user id or false if there is no recipe in the DB
+     * gets all recipes from a specific user from DB
+     * @param int $id the id of the user
+     * @return array array of recipes
      */
     public function getRecipesByUser($id): array
     {
@@ -163,9 +162,9 @@ class RecipeManager
     }
 
     /**
-     * get all recipes from a specific category from DB
+     * gets all recipes of a specific category from DB
      * @param string $category the category to search for
-     * @return Recipe|Recipes|bool one recipe or recipes of the given category or false if there is no recipe in the DB
+     * @return Recipe|Recipes|bool array of recipes
      */
     function getRecipesByCategory(string $category): array
     {
@@ -180,9 +179,9 @@ class RecipeManager
     }
 
     /**
-     * get all recipes from a specific type from DB
+     * gets all recipes of a specific type from DB
      * @param string $type the type to search for
-     * @return Recipe|Recipes|bool one recipe or recipes of the given type or false if there is no recipe in the DB
+     * @return array of recipes
      */
     function getRecipesByType(string $type): array
     {
@@ -197,7 +196,7 @@ class RecipeManager
     }
 
     /**
-     * get one random recipes from a specific category from DB
+     * get one random recipe of a specific category from DB
      * @param string $category the category to search for
      * @return Recipe|bool one recipe or false if there is no match
      */
@@ -313,15 +312,14 @@ class RecipeManager
             echo str_repeat("<img class='cookerhood' src = ./img/cookerhood.png>", 5);
             echo "noch keine Bewertungen. </p>";
         }
-        echo "</div>
-        <div class='flex_item_recipe_picture'> ";
-
+        echo "  </div>
+                <div class='flex_item_recipe_picture'> ";
         $photoUrl = $recipe->getPhotoUrl();
         if (strlen($photoUrl) != 0) {
             $url = 'uploads/' . $photoUrl;
             echo "<img src = $url alt = 'Bild des Rezeptes' height='200'> ";
         }
-        echo " </div >
+        echo "  </div >
             </div > ";
     }
 
@@ -399,52 +397,57 @@ class RecipeManager
     }
 
     /**
-     * insert favorite recipe of user into DB
+     * inserts favorite recipe of user into DB
      * @param int $user_id the id from the user
      * @param int $recipe_id the id of the recipe that is to be saved as a favorite
      */
     function favoriteRecipe(int $user_id, int $recipe_id)
     {
-        echo " <form action='' method='post'>
-                <p>Rezept merken:</p>
-                </br>
-                <button class='favorite_button' name='favorite'>&#10084;</button>
-             </form>
-                ";
         if (isset($_POST['favorite'])) {
             $ps = $this->connection->prepare('INSERT INTO user_has_favorites (user_id, recipe_id) VALUES (:user_id, :recipe_id)');
             $ps->bindValue('user_id', $user_id);
             $ps->bindValue('recipe_id', $recipe_id);
             $ps->execute();
+            $this->unfavoriteRecipe($user_id, $recipe_id);
+        } else {
+            echo " <form action='' method='post'>
+                <p>Rezept merken:</p>
+                </br>
+                <button class='favorite_button' name='favorite'>&#10084;</button>
+             </form>
+                ";
         }
+
     }
 
     /**
-     * delete favorite recipe of user from DB
+     * deletes favorite recipe of user from DB
      * @param int $user_id the id from the user
      * @param int $recipe_id the id of the recipe that is to be deleted
      */
     function unfavoriteRecipe(int $user_id, int $recipe_id)
     {
-        echo " <form action='' method='post'>
-                <p>Rezept entfavorisieren:</p>
-                </br>
-                <button class='favorite_button' name='unfavorite'>&#128148;</button>
-             </form>
-                ";
         if (isset($_POST['unfavorite'])) {
             $ps = $this->connection->prepare('DELETE FROM user_has_favorites WHERE user_id = :user_id 
                                  AND recipe_id= :recipe_id');
             $ps->bindValue('user_id', $user_id);
             $ps->bindValue('recipe_id', $recipe_id);
             $ps->execute();
+            $this->favoriteRecipe($user_id, $recipe_id);
+        } else {
+            echo " <form action='' method='post'>
+                <p>Rezept entfavorisieren:</p>
+                </br>
+                <button class='favorite_button' name='unfavorite'>&#128148;</button>
+             </form>
+                ";
         }
     }
 
     /**
-     * get favorite recipes of one user
+     * gets all favorite recipes of one user
      * @param int $user_id the id of the user
-     * @return array
+     * @return array array of recipes
      */
     function getFavoriteRecipes(int $user_id): array
     {
@@ -464,7 +467,7 @@ class RecipeManager
      * checks wether the recipe is a favorite recipe of the user
      * @param int $user_id the id of the user
      * @param int $recipe_id the id from the favorite recipe
-     * @return true if it is a favorite recipe or false otherwise
+     * @return true true if it is a favorite recipe or false otherwise
      */
     function isFavorite(int $user_id, int $recipe_id): bool
     {
@@ -494,8 +497,8 @@ class RecipeManager
     }
 
     /**
-     * deletes all recipes from one user from DB
-     * @param int $user_id the id from the user
+     * deletes all recipes of one user from DB
+     * @param int $user_id the id of the user
      */
     function deleteRecipesFromUser(int $user_id)
     {

@@ -17,7 +17,7 @@ class IngredientManager
     }
 
     /**
-     * insert ingredient into DB
+     * inserts ingredient into DB
      * @param string $name the name of the ingredient
      * @return string the id
      */
@@ -35,10 +35,11 @@ class IngredientManager
     }
 
     /**
-     * get one ingredient from table ingredient
-     * @return array of ingredients
+     * gets one ingredient from table ingredient
+     * @param string $name the name of the ingredient
+     * @return array|bool array of ingredients or false if there is no match
      */
-    function getIngredient(string $name): Ingredient|false
+    function getIngredient(string $name): array|bool
     {
         $result = $this->conn->query("SELECT * FROM ingredient WHERE name='" . $name . "'");
         if ($row = $result->fetch()) {
@@ -47,8 +48,8 @@ class IngredientManager
     }
 
     /**
-     * get all ingredients from db
-     * @return array of ingredients
+     * gets all ingredients from DB
+     * @return array array of ingredients
      */
     function getIngredients(): array
     {

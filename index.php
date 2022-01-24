@@ -22,7 +22,6 @@ require_once 'inc/maininclude.php';
     </header>
 
     <div class="content">
-
         <h1>Rezepte des Tages</h1>
         <?php
         $breakfast = $recipeManager->getOneRandomRecipeByCategory("Frühstück");
@@ -55,7 +54,6 @@ require_once 'inc/maininclude.php';
             echo "<br/><br/>";
         }
         ?>
-
 
     </div>
 

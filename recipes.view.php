@@ -71,7 +71,6 @@ $types = $typeManager->getTypes();
 
         <?php
         if (isset($_POST['filterCategory'])) {
-
             $recipesByCategory = $recipeManager->getRecipesByCategory($_POST['category']);
             echo count($recipesByCategory);
             $recipes_per_page = 5;

@@ -7,13 +7,11 @@ require_once 'manager/fileuploadmanager.php';
 require_once 'model/recipe_ingredient.php';
 require_once 'model/type.php';
 require_once 'model/category.php';
-require_once 'model/recipe_ingredients.php';
 require_once 'inc/errormessages.php';
 
 $categories = $categoryManager->getCategories();
 $types = $typeManager->getTypes();
 $measurementUnits = $measuringUnitManager->getMeasuringUnits();
-$count = 0;
 
 if (!isset ($_SESSION['recipe_ingredients'])) {
     $_SESSION['recipe_ingredients'] = [];
