@@ -26,8 +26,9 @@ SET time_zone = "+00:00";
 --
 -- Tabellenstruktur für Tabelle `category`
 --
+CREATE SCHEMA IF NOT EXISTS rezeptfabrik;
 
-CREATE TABLE `category`
+CREATE TABLE rezeptfabrik.category
 (
     `id`   int(11) NOT NULL,
     `name` varchar(30) DEFAULT NULL
@@ -38,7 +39,7 @@ CREATE TABLE `category`
 -- Daten für Tabelle `category`
 --
 
-INSERT INTO `category` (`id`, `name`)
+INSERT INTO rezeptfabrik.category (`id`, `name`)
 VALUES (1, 'Frühstück'),
        (2, 'Vorspeise'),
        (3, 'Dessert'),
@@ -53,7 +54,7 @@ VALUES (1, 'Frühstück'),
 -- Tabellenstruktur für Tabelle `ingredient`
 --
 
-CREATE TABLE `ingredient`
+CREATE TABLE rezeptfabrik.ingredient
 (
     `id`   int(11) NOT NULL,
     `name` varchar(30) DEFAULT NULL
@@ -64,7 +65,7 @@ CREATE TABLE `ingredient`
 -- Daten für Tabelle `ingredient`
 --
 
-INSERT INTO `ingredient` (`id`, `name`)
+INSERT INTO rezeptfabrik.ingredient (`id`, `name`)
 VALUES (1, 'Wodka'),
        (2, 'Limette (ausgepresst)'),
        (3, 'Ginger Beer zum Auffüllen'),
@@ -149,7 +150,7 @@ VALUES (1, 'Wodka'),
 -- Tabellenstruktur für Tabelle `recipe`
 --
 
-CREATE TABLE `recipe`
+CREATE TABLE rezeptfabrik.recipe
 (
     `id`             int(11)     NOT NULL,
     `title`          varchar(30) NOT NULL,
@@ -169,7 +170,7 @@ CREATE TABLE `recipe`
 -- Daten für Tabelle `recipe`
 --
 
-INSERT INTO `recipe` (`id`, `title`, `content`, `slug`, `user_id`, `category_id`, `type_id`, `photo_url`,
+INSERT INTO rezeptfabrik.recipe (`id`, `title`, `content`, `slug`, `user_id`, `category_id`, `type_id`, `photo_url`,
                       `published_date`, `rating_count`, `rating`)
 VALUES (1, 'Moscow Mule',
         '<p><strong>Dieser k&ouml;stliche Moscow Mule mit Wodka, Limettensaft und Ginger Beer, ist der neue Trend unt den Cocktails und wird gern im Kupferbecher serviert.</strong></p>\r\n<ol>\r\n<li>F&uuml;r den Moscow Mule zuerst die Limette auspressen.</li>\r\n<li>In den Kupferbecher den Wodka einf&uuml;llen, dann sofort mit Eisw&uuml;rfeln f&uuml;llen. Jetzt den Limettensaft &uuml;ber das Eis gie&szlig;en.</li>\r\n<li>Mit Ginger Beer auff&uuml;llen, vorsichtig mit einem Barl&ouml;ffel umr&uuml;hren.</li>\r\n<li>Limettenspalten sowie Minzbl&auml;tter zum Garnieren verwenden.</li>\r\n</ol>',
@@ -223,7 +224,7 @@ VALUES (1, 'Moscow Mule',
 -- Tabellenstruktur für Tabelle `recipe_has_ingredient_has_unit_of_measurement`
 --
 
-CREATE TABLE `recipe_has_ingredient_has_unit_of_measurement`
+CREATE TABLE rezeptfabrik.recipe_has_ingredient_has_unit_of_measurement
 (
     `recipe_id`              int(11) NOT NULL,
     `ingredient_id`          int(11) NOT NULL,
@@ -236,7 +237,7 @@ CREATE TABLE `recipe_has_ingredient_has_unit_of_measurement`
 -- Daten für Tabelle `recipe_has_ingredient_has_unit_of_measurement`
 --
 
-INSERT INTO `recipe_has_ingredient_has_unit_of_measurement` (`recipe_id`, `ingredient_id`, `unit_of_measurement_id`, `amount`)
+INSERT INTO rezeptfabrik.recipe_has_ingredient_has_unit_of_measurement (`recipe_id`, `ingredient_id`, `unit_of_measurement_id`, `amount`)
 VALUES (1, 1, 5, 5),
        (1, 2, 7, 0.5),
        (1, 3, 4, 320),
@@ -354,7 +355,7 @@ VALUES (1, 1, 5, 5),
 -- Tabellenstruktur für Tabelle `role`
 --
 
-CREATE TABLE `role`
+CREATE TABLE rezeptfabrik.role
 (
     `name` varchar(30) NOT NULL
 ) ENGINE = InnoDB
@@ -364,7 +365,7 @@ CREATE TABLE `role`
 -- Daten für Tabelle `role`
 --
 
-INSERT INTO `role` (`name`)
+INSERT INTO rezeptfabrik.role (`name`)
 VALUES ('ADMIN'),
        ('Chefkoch'),
        ('Hobbykoch'),
@@ -376,7 +377,7 @@ VALUES ('ADMIN'),
 -- Tabellenstruktur für Tabelle `type`
 --
 
-CREATE TABLE `type`
+CREATE TABLE rezeptfabrik.type
 (
     `id`   int(11) NOT NULL,
     `name` varchar(30) DEFAULT NULL
@@ -387,7 +388,7 @@ CREATE TABLE `type`
 -- Daten für Tabelle `type`
 --
 
-INSERT INTO `type` (`id`, `name`)
+INSERT INTO rezeptfabrik.type (`id`, `name`)
 VALUES (1, 'mit Fleisch'),
        (2, 'vegetarisch'),
        (3, 'vegan');
@@ -398,7 +399,7 @@ VALUES (1, 'mit Fleisch'),
 -- Tabellenstruktur für Tabelle `unit_of_measurement`
 --
 
-CREATE TABLE `unit_of_measurement`
+CREATE TABLE rezeptfabrik.unit_of_measurement
 (
     `id`   int(11) NOT NULL,
     `name` varchar(15) DEFAULT NULL
@@ -409,7 +410,7 @@ CREATE TABLE `unit_of_measurement`
 -- Daten für Tabelle `unit_of_measurement`
 --
 
-INSERT INTO `unit_of_measurement` (`id`, `name`)
+INSERT INTO rezeptfabrik.unit_of_measurement (`id`, `name`)
 VALUES (1, 'g'),
        (2, 'dag'),
        (3, 'kg'),
@@ -429,7 +430,7 @@ VALUES (1, 'g'),
 -- Tabellenstruktur für Tabelle `user`
 --
 
-CREATE TABLE `user`
+CREATE TABLE rezeptfabrik.user
 (
     `id`        int(11)      NOT NULL,
     `firstname` varchar(30)  NOT NULL,
@@ -444,7 +445,7 @@ CREATE TABLE `user`
 -- Daten für Tabelle `user`
 --
 
-INSERT INTO `user` (`id`, `firstname`, `lastname`, `user_name`, `email`, `password`)
+INSERT INTO rezeptfabrik.user (`id`, `firstname`, `lastname`, `user_name`, `email`, `password`)
 VALUES (1, 'andi', 'andi', 'andi', 'andi@andi.com', '$2y$10$S/xA0FROTgfsgtyoEbIvluuqGLX25MJmwOiRH58TdRgoV/gpRqLWa'),
        (2, 'fabi', 'fabi', 'fabi', 'fabi@fabi.com', '$2y$10$vmPg81nOobLDAVGiRGRfreGvEXoWh.obTr9bKYQfRc2EuDeh.XHAG'),
        (3, 'maxi', 'maxi', 'maxi', 'maxi@maxi.com', '$2y$10$jCQDkMd9O5Ng6L86wSMsyuQyK9sQctVLdwBYY/QKDNaYmMLPNTkjC'),
@@ -459,7 +460,7 @@ VALUES (1, 'andi', 'andi', 'andi', 'andi@andi.com', '$2y$10$S/xA0FROTgfsgtyoEbIv
 -- Tabellenstruktur für Tabelle `user_has_favorites`
 --
 
-CREATE TABLE `user_has_favorites`
+CREATE TABLE rezeptfabrik.user_has_favorites
 (
     `user_id`   int(11) NOT NULL,
     `recipe_id` int(11) NOT NULL
@@ -472,7 +473,7 @@ CREATE TABLE `user_has_favorites`
 -- Tabellenstruktur für Tabelle `user_has_role`
 --
 
-CREATE TABLE `user_has_role`
+CREATE TABLE rezeptfabrik.user_has_role
 (
     `user_id`   int(11)     NOT NULL,
     `role_name` varchar(30) NOT NULL
@@ -483,7 +484,7 @@ CREATE TABLE `user_has_role`
 -- Daten für Tabelle `user_has_role`
 --
 
-INSERT INTO `user_has_role` (`user_id`, `role_name`)
+INSERT INTO rezeptfabrik.user_has_role (`user_id`, `role_name`)
 VALUES (1, 'ADMIN'),
        (1, 'USER'),
        (2, 'ADMIN'),
@@ -499,19 +500,19 @@ VALUES (1, 'ADMIN'),
 --
 -- Indizes für die Tabelle `category`
 --
-ALTER TABLE `category`
+ALTER TABLE rezeptfabrik.category
     ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `ingredient`
 --
-ALTER TABLE `ingredient`
+ALTER TABLE rezeptfabrik.ingredient
     ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `recipe`
 --
-ALTER TABLE `recipe`
+ALTER TABLE rezeptfabrik.recipe
     ADD PRIMARY KEY (`id`),
     ADD UNIQUE KEY `title` (`title`),
     ADD UNIQUE KEY `slug` (`slug`);
@@ -519,7 +520,7 @@ ALTER TABLE `recipe`
 --
 -- Indizes für die Tabelle `recipe_has_ingredient_has_unit_of_measurement`
 --
-ALTER TABLE `recipe_has_ingredient_has_unit_of_measurement`
+ALTER TABLE rezeptfabrik.recipe_has_ingredient_has_unit_of_measurement
     ADD KEY `fk_riuom_rid` (`recipe_id`),
     ADD KEY `fk_riuom_iid` (`ingredient_id`),
     ADD KEY `fk_riuom_uomid` (`unit_of_measurement_id`);
@@ -527,25 +528,25 @@ ALTER TABLE `recipe_has_ingredient_has_unit_of_measurement`
 --
 -- Indizes für die Tabelle `role`
 --
-ALTER TABLE `role`
+ALTER TABLE rezeptfabrik.role
     ADD PRIMARY KEY (`name`);
 
 --
 -- Indizes für die Tabelle `type`
 --
-ALTER TABLE `type`
+ALTER TABLE rezeptfabrik.type
     ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `unit_of_measurement`
 --
-ALTER TABLE `unit_of_measurement`
+ALTER TABLE rezeptfabrik.unit_of_measurement
     ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `user`
 --
-ALTER TABLE `user`
+ALTER TABLE rezeptfabrik.user
     ADD PRIMARY KEY (`id`),
     ADD UNIQUE KEY `user_name` (`user_name`),
     ADD UNIQUE KEY `email` (`email`);
@@ -553,14 +554,14 @@ ALTER TABLE `user`
 --
 -- Indizes für die Tabelle `user_has_favorites`
 --
-ALTER TABLE `user_has_favorites`
+ALTER TABLE rezeptfabrik.user_has_favorites
     ADD PRIMARY KEY (`user_id`, `recipe_id`),
     ADD KEY `fk_ufr_rid` (`recipe_id`);
 
 --
 -- Indizes für die Tabelle `user_has_role`
 --
-ALTER TABLE `user_has_role`
+ALTER TABLE rezeptfabrik.user_has_role
     ADD PRIMARY KEY (`user_id`, `role_name`),
     ADD KEY `fk_uhr_rid` (`role_name`);
 
@@ -571,42 +572,42 @@ ALTER TABLE `user_has_role`
 --
 -- AUTO_INCREMENT für Tabelle `category`
 --
-ALTER TABLE `category`
+ALTER TABLE rezeptfabrik.category
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,
     AUTO_INCREMENT = 8;
 
 --
 -- AUTO_INCREMENT für Tabelle `ingredient`
 --
-ALTER TABLE `ingredient`
+ALTER TABLE rezeptfabrik.ingredient
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,
     AUTO_INCREMENT = 78;
 
 --
 -- AUTO_INCREMENT für Tabelle `recipe`
 --
-ALTER TABLE `recipe`
+ALTER TABLE rezeptfabrik.recipe
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,
     AUTO_INCREMENT = 17;
 
 --
 -- AUTO_INCREMENT für Tabelle `type`
 --
-ALTER TABLE `type`
+ALTER TABLE rezeptfabrik.type
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,
     AUTO_INCREMENT = 4;
 
 --
 -- AUTO_INCREMENT für Tabelle `unit_of_measurement`
 --
-ALTER TABLE `unit_of_measurement`
+ALTER TABLE rezeptfabrik.unit_of_measurement
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,
     AUTO_INCREMENT = 13;
 
 --
 -- AUTO_INCREMENT für Tabelle `user`
 --
-ALTER TABLE `user`
+ALTER TABLE rezeptfabrik.user
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,
     AUTO_INCREMENT = 6;
 
@@ -617,7 +618,7 @@ ALTER TABLE `user`
 --
 -- Constraints der Tabelle `recipe_has_ingredient_has_unit_of_measurement`
 --
-ALTER TABLE `recipe_has_ingredient_has_unit_of_measurement`
+ALTER TABLE rezeptfabrik.recipe_has_ingredient_has_unit_of_measurement
     ADD CONSTRAINT `fk_riuom_iid` FOREIGN KEY (`ingredient_id`) REFERENCES `ingredient` (`id`) ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_riuom_rid` FOREIGN KEY (`recipe_id`) REFERENCES `recipe` (`id`) ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_riuom_uomid` FOREIGN KEY (`unit_of_measurement_id`) REFERENCES `unit_of_measurement` (`id`) ON UPDATE CASCADE;
@@ -625,14 +626,14 @@ ALTER TABLE `recipe_has_ingredient_has_unit_of_measurement`
 --
 -- Constraints der Tabelle `user_has_favorites`
 --
-ALTER TABLE `user_has_favorites`
+ALTER TABLE rezeptfabrik.user_has_favorites
     ADD CONSTRAINT `fk_ufr_rid` FOREIGN KEY (`recipe_id`) REFERENCES `recipe` (`id`),
     ADD CONSTRAINT `fk_ufr_uid` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
 -- Constraints der Tabelle `user_has_role`
 --
-ALTER TABLE `user_has_role`
+ALTER TABLE rezeptfabrik.user_has_role
     ADD CONSTRAINT `fk_uhr_rid` FOREIGN KEY (`role_name`) REFERENCES `role` (`name`) ON UPDATE CASCADE,
     ADD CONSTRAINT `fk_uhr_uid` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE;
 COMMIT;
