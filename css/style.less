@@ -109,23 +109,19 @@ header {
 /* display recipe */
 .flex_container_recipe {
   display: flex;
-  margin-top: 20px;
+  margin-top: 50px;
   margin-bottom: 10px;
   width: 900px;
   flex-wrap: wrap;
 }
 
 .flex_item_recipe_picture {
-  background-image: url(../img/placeholder.jpg);
-  background-repeat: no-repeat;
-  background-size: 100%;
-  margin-top: 30px;
-  margin-left: 30px;
-  width: 220px;
+  float: right;
+  width: 290px;
 }
 
 .flex_item_recipe_content {
-  width: 650px;
+  width: 580px;
   min-height: 200px;
 
   a {
@@ -269,6 +265,10 @@ button:hover, .button:hover {
   border: none;
 }
 
+.recipes_update_button{
+  margin-top: -50px;
+}
+
 .edit_recipe {
   margin-top: -50px;
 }
@@ -276,6 +276,7 @@ button:hover, .button:hover {
 /* rating and favorite */
 .rating_favorite {
   width: 220px;
+  height: 150px;
   display: inline-block;
   text-align: center;
   padding-right: 50px;
@@ -298,7 +299,6 @@ footer {
 }
 
 /* rating */
-
 div.cookerhood_rating {
   width: 250px;
   display: inline-block;
