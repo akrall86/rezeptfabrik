@@ -72,7 +72,6 @@ $types = $typeManager->getTypes();
         <?php
         if (isset($_POST['filterCategory'])) {
             $recipesByCategory = $recipeManager->getRecipesByCategory($_POST['category']);
-            echo count($recipesByCategory);
             $recipes_per_page = 5;
             $page_number = ((isset($_GET["pagecount"])) ? $_GET["pagecount"] : 0);
             $number = 0;
@@ -112,6 +111,7 @@ $types = $typeManager->getTypes();
                 echo '<a href="?pagecount=' . $count . '">' .
                     (($count == $page_number) ? "[" . $number . "]" : $number) . ' </a>';
             }
+            echo"<br/>";
 
             for ($count = $page_number; $count < ($page_number + $recipes_per_page); $count++) {
                 if (isset($recipes[$count])) {

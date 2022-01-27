@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
         $recipeManager->updateRecipe($new_recipe);
 
         unset($_SESSION['recipe_ingredients']);
-        //header('Location: ./confirmation.php');
+        header('Location: ./confirmation.php');
     }
 }
 
