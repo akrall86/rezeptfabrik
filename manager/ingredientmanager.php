@@ -39,7 +39,7 @@ class IngredientManager
      * @param string $name the name of the ingredient
      * @return array|bool array of ingredients or false if there is no match
      */
-    function getIngredient(string $name): array|bool
+    function getIngredient(string $name): Ingredient|bool
     {
         $result = $this->conn->query("SELECT * FROM ingredient WHERE name='" . $name . "'");
         if ($row = $result->fetch()) {

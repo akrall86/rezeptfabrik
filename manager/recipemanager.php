@@ -164,7 +164,7 @@ class RecipeManager
     /**
      * gets all recipes of a specific category from DB
      * @param string $category the category to search for
-     * @return Recipe|Recipes|bool array of recipes
+     * @return array array of recipes
      */
     function getRecipesByCategory(string $category): array
     {
@@ -196,7 +196,7 @@ class RecipeManager
     }
 
     /**
-     * get one random recipe of a specific category from DB
+     * gets one random recipe of a specific category from DB
      * @param string $category the category to search for
      * @return Recipe|bool one recipe or false if there is no match
      */
@@ -237,7 +237,8 @@ class RecipeManager
         $rating_count = $this->ratingManager->getRatingCount($recipe_id);
         if ($rating > 0) {
             $rating_average = (round(($rating / $rating_count) * 2))/2 ;
-            echo $this->ratingManager->displayRating($rating_average) . " (" . $rating_count . " Bewertungen)";
+            echo $this->ratingManager->displayRating($rating_average) . " (" .
+                $rating_count . " Bewertungen)";
         } else {
             echo str_repeat("<img class='cookerhood' src = ./img/cookerhood.png>", 5);
             echo "noch keine Bewertungen. </p>";
@@ -279,7 +280,9 @@ class RecipeManager
 
         if (strlen($photoUrl) != 0) {
             $url = 'uploads/' . $photoUrl;
-            echo "<img src = $url alt = 'Bild des Rezeptes' height='200'> ";
+            echo "<img src = $url alt = 'Bild des Rezeptes' height='210'> ";
+        } else {
+            echo "<img src = '../img/placeholder.jpg' alt = 'Bild des Rezeptes' height='200'>";
         }
         echo " </div >
             </div > ";
@@ -317,7 +320,9 @@ class RecipeManager
         $photoUrl = $recipe->getPhotoUrl();
         if (strlen($photoUrl) != 0) {
             $url = 'uploads/' . $photoUrl;
-            echo "<img src = $url alt = 'Bild des Rezeptes' height='200'> ";
+            echo "<img src = $url alt = 'Bild des Rezeptes' height='210'> ";
+        } else {
+            echo "<img src = '../img/placeholder.jpg' alt = 'Bild des Rezeptes' height='200'>";
         }
         echo "  </div >
             </div > ";
@@ -437,7 +442,7 @@ class RecipeManager
         } else {
             echo " <form action='' method='post'>
                 <p>Rezept entfavorisieren:</p>
-                </br>
+              
                 <button class='favorite_button' name='unfavorite'>&#128148;</button>
              </form>
                 ";
