@@ -35,7 +35,7 @@ require_once 'inc/profileinclude.php';
             <form action="profile.php" method="POST">
                 <button name="btsubmit">Daten Bearbeiten</button>
             </form>
-
+            <br/>
         </div>
         <div>
             <h2>Meine Rezepte</h2>
@@ -46,7 +46,7 @@ require_once 'inc/profileinclude.php';
                 $slug = $recipe->getSlug();
                 $recipeManager->displayShortVersionOfRecipe($recipe);
                 ?>
-                <form action="recipe.update.form.php?<?php echo $slug ?>&load" method="POST">
+                <form class="recipes_update_button" action="recipe.update.form.php?<?php echo $slug ?>&load" method="POST">
                     <input type="hidden" id="recipe_id" name="recipe_id" value="<?php echo $recipe_id ?>">
                     <button class="edit_recipe" name=<?php echo $recipe_id . 'submit' ?>>Rezept bearbeiten</button>
                 </form>
@@ -56,6 +56,7 @@ require_once 'inc/profileinclude.php';
                 }
             }
             ?>
+            <br/>
         </div>
         <div>
             <h2>Meine Favoriten</h2>
