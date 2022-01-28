@@ -39,7 +39,7 @@ CREATE TABLE rezeptfabrik.recipe
     id             INTEGER AUTO_INCREMENT,
     title          VARCHAR(30) NOT NULL,
     content        TEXT        NOT NULL,
-    slug           VARCHAR(15) NOT NULL,
+    slug           VARCHAR(50) NOT NULL,
     user_id        INTEGER     NOT NULL,
     category_id    INTEGER     NOT NULL,
     type_id        INTEGER     NOT NULL,
