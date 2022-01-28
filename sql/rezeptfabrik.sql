@@ -155,7 +155,7 @@ CREATE TABLE rezeptfabrik.recipe
     `id`             int(11)     NOT NULL,
     `title`          varchar(30) NOT NULL,
     `content`        text        NOT NULL,
-    `slug`           varchar(15) NOT NULL,
+    `slug`           varchar(50) NOT NULL,
     `user_id`        int(11)     NOT NULL,
     `category_id`    int(11)     NOT NULL,
     `type_id`        int(11)     NOT NULL,
