@@ -208,6 +208,7 @@ VALUES (1, 'Moscow Mule',
        (13, 'American Pancakes',
         '<p><strong>Das American Pancakes - Rezept dien pperfekt f&uuml;r das Sonntagsfr&uuml;hst&uuml;ck!</strong></p>\r\n<ol>\r\n<li>Das Eiwei&szlig; mit Zucker zu Schnee schlagen. In einer zweiten Sch&uuml;ssel Eidotter und Suaerrahm glatt r&uuml;hren. Den Eischnee unterheben.</li>\r\n<li>Butter in einer Pfanne erhitzen und zergehen lassen. Jewils 2-3 Essl&ouml;ffel des Teigs hineingeben und backen lassen. Wenn der Teig fest wird, wenden.</li>\r\n</ol>',
         'american - pancakes', 1, 1, 2, '1_13.png', '2022-01-17 08:24:29', 0, 0),
+
        (14, '3- Minuten Ei',
         '<p><strong>Ein 3- Minuten Ei oder auch liebvoll weiches Ei genannt, passt zum Fr&uuml;hst&uuml;ck und ist gesund. Das einfache Rezept f&uuml;r Jedermann.</strong></p>\r\n<ol>\r\n<li>F&uuml;r das 2- Minuten Ei wird das Wasser mit etwas Salz im Topf zum Kochen gebracht. Dann legt man die einzelnen Eier mit Hilfe eines Essl&ouml;ffels langsam in das Wasser.</li>\r\n<li>Nun genau auf die Uhr sehen und 3 Minuten im kochenden Wasser wallen lassen. Anschlie&szlig;end das Ei sofort aus dem Wasser nehmen und sofort mit kaltem Wasser abschrecken. Nun kannn die obere Schalenh&auml;lfte vom Ei gel&ouml;st werden. Noch hei&szlig; in einem Eierbecher Servieren.</li>\r\n<li>Wird die Kochdauer dabei verl&auml;ngert z.B. 4 - 5 oder 6 Minuten entsteht ein kernweiches oder auch hartes Ei.</li>\r\n</ol>',
         '3- - minuten - ', 3, 1, 2, '3_14.png', '2022-01-17 08:34:02', 0, 0),

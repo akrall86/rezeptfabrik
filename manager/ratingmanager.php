@@ -56,7 +56,6 @@ class RatingManager
                 if (isset($_POST['cookerhood'])) {
                     $rating = $_POST['cookerhood'];
                     $this->updateRating($recipe_id, $rating);
-                    header("Refresh:0");
                 }
         }
         echo "</div>";
