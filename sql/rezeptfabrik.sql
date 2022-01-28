@@ -206,6 +206,10 @@ VALUES (1, 'Moscow Mule',
         '<p><strong>Das Rezept 7-Kornflocken mit Apfel ist ein wunderbares Fr&uuml;hst&uuml;ck und darf jeden Tag auf den Tisch</strong></p>\r\n<ol>\r\n<li>F&uuml;r die 7-Kornflocken mit Apfel als erstes den Apfel waschen und in kleine W&uuml;rfel schneiden, mit den 7 Kornflocken, Milch, und Honig in ein verschlie&szlig;bares Glas geben und umr&uuml;hren.</li>\r\n<li>Die Walnuss-H&auml;lften dar&uuml;ber geben, das Glas verschlie&szlig;en und im K&uuml;hlschrank &uuml;ber Nacht ziehen lassen.</li>\r\n</ol>',
         '7-kornflocken - mit - Apfel', 2, 1, 2, '2_12.png', '2022-01-17 08:17:07', 0, 0),
        (13, 'American Pancakes',
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3eb93ab58b1d95ad49796f9ff3990faaccc0307b
         '<p><strong>Das American Pancakes - Rezept dien pperfekt f&uuml;r das Sonntagsfr&uuml;hst&uuml;ck!</strong></p>\r\n<ol>\r\n<li>Das Eiwei&szlig; mit Zucker zu Schnee schlagen. In einer zweiten Sch&uuml;ssel Eidotter und Suaerrahm glatt r&uuml;hren. Den Eischnee unterheben.</li>\r\n<li>Butter in einer Pfanne erhitzen und zergehen lassen. Jewils 2-3 Essl&ouml;ffel des Teigs hineingeben und backen lassen. Wenn der Teig fest wird, wenden.</li>\r\n</ol>',
         'american - pancakes', 1, 1, 2, '1_13.png', '2022-01-17 08:24:29', 0, 0),
 
