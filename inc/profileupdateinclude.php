@@ -16,11 +16,9 @@ if (isset($_POST['btupdate']) && $_POST['password']) {
         if (strlen(trim($_POST['newpassword'])) < 6) {
             $errors['newpassword'] = 'neues Passwort muss mindestens 6 Zeichen haben.';
         }
-        if (strlen(trim($_POST['newpasswordrepeat'])) != strlen(trim($_POST['newpassword']))) {
-            $errors['newpasswordrepeat'] = 'neues Passwort stimmt nicht überein.';
-        }
-        if (strcmp($_POST['password'], $_POST['passwordrepeat']) !== 0) {
-            $errors['passwordrepeat'] = 'Passwörter stimmen nicht überein.';
+
+        if (strcmp($_POST['password'], $_POST['newpasswordrepeat']) !== 0) {
+            $errors['newpasswordrepeat'] = 'Passwörter stimmen nicht überein.';
         }
     }
     if (!password_verify($_POST['password'], $user->password)) {
