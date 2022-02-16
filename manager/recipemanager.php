@@ -368,7 +368,7 @@ class RecipeManager
 
     /**
      * updates the recipe in the DB
-     * @param Recipe $recipe th recipe to be updated
+     * @param Recipe $recipe the recipe to be updated
      */
     function updateRecipe(Recipe $recipe)
     {
