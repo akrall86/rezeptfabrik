@@ -11,8 +11,10 @@ class MessageManager
         $this->conn = $conn;
     }
 
-    function sendMessage()
+    function sendMessage($from_user_id, $to_user, $message)
     {
 
     }
+
+
 }
