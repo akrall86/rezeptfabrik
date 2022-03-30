@@ -127,3 +127,14 @@ CREATE TABLE rezeptfabrik.user_has_favorites
     CONSTRAINT fk_ufr_uid FOREIGN KEY (user_id) REFERENCES user (id),
     CONSTRAINT fk_ufr_rid FOREIGN KEY (recipe_id) REFERENCES recipe (id)
 );
+
+CREATE TABLE rezeptfabrik.messages
+(
+    id              INTEGER      NOT NULL AUTO_INCREMENT,
+    from_user_id    INTEGER      NOT NULL,
+    to_user_id      INTEGER      NOT NULL,
+    message_content VARCHAR(250) NOT NULL,
+    sent_time       DATETIME     NOT NULL,
+    seen            BOOLEAN,
+    PRIMARY KEY (id)
+);
