@@ -1,5 +1,5 @@
 <?php
 if (!$userManager->isLoggedIn()) {
-    header('Location: ./login.php');
+    header('Location: ./login.form.php');
     return;
 }
