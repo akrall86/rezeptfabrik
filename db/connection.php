@@ -3,7 +3,7 @@
 $host = "localhost:3306";
 $dbName = "rezeptfabrik";
 $dbUsername = "root";
-$dbPassword = "";
+$dbPassword = "root";
 
 // get DB connection
 $connection = new PDO("mysql:dbname=$dbName; host=$host;", $dbUsername, $dbPassword);
