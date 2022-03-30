@@ -236,6 +236,21 @@ button:hover,
   text-align: center;
   padding-right: 50px;
 }
+.message {
+  width: 220px;
+  height: 150px;
+  text-align: center;
+  padding-right: 50px;
+}
+.message a {
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+.message a:hover {
+  color: black;
+  text-decoration: underline;
+}
 /* footer */
 footer {
   list-style-type: none;

@@ -1,13 +1,6 @@
 <?php
 require_once 'inc/maininclude.php';
-require_once 'manager/measuringunitmanager.php';
-require_once 'manager/recipeingredientmanager.php';
-require_once 'manager/categorymanager.php';
-require_once 'manager/typemanager.php';
-require_once 'manager/recipemanager.php';
 
-$recipe_id = $_POST['recipe_id'];
-require_once 'inc/recipe.update.php';
 ?>
 
 <!DOCTYPE HTML>
@@ -50,7 +43,6 @@ require_once 'inc/recipe.update.php';
             </div>
             <div class="description_div">
             <textarea class="description" type="text" name="description" id="description">
-                       <?php echo $recipe->getContent() ?>
                     </textarea>
                 <br/>
                 <div>
@@ -59,10 +51,11 @@ require_once 'inc/recipe.update.php';
                 <br/>
         </form>
     </div>
+</div>
     <?php
     include "inc/footer.php";
     ?>
-</div>
+
 
 </body>
 </html>

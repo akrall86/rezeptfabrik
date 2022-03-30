@@ -272,6 +272,10 @@ class RecipeManager
                 $this->favoriteRecipe($user_id, $recipe_id);
                 echo " </div>";
             }
+            echo "
+            <div class='rating_favorite'>
+            <a id='message' href='./message.form.php?id=' " . $user_id . " '>Nachricht senden</a>
+            </div>";
         }
         echo "</p>
                 </div >
