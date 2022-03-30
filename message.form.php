@@ -34,15 +34,15 @@ require_once 'inc/maininclude.php';
 
     <div class="content">
         <h1>Nachricht schreiben</h1>
-        <form enctype="multipart/form-data" action="recipe.update.form.php" method="post">
+        <form action="message.form.php" method="post">
             <?php include 'inc/errormessages.php' ?>
 
             <div class="description_label">
                 <br/>
-                <label for="description">Nachricht:</label><br/>
+                <label for="message">Nachricht:</label><br/>
             </div>
             <div class="description_div">
-            <textarea class="description" type="text" name="description" id="description">
+            <textarea class="description" type="text" name="message" id="message">
                     </textarea>
                 <br/>
                 <div>
