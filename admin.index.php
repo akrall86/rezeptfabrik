@@ -30,7 +30,7 @@ require_once 'inc/admin.recipemanagement.php';
         <div>
             <h2>Benutzer Übersicht</h2>
             <form action="admin.index.php" method="POST">
-                <button name="btgetusers">Alle Benutzer Anzeigen</button>
+                <button name="getusers">Alle Benutzer Anzeigen</button>
             </form>
         </div>
         <div>
