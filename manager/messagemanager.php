@@ -20,8 +20,8 @@ class MessageManager
         $ivlen = openssl_cipher_iv_length($cipher);
         $iv = openssl_random_pseudo_bytes($ivlen);
         $key = 'rezeptfabrik' . $from_user_id . $to_user_id;
-        $ciphertext_raw = openssl_encrypt($message_content, $cipher, $key, OPENSSL_RAW_DATA, $iv);
-        $ciphertext = base64_encode($ciphertext_raw);
+//        $ciphertext_raw = openssl_encrypt($message_content, $cipher, $key, OPENSSL_RAW_DATA, $iv);
+//        $ciphertext = base64_encode($ciphertext_raw);
 
         $datetime = new DateTime('now');
 
@@ -31,15 +31,15 @@ class MessageManager
                                             (:from_user_id, :to_user_id, :message_content, :sent_time, :seen)');
 
         $ps->bindValue('from_user_id', $from_user_id);
-        $ps->bindValue('to_user_id', $to_user);
-        $ps->bindValue('message_content', $ciphertext);
+        $ps->bindValue('to_user_id', $to_user_id);
+        $ps->bindValue('message_content', $message_content);
         $ps->bindValue('sent_time', date('Y-m-d H:i:s', $datetime->getTimestamp()));
         $ps->bindValue('seen', false);
         $ps->execute();
 
         $message_id = (int)$this->conn->lastInsertId();
 
-        return new Message($message_id, $from_user_id, $to_user, $message, $datetime, false);
+        return new Message($message_id, $from_user_id, $to_user_id, $message_content, $datetime, false);
 
     }
 

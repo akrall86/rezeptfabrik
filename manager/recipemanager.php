@@ -274,7 +274,7 @@ class RecipeManager
             }
             echo "
             <div class='rating_favorite'>
-            <a id='message' href='./message.form.php?id=' " . $user_id . " '>Nachricht senden</a>
+            <a id='message' href='./message.form.php?id=" . $user_id . "'>Nachricht senden</a>
             </div>";
         }
         echo "</p>

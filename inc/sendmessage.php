@@ -2,7 +2,7 @@
 require_once 'inc/maininclude.php';
 
 if (isset($_POST['submit'])) {
-    $to_user = $_POST['to_user'];
+    $to_user = (int)$_POST['to_user'];
     $from_user_id = (int)$_SESSION['user_id'];
 
     if (strlen(trim($_POST['message'])) == 0) {
