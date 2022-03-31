@@ -5,3 +5,4 @@
 .css/style.css
 .idea/dataSources.xml
 .idea/.name
+./db/connection.php
