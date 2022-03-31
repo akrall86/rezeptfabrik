@@ -1,3 +1,4 @@
+
 <?php
 require_once __DIR__ . '/../inc/maininclude.php';
 require_once __DIR__ . '/../model/category.php';
@@ -21,7 +22,7 @@ class RecipeManager
     private RatingManager $ratingManager;
 
     /**
-     * @param PDO $connection
+     * @param PDO $conn the connection to the db
      * @param IngredientManager $ingredientManager
      * @param MeasuringUnitManager $measuringUnitManager
      * @param RecipeIngredientManager $recipeIngredientManager
@@ -516,6 +517,7 @@ class RecipeManager
             $this->deleteRecipe($recipe);
         }
     }
+
 
 
 }
