@@ -21,7 +21,7 @@ class RecipeManager
     private RatingManager $ratingManager;
 
     /**
-     * @param PDO $conn the connection to the db
+     * @param PDO $connection
      * @param IngredientManager $ingredientManager
      * @param MeasuringUnitManager $measuringUnitManager
      * @param RecipeIngredientManager $recipeIngredientManager
@@ -272,6 +272,10 @@ class RecipeManager
                 $this->favoriteRecipe($user_id, $recipe_id);
                 echo " </div>";
             }
+            echo "
+            <div class='rating_favorite'>
+            <a id='message' href='./message.form.php?id=' " . $user_id . " '>Nachricht senden</a>
+            </div>";
         }
         echo "</p>
                 </div >
