@@ -51,3 +51,4 @@ $fileUploadManager = new FileUploadManager();
 $messageManager = new MessageManager($connection);
 
 // array to store errors
+$errors = [];
