@@ -2,7 +2,6 @@
 require_once 'inc/maininclude.php';
 require_once 'inc/sendmessage.php';
 
-$to_user = $_GET['id'];
 ?>
 
 <!DOCTYPE HTML>
@@ -35,24 +34,8 @@ $to_user = $_GET['id'];
     </header>
 
     <div class="content">
-        <h1>Nachricht schreiben</h1>
-        <form action="message.form.php" method="post">
-            <?php include 'inc/errormessages.php' ?>
+        <h1>Deine Nachrichten</h1>
 
-            <div class="description_label">
-                <br/>
-                <label for="message">Nachricht:</label><br/>
-            </div>
-            <div class="description_div">
-            <textarea class="description" type="text" name="message" id="message">
-                    </textarea>
-                <input type="hidden" id="to_user" name="to_user" value=<?php echo $to_user ?>>
-                <br/>
-                <div>
-                    <button name="submit">senden</button>
-                </div>
-                <br/>
-        </form>
     </div>
 </div>
     <?php
