@@ -130,11 +130,11 @@ CREATE TABLE rezeptfabrik.user_has_favorites
 
 CREATE TABLE rezeptfabrik.messages
 (
-    id              INTEGER      NOT NULL AUTO_INCREMENT,
-    from_user_id    INTEGER      NOT NULL,
-    to_user_id      INTEGER      NOT NULL,
-    message_content VARCHAR(250) NOT NULL,
-    sent_time       DATETIME     NOT NULL,
+    id              INTEGER  NOT NULL AUTO_INCREMENT,
+    from_user_id    INTEGER  NOT NULL,
+    to_user_id      INTEGER  NOT NULL,
+    message_content TEXT     NOT NULL,
+    sent_time       DATETIME NOT NULL,
     seen            BOOLEAN,
     PRIMARY KEY (id)
 );
