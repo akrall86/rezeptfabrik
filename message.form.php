@@ -24,6 +24,7 @@ $to_user = $_GET['id'];
         });
     </script>
     <link rel="stylesheet" href="css/style.css"/>
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
 <div class="body">
