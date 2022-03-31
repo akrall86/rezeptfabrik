@@ -1,3 +1,4 @@
+
 <?php
 // DB-Connection Attribute
 $host = "localhost:3306";
@@ -8,3 +9,4 @@ $dbPassword = "root";
 // get DB connection
 $connection = new PDO("mysql:dbname=$dbName; host=$host;", $dbUsername, $dbPassword);
 $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+

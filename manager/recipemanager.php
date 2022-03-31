@@ -236,7 +236,7 @@ class RecipeManager
         $rating = $this->ratingManager->getRating($recipe_id);
         $rating_count = $this->ratingManager->getRatingCount($recipe_id);
         if ($rating > 0) {
-            $rating_average = (round(($rating / $rating_count) * 2)) / 2;
+            $rating_average = (round(($rating / $rating_count) * 2))/2 ;
             echo $this->ratingManager->displayRating($rating_average) . " (" .
                 $rating_count . " Bewertungen)";
         } else {
@@ -274,7 +274,7 @@ class RecipeManager
             }
             echo "
             <div class='rating_favorite'>
-            <a id='message' href='./message.form.php?id=" . $user_id . "'>Nachricht senden</a>
+            <a id='message' href='./message.form.php?id=' " . $user_id . " '>Nachricht senden</a>
             </div>";
         }
         echo "</p>

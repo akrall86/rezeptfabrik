@@ -1,3 +1,4 @@
+
 <?php
 require_once __DIR__ . '/../model/recipe_ingredient.php';
 
@@ -50,4 +51,3 @@ $fileUploadManager = new FileUploadManager();
 $messageManager = new MessageManager($connection);
 
 // array to store errors
-$errors = [];
