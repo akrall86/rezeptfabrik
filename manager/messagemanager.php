@@ -15,26 +15,17 @@ class MessageManager
 
     function sendMessage(int $from_user_id, int $to_user_id, string $message_content): Message
     {
-
-        $cipher = 'AES-256-XTS';
-        $ivlen = openssl_cipher_iv_length($cipher);
-        $iv = openssl_random_pseudo_bytes($ivlen);
-        $key = 'rezeptfabrik' . $from_user_id . $to_user_id;
-//        $ciphertext_raw = openssl_encrypt($message_content, $cipher, $key, OPENSSL_RAW_DATA, $iv);
-//        $ciphertext = base64_encode($ciphertext_raw);
-
         $datetime = new DateTime('now');
 
         $ps = $this->conn->prepare('INSERT INTO messages
                                             (from_user_id, to_user_id, message_content, sent_time, seen) 
                                             VALUES 
                                             (:from_user_id, :to_user_id, :message_content, :sent_time, :seen)');
-
         $ps->bindValue('from_user_id', $from_user_id);
         $ps->bindValue('to_user_id', $to_user_id);
         $ps->bindValue('message_content', $message_content);
         $ps->bindValue('sent_time', date('Y-m-d H:i:s', $datetime->getTimestamp()));
-        $ps->bindValue('seen', false);
+        $ps->bindValue('seen', false, PDO::PARAM_BOOL);
         $ps->execute();
 
         $message_id = (int)$this->conn->lastInsertId();

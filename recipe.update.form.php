@@ -130,8 +130,7 @@ require_once 'inc/recipe.update.php';
             </div>
             <div class="description_div">
             <textarea class="description" type="text" name="description" id="description">
-                       <?php echo $recipe->getContent() ?>
-                    </textarea>
+                       <?php echo $recipe->getContent() ?></textarea>
                 <br/>
             </div>
             <input type="hidden" id="recipe_id" name="recipe_id" value=<?php echo $recipe_id ?>>

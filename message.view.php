@@ -2,6 +2,7 @@
 require_once 'inc/maininclude.php';
 require_once 'inc/sendmessage.php';
 
+$messages = $messageManager -> getMessage()
 ?>
 
 <!DOCTYPE HTML>
@@ -37,11 +38,11 @@ require_once 'inc/sendmessage.php';
         <h1>Deine Nachrichten</h1>
 
     </div>
-</div>
+
     <?php
     include "inc/footer.php";
     ?>
-
+</div>
 </body>
 </html>
 
