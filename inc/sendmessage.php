@@ -1,6 +1,5 @@
 <?php
 require_once 'inc/maininclude.php';
-require_once 'inc/errormessages.php';
 
 if (isset($_POST['submit'])) {
     $to_user = $_POST['to_user'];

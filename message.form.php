@@ -38,7 +38,6 @@ $to_user = $_GET['id'];
         <h1>Nachricht schreiben</h1>
         <form action="message.form.php" method="post">
             <?php include 'inc/errormessages.php' ?>
-
             <div class="description_label">
                 <br/>
                 <label for="message">Nachricht:</label><br/>
