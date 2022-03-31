@@ -1,3 +1,4 @@
+
 <?php
 require_once __DIR__ . '/../inc/maininclude.php';
 require_once __DIR__ . '/../model/category.php';
@@ -516,6 +517,7 @@ class RecipeManager
             $this->deleteRecipe($recipe);
         }
     }
+
 
 
 }
