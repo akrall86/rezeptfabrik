@@ -37,7 +37,7 @@ class MessageManager
         $ps->bindValue('seen', false);
         $ps->execute();
 
-        $message_id = $this->conn->lastInsertId();
+        $message_id = (int)$this->conn->lastInsertId();
 
         return new Message($message_id, $from_user_id, $to_user, $message, $datetime, false);
 
