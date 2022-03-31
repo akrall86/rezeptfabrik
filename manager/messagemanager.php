@@ -53,8 +53,8 @@ class MessageManager
         $message.setMessageContent($clearedtext);
     }
 
-    // designation
-    function updateMessage($message)
+
+    function setSeenTrue($message)
     {
         $id = $message->getId();
         $ps = $this->conn->prepare('UPDATE messages SET seen = :seen WHERE  id = :id');
