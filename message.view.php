@@ -2,7 +2,6 @@
 require_once 'inc/maininclude.php';
 require_once 'inc/sendmessage.php';
 
-$messages = $messageManager -> getMessage()
 ?>
 
 <!DOCTYPE HTML>

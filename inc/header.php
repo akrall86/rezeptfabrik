@@ -8,6 +8,7 @@
         <a href="./register.php">Registrieren</a>
     <?php else: ?>
         <a href="./profile.php">Profil</a></br>
+        <a href="./message.view.php">Profil</a></br>
         <a href="./logout.php">Logout</a>
     <?php endif; ?>
 </div>

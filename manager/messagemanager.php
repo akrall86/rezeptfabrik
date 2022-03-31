@@ -41,7 +41,6 @@ class MessageManager
      */
     function getMessage(Message $message, $user_id): Message| string
     {
-
         if ($message->getToUserId() === $user_id) {
             $cipher = 'AES-256-XTS';
             $ivlen = openssl_cipher_iv_length($cipher);
@@ -49,8 +48,8 @@ class MessageManager
             $key = 'rezeptfabrik' . $message->getFromUserId() . $message->getToUserId();
             $clearedtext = openssl_decrypt($ciphertext, $cipher, $key, OPENSSL_RAW_DATA, $iv);
 
-             $message->setMessageContent($clearedtext);
-             return $message;
+            $message->setMessageContent($clearedtext);
+            return $message;
         }
         return "Keine neuen Nachrichten";
     }
@@ -63,6 +62,26 @@ class MessageManager
         $ps->bindValue('seen', true);
         $ps->bindValue('id', $id);
         $ps->execute();
+    }
+
+    function getUsersWrittenWith($user_id) : array
+    {
+        $ids=[];
+        $ps = $this->conn->prepare('SELECT from_user_id, to_user_id FROM messages
+                                            WHERE from_user_id = :user_id OR to_user_id = :user_id');
+        $ps->bindValue('from_user_id', $user_id);
+        $ps->bindValue('to_user_id', $user_id);
+        $ps->execute();
+
+        while ($row = $result->fetch()) {
+
+            if ($row['from_user_id'] === $user_id){
+                $ids[] = $row['to_user_id'];
+            } else {
+                $ids[] = $row['from_user_id'];
+            }
+        }
+        return $ids;
     }
 
 
