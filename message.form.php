@@ -43,8 +43,7 @@ $to_user = $_GET['id'];
                 <label for="message">Nachricht:</label><br/>
             </div>
             <div class="description_div">
-            <textarea class="description" type="text" name="message" id="message">
-                    </textarea>
+            <textarea class="description" type="text" name="message" id="message"></textarea>
                 <input type="hidden" id="to_user" name="to_user" value=<?php echo $to_user ?>>
                 <br/>
                 <div>
