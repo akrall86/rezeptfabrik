@@ -54,6 +54,7 @@ class MessageManager
 
 
 
+
     function setSeenTrue($message)
     {
         $id = $message->getId();
