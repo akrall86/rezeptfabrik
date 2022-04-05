@@ -48,7 +48,6 @@ class MessageManager
         $ps->bindValue('from_user_id', $user_id);
         $ps->bindValue('to_user_id', $user_id);
         $ps->execute();
-
         while ($row = $result->fetch()) {
             if ($row['from_user_id'] === $user_id){
                 $ids[] = $row['to_user_id'];
