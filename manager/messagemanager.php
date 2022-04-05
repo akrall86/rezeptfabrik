@@ -12,7 +12,6 @@ class MessageManager
         $this->conn = $conn;
     }
 
-
     function sendMessage(int $from_user_id, int $to_user_id, string $message_content): Message
     {
 
@@ -38,6 +37,29 @@ class MessageManager
 
     /**
      * @param $user_id
+     * gets all users with which the given user wrote
+     * @return array array of user ids
+     */
+    function getUsersWrittenWith($user_id) : array
+    {
+        $ids=[];
+        $ps = $this->conn->prepare('SELECT from_user_id, to_user_id FROM messages
+                                            WHERE from_user_id = :user_id OR to_user_id = :user_id');
+        $ps->bindValue('from_user_id', $user_id);
+        $ps->bindValue('to_user_id', $user_id);
+        $ps->execute();
+        while ($row = $result->fetch()) {
+            if ($row['from_user_id'] === $user_id){
+                $ids[] = $row['to_user_id'];
+            } else {
+                $ids[] = $row['from_user_id'];
+            }
+        }
+        return $ids;
+    }
+
+    /**
+     * @param $user_id
      * @param $from_user_id
      * @return array
      */
@@ -51,8 +73,6 @@ class MessageManager
 
         return $messages;
     }
-
-
 
     function setSeenTrue($message)
     {
