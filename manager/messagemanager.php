@@ -45,6 +45,7 @@ class MessageManager
         $ids=[];
         $ps = $this->conn->prepare('SELECT from_user_id, to_user_id FROM messages
                                             WHERE from_user_id = :user_id OR to_user_id = :user_id');
+
         $ps->bindValue('from_user_id', $user_id);
         $ps->bindValue('to_user_id', $user_id);
         $ps->execute();
