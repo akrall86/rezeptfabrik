@@ -251,6 +251,12 @@ button:hover,
   color: black;
   text-decoration: underline;
 }
+.right {
+  float: right;
+}
+.left {
+  float: left;
+}
 /* footer */
 footer {
   list-style-type: none;
