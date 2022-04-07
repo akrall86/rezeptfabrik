@@ -2,6 +2,9 @@
 require_once 'inc/maininclude.php';
 require_once 'inc/sendmessage.php';
 
+$user_id = $_SESSION['user_id'];
+$user_ids = $messageManager->getUsersWrittenWith($user_id);
+
 ?>
 
 <!DOCTYPE HTML>
@@ -12,16 +15,6 @@ require_once 'inc/sendmessage.php';
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <script src="js/jquery-3.6.0.js" defer></script>
     <script src="js/script.js" defer></script>
-    <script src="https://cdn.tiny.cloud/1/yrzh53e1pluir30xdlmiyrryst09opb6vf7vy441zi3nai5h/tinymce/5/tinymce.min.js"
-            referrerpolicy="origin"></script>
-    <script type="text/javascript">
-        tinymce.init({
-            selector: '#description',
-            toolbar: 'undo redo | bold italic underline | numlist bullist',
-            plugins: 'lists',
-            menubar: ''
-        });
-    </script>
     <link rel="stylesheet" href="css/style.css"/>
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -36,7 +29,30 @@ require_once 'inc/sendmessage.php';
 
     <div class="content">
         <h1>Deine Nachrichten</h1>
+        <?php
+        if ($user_ids != null) {
+            foreach ($user_ids as $id) {
+                if ($id != $user_id) {
+                    $user = $userManager->getUserById($id);
+                    echo "<a href='message.view.php?id=" . $id . "'>" . $user->getUserName() . "</a>
+                    </br>";
+                }
+            }
+        } else echo "<p> Noch keine Nachrichten vorhanden.";
 
+        if (isset($_GET['id'])) {
+            $messages = $messageManager->getAllMessages($user_id, (int)$_GET['id']);
+            foreach ($messages as $message) {
+                if ($message->getFromUserId() === $user_id) {
+                    echo "<div class=right>" . $message->getMessageContent() . "</div>
+                          <div class=right>" . $message->getSendTime() . "</div>";
+                } else {
+                    echo "<div class=left>" . $message->getMessageContent() . "</div>
+                    <div class=right>" . $message->getSendTime() . "</div>";
+                }
+            }
+        }
+        ?>
     </div>
 
     <?php
