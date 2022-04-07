@@ -46,7 +46,7 @@ class MessageManager
         $st = $this->conn->query("SELECT * FROM messages WHERE $user_id = to_user_id AND $from_user_id = from_user_id");
         $messages = [];
         while ($wor = $st->fetch()) {
-            $messages[] = new Message('id', 'from_user_id', 'to_user_id', 'message_content', 'semt_time', 'seen');
+            $messages[] = new Message('id', 'from_user_id', 'to_user_id', 'message_content', 'sent_time', 'seen');
         }
 
         return $messages;
