@@ -40,22 +40,24 @@ class MessageManager
      * gets all users with which the given user wrote
      * @return array array of user ids
      */
-    function getUsersWrittenWith($user_id) : array
+    function getUsersWrittenWith($user_id): array
     {
-        $ids=[];
+        $ids = [];
         $ps = $this->conn->prepare('SELECT from_user_id, to_user_id FROM messages
                                             WHERE from_user_id = :user_id OR to_user_id = :user_id');
-        $ps->bindValue('from_user_id', $user_id);
-        $ps->bindValue('to_user_id', $user_id);
+        $ps->bindValue('user_id', $user_id);
+        $ps->bindValue('user_id', $user_id);
         $ps->execute();
-        while ($row = $result->fetch()) {
-            if ($row['from_user_id'] === $user_id){
+        while ($row = $ps->fetch()) {
+            if ($row['from_user_id'] === $user_id) {
                 $ids[] = $row['to_user_id'];
             } else {
                 $ids[] = $row['from_user_id'];
             }
         }
-        return $ids;
+        $ids_unique = array_unique($ids);
+
+        return $ids_unique;
     }
 
     /**
