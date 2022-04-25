@@ -59,7 +59,7 @@ class UserManager
      * @param int $id
      * @return void
      */
-    function setUserRoleToUserById(int $id)
+    function setUserRoleToUserById(int $id): void
     {
         $roles = $this->getRoles();
         $user_role = "";
