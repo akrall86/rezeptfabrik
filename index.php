@@ -26,31 +26,31 @@ require_once 'inc/maininclude.php';
         <h1>Rezepte des Tages</h1>
         <?php
         $breakfast = $recipeManager->getOneRandomRecipeByCategory("Frühstück");
-        if ($breakfast != false) {
+        if ($breakfast) {
             $recipeManager->displayShortVersionOfRecipe($breakfast);
             echo "<br/><br/>";
         }
 
         $starter = $recipeManager->getOneRandomRecipeByCategory("Vorspeise");
-        if ($starter != false) {
+        if ($starter) {
             $recipeManager->displayShortVersionOfRecipe($starter);
             echo "<br/><br/>";
         }
 
         $dinner = $recipeManager->getOneRandomRecipeByCategory("Hauptspeise");
-        if ($dinner != false) {
+        if ($dinner) {
             $recipeManager->displayShortVersionOfRecipe($dinner);
             echo "<br/><br/>";
         }
 
         $dessert = $recipeManager->getOneRandomRecipeByCategory("Dessert");
-        if ($dessert != false) {
+        if ($dessert) {
             $recipeManager->displayShortVersionOfRecipe($dessert);
             echo "<br/><br/>";
         }
 
         $drink = $recipeManager->getOneRandomRecipeByCategory("Getränk");
-        if ($drink != false) {
+        if ($drink) {
             $recipeManager->displayShortVersionOfRecipe($drink);
             echo "<br/><br/>";
         }

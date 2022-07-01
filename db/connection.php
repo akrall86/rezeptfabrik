@@ -3,8 +3,8 @@
 // DB-Connection Attribute
 $host = "localhost:3306";
 $dbName = "rezeptfabrik";
-$dbUsername = "root";
-$dbPassword = "";
+$dbUsername = "user";
+$dbPassword = "user";
 
 // get DB connection
 $connection = new PDO("mysql:dbname=$dbName; host=$host;", $dbUsername, $dbPassword);
